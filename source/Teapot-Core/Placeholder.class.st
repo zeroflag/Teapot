@@ -13,9 +13,10 @@ Class {
 { #category : #'instance creation' }
 Placeholder class >> fromString: aString atLast: aBoolean [
 	| class |
-	(aString beginsWith: ':') ifFalse: [ self error: 'Invalid placeholder name: ', aString ].
+	((aString beginsWith: '<') and: [ aString endsWith: '>' ]) 
+		ifFalse: [ self error: 'Invalid placeholder name: ', aString ].
 	class := aBoolean ifTrue: [ PlaceholderStop ] ifFalse: [ Placeholder ].		
-	^ class new setPlaceholderName: aString allButFirst.
+	^ class new setPlaceholderName: aString allButFirst allButLast.
 ]
 
 { #category : #'url pattern segment' }

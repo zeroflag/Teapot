@@ -22,7 +22,7 @@ Class {
 UrlPattern class >> createSegment: aString atLast: aBoolean [
 	aString = '*' 
 		ifTrue: [ ^ Wildcard atLast: aBoolean ].
-	(aString beginsWith: ':')
+	(aString beginsWith: '<')
 		ifTrue: [ ^ Placeholder fromString: aString atLast: aBoolean ].
 	^ Literal 
 		fromString: aString 
