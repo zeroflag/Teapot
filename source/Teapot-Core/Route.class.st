@@ -9,7 +9,7 @@ Class {
 		'urlPattern',
 		'transformer'
 	],
-	#category : #'Teapot-Core-Teapot-Core'
+	#category : #'Teapot-Core'
 }
 
 { #category : #'instance creation' }

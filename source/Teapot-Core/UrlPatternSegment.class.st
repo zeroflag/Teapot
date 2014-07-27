@@ -5,7 +5,7 @@ My subclasses form te elements of url patterns.
 Class {
 	#name : #UrlPatternSegment,
 	#superclass : #Object,
-	#category : #'Teapot-Core-Teapot-Core'
+	#category : #'Teapot-Core'
 }
 
 { #category : #'url pattern segment' }

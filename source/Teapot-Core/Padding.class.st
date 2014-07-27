@@ -4,5 +4,5 @@ An url is padded by me, if its size is to short. I don't match to any literal UR
 Class {
 	#name : #Padding,
 	#superclass : #Object,
-	#category : #'Teapot-Core-Teapot-Core'
+	#category : #'Teapot-Core'
 }

@@ -4,7 +4,7 @@ A wildcard url pattern segment that matches to anything.
 Class {
 	#name : #Wildcard,
 	#superclass : #UrlPatternSegment,
-	#category : #'Teapot-Core-Teapot-Core'
+	#category : #'Teapot-Core'
 }
 
 { #category : #'instance creation' }

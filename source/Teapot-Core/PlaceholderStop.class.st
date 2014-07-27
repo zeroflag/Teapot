@@ -4,7 +4,7 @@ I'm a placeholder at the last position.
 Class {
 	#name : #PlaceholderStop,
 	#superclass : #Placeholder,
-	#category : #'Teapot-Core-Teapot-Core'
+	#category : #'Teapot-Core'
 }
 
 { #category : #'url pattern segment' }

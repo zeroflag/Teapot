@@ -4,7 +4,7 @@ I'm a Wildcard at the last position.
 Class {
 	#name : #WildcardStop,
 	#superclass : #Wildcard,
-	#category : #'Teapot-Core-Teapot-Core'
+	#category : #'Teapot-Core'
 }
 
 { #category : #'url pattern segment' }

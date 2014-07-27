@@ -4,7 +4,7 @@ An url pattern segment that matches to nothing.
 Class {
 	#name : #LiteralStop,
 	#superclass : #Literal,
-	#category : #'Teapot-Core-Teapot-Core'
+	#category : #'Teapot-Core'
 }
 
 { #category : #'url pattern segment' }
