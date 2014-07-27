@@ -29,8 +29,8 @@ TeapotTest >> setUp [
 		GET: '/*/c' do: [ '2' ];	
 		GET: '/x/y/*' do: [ '3' ];			
 		GET: '/z' do: [ '4' ];
-		GET: '/user/:id' do: [ :req :resp :params | 'user', (params at: #id) ];
-		GET: '/user/:id/create' do: [ :req :resp :params | 'user create', (params at: #id) ];		
+		GET: '/user/<id>' do: [ :req :resp :params | 'user', (params at: #id) ];
+		GET: '/user/<id>/create' do: [ :req :resp :params | 'user create', (params at: #id) ];		
 		start.
 		
 

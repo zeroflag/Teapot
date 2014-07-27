@@ -22,7 +22,7 @@ UrlPatternTest >> pattern: patternString noMatch: urlString [
 
 { #category : #tests }
 UrlPatternTest >> testLongerPatternEndedPlaceholder [
-	self pattern: '/a/b/:id' noMatch: '/a/b'.
+	self pattern: '/a/b/<id>' noMatch: '/a/b'.
 
 ]
 
@@ -44,26 +44,26 @@ UrlPatternTest >> testNoWildcard [
 UrlPatternTest >> testPlaceholderSubstitute [
 	| placeholders |
 	
-	placeholders := self pattern: '/:id/a/b' matches: '/123/a/b'.
+	placeholders := self pattern: '/<id>/a/b' matches: '/123/a/b'.
 	self assert: (placeholders at: #id) equals: '123'.
 	
-	placeholders := self pattern: '/a/:id/b' matches: '/a/25/b'.
+	placeholders := self pattern: '/a/<id>/b' matches: '/a/25/b'.
 	self assert: (placeholders at: #id) equals: '25'.
 	
-	placeholders := self pattern: '/a/b/:id' matches: '/a/b/xyz'.	
+	placeholders := self pattern: '/a/b/<id>' matches: '/a/b/xyz'.	
 	self assert: (placeholders at: #id) equals: 'xyz'.		
 
 ]
 
 { #category : #tests }
 UrlPatternTest >> testPlaceholders [
-	self pattern: '/:id/a/b' matches: '/1/a/b'.
-	self pattern: '/a/:id/b' matches: '/a/2/b'.
-	self pattern: '/a/b/:id' matches: '/a/b/1'.	
+	self pattern: '/<id>/a/b' matches: '/1/a/b'.
+	self pattern: '/a/<id>/b' matches: '/a/2/b'.
+	self pattern: '/a/b/<id>' matches: '/a/b/1'.	
 	
-	self pattern: '/:id/a/b' noMatch: '/1/a/c'.
-	self pattern: '/a/:id/b' noMatch: '/a/2/c'.
-	self pattern: '/a/b/:id' noMatch: '/a/c/1'.	
+	self pattern: '/<id>/a/b' noMatch: '/1/a/c'.
+	self pattern: '/a/<id>/b' noMatch: '/a/2/c'.
+	self pattern: '/a/b/<id>' noMatch: '/a/c/1'.	
 ]
 
 { #category : #tests }
@@ -75,7 +75,7 @@ UrlPatternTest >> testRoot [
 
 { #category : #tests }
 UrlPatternTest >> testShorterPatternEndedPlaceholder [
-	self pattern: '/a/b/:id' noMatch: '/a/b/1/2'.	
+	self pattern: '/a/b/<id>' noMatch: '/a/b/1/2'.	
 
 ]
 
