@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'handler',
 		'urlPattern',
-		'transformer'
+		'transformer',
+		'method'
 	],
 	#category : #'Teapot-Core'
 }
@@ -16,17 +17,20 @@ Class {
 Route class >> method: aSymbol urlPattern: patternString handler: handlerBlock transformer: transformerBlock [
 	^ self new 
 		setPattern: (UrlPattern parseString: patternString)
+		method: aSymbol
 		handler: handlerBlock
 		transformer: transformerBlock
 ]
 
 { #category : #route }
 Route >> handleRequest: aZnRequest response: aZnResponse [
-	| matches result placeholders |
-	placeholders := Dictionary new.
-	matches := urlPattern matchesUrl: aZnRequest url placeholders: placeholders.
+	| matches placeholders |	
+	placeholders := Dictionary new.	
+	matches := (aZnRequest method = method) and: 
+				[ urlPattern matchesUrl: aZnRequest url placeholders: placeholders ].
 	matches
-		ifTrue: [ 
+		ifTrue:
+			[ | result  |			
 			result := handler cull: aZnRequest cull: aZnResponse cull: placeholders.
 			result := transformer value: result.
 			aZnResponse entity: (ZnStringEntity text: result) ].
@@ -34,9 +38,15 @@ Route >> handleRequest: aZnRequest response: aZnResponse [
 ]
 
 { #category : #initialization }
-Route >> setPattern: anUrlPattern handler: handlerBlock transformer: transformerBlock [
+Route >> setPattern: anUrlPattern method: aSymbol handler: handlerBlock transformer: transformerBlock [
 	urlPattern := anUrlPattern.
+	method := aSymbol.
 	handler := handlerBlock.
 	transformer := transformerBlock.
 	^ self
+]
+
+{ #category : #route }
+Route >> transformer: aBlock [
+	transformer := aBlock
 ]

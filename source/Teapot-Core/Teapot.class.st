@@ -11,7 +11,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'server',
-		'routes'
+		'routes',
+		'currentRoute'
 	],
 	#category : #'Teapot-Core'
 }
@@ -27,23 +28,59 @@ Teapot class >> stopAll [
 ]
 
 { #category : #'url mapping' }
-Teapot >> GET: patternString do: aBlock [
-	self GET: patternString do: aBlock as: #asString
+Teapot >> DELETE: patternString do: handlerBlock [
+	self addRoute:
+		(Route
+			method: #DELETE
+			urlPattern: patternString
+			handler: handlerBlock
+			transformer: #asString)
 ]
 
 { #category : #'url mapping' }
-Teapot >> GET: patternString do: handlerBlock as: transformerBlock [
+Teapot >> GET: patternString do: aBlock [
 	self addRoute:
 		(Route
 			method: #GET
 			urlPattern: patternString
+			handler: aBlock
+			transformer: #asString)
+]
+
+{ #category : #'url mapping' }
+Teapot >> OPTIONS: patternString do: handlerBlock [
+	self addRoute:
+		(Route
+			method: #OPTIONS
+			urlPattern: patternString
 			handler: handlerBlock
-			transformer: transformerBlock)
+			transformer: #asString)
+]
+
+{ #category : #'url mapping' }
+Teapot >> POST: patternString do: handlerBlock [
+	self addRoute:
+		(Route
+			method: #POST
+			urlPattern: patternString
+			handler: handlerBlock
+			transformer: #asString)
+]
+
+{ #category : #'url mapping' }
+Teapot >> PUT: patternString do: handlerBlock [
+	self addRoute:
+		(Route
+			method: #PUT
+			urlPattern: patternString
+			handler: handlerBlock
+			transformer: #asString)
 ]
 
 { #category : #private }
 Teapot >> addRoute: aRoute [
-	routes add: aRoute
+	currentRoute := routes add: aRoute.
+	
 ]
 
 { #category : #'zn delegate' }
@@ -86,4 +123,10 @@ Teapot >> start [
 { #category : #controlling }
 Teapot >> stop [
 	server ifNotNil: [ server stop ]
+]
+
+{ #category : #'url mapping' }
+Teapot >> to: transformerBlock [
+	"transform the result of the handler block"
+	currentRoute transformer: transformerBlock
 ]
