@@ -21,6 +21,20 @@ TeapotTest >> httpGetString: aString [
 	
 ]
 
+{ #category : #private }
+TeapotTest >> httpPost: aString [
+	^ ZnEasy post: 'http://localhost:8080/', aString data: (ZnEntity text: 'any')
+
+	
+]
+
+{ #category : #private }
+TeapotTest >> httpPostString: aString [
+	^ (self httpPost: aString) entity string
+
+	
+]
+
 { #category : #running }
 TeapotTest >> setUp [
 	server := Teapot on
@@ -28,9 +42,10 @@ TeapotTest >> setUp [
 		GET: '/a/*/b' do: [ '1' ];
 		GET: '/*/c' do: [ '2' ];	
 		GET: '/x/y/*' do: [ '3' ];			
-		GET: '/z' do: [ 4 ] as: #printStringRoman;
+		GET: '/z' do: [ 4 ]; to: #printStringRoman;
 		GET: '/user/<id>' do: [ :req :resp :params | 'user', (params at: #id) ];
 		GET: '/user/<id>/create' do: [ :req :resp :params | 'user create', (params at: #id) ];		
+		POST: '/user/<id>/create' do: [ 'post' ];
 		start.
 		
 
@@ -51,7 +66,7 @@ TeapotTest >> testPlaceholder [
 ]
 
 { #category : #tests }
-TeapotTest >> testRouting [
+TeapotTest >> testRoutingGet [
 	self assert: (self httpGetString: '') equals: 'root'.
 	self assert: (self httpGetString: 'a/x/b') equals: '1'.
 	self assert: (self httpGetString: 'x/c') equals: '2'.
@@ -59,5 +74,11 @@ TeapotTest >> testRouting [
 	self assert: (self httpGetString: 'z') equals: 'IV'.	
  	self assert: (self httpGet: '1/2/3/4') code equals: 404.
 	
+	
+]
+
+{ #category : #tests }
+TeapotTest >> testRoutingPost [
+	self assert: (self httpPostString: '/user/12/create') equals: 'post'.
 	
 ]
