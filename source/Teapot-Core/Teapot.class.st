@@ -28,10 +28,17 @@ Teapot class >> stopAll [
 
 { #category : #'url mapping' }
 Teapot >> GET: patternString do: aBlock [
-	self addRoute: (Route 
-		method: #GET 
-		urlPattern: patternString 
-		handler: aBlock)
+	self GET: patternString do: aBlock as: #asString
+]
+
+{ #category : #'url mapping' }
+Teapot >> GET: patternString do: handlerBlock as: transformerBlock [
+	self addRoute:
+		(Route
+			method: #GET
+			urlPattern: patternString
+			handler: handlerBlock
+			transformer: transformerBlock)
 ]
 
 { #category : #private }

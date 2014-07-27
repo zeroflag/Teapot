@@ -6,16 +6,18 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'handler',
-		'urlPattern'
+		'urlPattern',
+		'transformer'
 	],
 	#category : #'Teapot-Core-Teapot-Core'
 }
 
 { #category : #'instance creation' }
-Route class >> method: aSymbol urlPattern: patternString handler: aBlock [
+Route class >> method: aSymbol urlPattern: patternString handler: handlerBlock transformer: transformerBlock [
 	^ self new 
 		setPattern: (UrlPattern parseString: patternString)
-		handler: aBlock
+		handler: handlerBlock
+		transformer: transformerBlock
 ]
 
 { #category : #route }
@@ -26,13 +28,15 @@ Route >> handleRequest: aZnRequest response: aZnResponse [
 	matches
 		ifTrue: [ 
 			result := handler cull: aZnRequest cull: aZnResponse cull: placeholders.
+			result := transformer value: result.
 			aZnResponse entity: (ZnStringEntity text: result) ].
 	^ matches
 ]
 
 { #category : #initialization }
-Route >> setPattern: anUrlPattern handler: aBlock [
+Route >> setPattern: anUrlPattern handler: handlerBlock transformer: transformerBlock [
 	urlPattern := anUrlPattern.
-	handler := aBlock.
+	handler := handlerBlock.
+	transformer := transformerBlock.
 	^ self
 ]
