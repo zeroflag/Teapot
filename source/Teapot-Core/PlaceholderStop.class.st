@@ -14,14 +14,15 @@ PlaceholderStop >> matches: urlSegments rest: adjacentPatterns placeholders: aDi
 	match ifTrue:
 		 [ aDictionary
 			at: placeholderName 
-			put: urlSegments first ].
+			put: (urlSegments first perform: type) ].
 	^ match
 ]
 
 { #category : #printing }
 PlaceholderStop >> printOn: aStream [
 	aStream 
-		nextPut: $:;
+		nextPut: $<;
 		nextPutAll: placeholderName;
+		nextPut: $>;		
 		nextPut: $$
 ]

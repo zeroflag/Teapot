@@ -24,17 +24,23 @@ Route class >> method: aSymbol urlPattern: patternString handler: handlerBlock t
 
 { #category : #route }
 Route >> handleRequest: aZnRequest response: aZnResponse [
-	| matches placeholders |	
-	placeholders := Dictionary new.	
-	matches := (aZnRequest method = method) and: 
-				[ urlPattern matchesUrl: aZnRequest url placeholders: placeholders ].
+	| matches placeholders |
+	placeholders := Dictionary new.
+	matches := self matchesRequest: aZnRequest placeholders: placeholders.
 	matches
-		ifTrue:
-			[ | result  |			
-			result := handler cull: aZnRequest cull: aZnResponse cull: placeholders.
-			result := transformer value: result.
-			aZnResponse entity: (ZnStringEntity text: result) ].
+		ifTrue: [ 
+			| result request |
+			request := Request fromZnRequest: aZnRequest pathParams: placeholders.
+			result := handler cull: request cull: aZnResponse.
+			result := transformer cull: result cull: request cull: aZnResponse.			
+			aZnResponse entity: (ZnStringEntity with: result type: aZnResponse headers contentType) ].
 	^ matches
+]
+
+{ #category : #private }
+Route >> matchesRequest: aZnRequest placeholders: placeholders [
+	^ aZnRequest method = method 
+		and: [ urlPattern matchesUrl: aZnRequest url placeholders: placeholders ]
 ]
 
 { #category : #initialization }

@@ -34,7 +34,7 @@ Teapot >> DELETE: patternString do: handlerBlock [
 			method: #DELETE
 			urlPattern: patternString
 			handler: handlerBlock
-			transformer: #asString)
+			transformer: Format text)
 ]
 
 { #category : #'url mapping' }
@@ -44,7 +44,7 @@ Teapot >> GET: patternString do: aBlock [
 			method: #GET
 			urlPattern: patternString
 			handler: aBlock
-			transformer: #asString)
+			transformer: Format text)
 ]
 
 { #category : #'url mapping' }
@@ -54,7 +54,7 @@ Teapot >> OPTIONS: patternString do: handlerBlock [
 			method: #OPTIONS
 			urlPattern: patternString
 			handler: handlerBlock
-			transformer: #asString)
+			transformer: Format text)
 ]
 
 { #category : #'url mapping' }
@@ -64,7 +64,7 @@ Teapot >> POST: patternString do: handlerBlock [
 			method: #POST
 			urlPattern: patternString
 			handler: handlerBlock
-			transformer: #asString)
+			transformer: Format text)
 ]
 
 { #category : #'url mapping' }
@@ -74,7 +74,7 @@ Teapot >> PUT: patternString do: handlerBlock [
 			method: #PUT
 			urlPattern: patternString
 			handler: handlerBlock
-			transformer: #asString)
+			transformer: Format text)
 ]
 
 { #category : #private }
@@ -86,7 +86,7 @@ Teapot >> addRoute: aRoute [
 { #category : #'zn delegate' }
 Teapot >> handleRequest: aZnRequest [
 	^ self 
-		routeRequest: aZnRequest 
+		routeRequest: aZnRequest
 		response: self newResponse
 
 ]
@@ -97,12 +97,20 @@ Teapot >> initialize [
 	routes := OrderedCollection new.	
 ]
 
+{ #category : #controlling }
+Teapot >> logToTranscript [
+	^ server logToTranscript
+]
+
 { #category : #private }
 Teapot >> newResponse [
-	^ ZnResponse new 
+	| response |
+	response := ZnResponse new 
 		statusLine: ZnStatusLine ok;
 		headers: ZnHeaders defaultResponseHeaders;
-		yourself
+		yourself.
+	response headers contentType: 'text/plain'. "TODO, van default transformer, de ha a user to:-nal megad vmit es nem allit be semmit akkor elszall"
+	^ response
 ]
 
 { #category : #private }
