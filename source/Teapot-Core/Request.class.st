@@ -21,8 +21,31 @@ Request >> doesNotUnderstand: aMessage [
 ]
 
 { #category : #acccessing }
+Request >> form: aSymbol [
+	^ znRequest entity at: aSymbol
+]
+
+{ #category : #acccessing }
 Request >> param: aString [
+	"Gets the value of a path parameter. E.g. /foo/<path-param>/bar"
+	
 	^ pathParams at: aString	
+]
+
+{ #category : #acccessing }
+Request >> query: aSymbol [
+	"Gets a parameter from the query string"
+	
+	^ znRequest uri queryAt: aSymbol
+]
+
+{ #category : #acccessing }
+Request >> query: aSymbol ifAbsent: aBlock [
+	"Gets an optional parameter from the query string"
+	
+	^ znRequest uri 
+		queryAt: aSymbol 
+		ifAbsent: aBlock
 ]
 
 { #category : #initialization }
