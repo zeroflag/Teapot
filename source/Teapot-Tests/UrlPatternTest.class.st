@@ -56,6 +56,20 @@ UrlPatternTest >> testPlaceholderSubstitute [
 ]
 
 { #category : #tests }
+UrlPatternTest >> testPlaceholderType [
+	| placeholders |
+	placeholders := self pattern: '/<id:asInteger>' matches: '/12'.
+	self assert: (placeholders at: #id) equals: 12.
+	
+	placeholders := self pattern: '/<id:asInteger>/abc' matches: '/34/abc'.
+	self assert: (placeholders at: #id) equals: 34.
+	
+	placeholders := self pattern: '/<float:asNumber>/<sym:asSymbol>' matches: '/3.14/test'.
+	self assert: (placeholders at: #float) equals: 3.14.
+	self assert: (placeholders at: #sym) equals: #test.	
+]
+
+{ #category : #tests }
 UrlPatternTest >> testPlaceholders [
 	self pattern: '/<id>/a/b' matches: '/1/a/b'.
 	self pattern: '/a/<id>/b' matches: '/a/2/b'.
@@ -63,7 +77,7 @@ UrlPatternTest >> testPlaceholders [
 	
 	self pattern: '/<id>/a/b' noMatch: '/1/a/c'.
 	self pattern: '/a/<id>/b' noMatch: '/a/2/c'.
-	self pattern: '/a/b/<id>' noMatch: '/a/c/1'.	
+	self pattern: '/a/b/<id>' noMatch: '/a/c/1'.
 ]
 
 { #category : #tests }

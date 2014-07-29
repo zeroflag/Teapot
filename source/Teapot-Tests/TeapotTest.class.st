@@ -42,9 +42,9 @@ TeapotTest >> setUp [
 		GET: '/a/*/b' do: [ '1' ];
 		GET: '/*/c' do: [ '2' ];	
 		GET: '/x/y/*' do: [ '3' ];			
-		GET: '/z' do: [ 4 ]; to: #printStringRoman;
-		GET: '/user/<id>' do: [ :req :resp :params | 'user', (params at: #id) ];
-		GET: '/user/<id>/create' do: [ :req :resp :params | 'user create', (params at: #id) ];		
+		GET: '/z' do: [ 4 ]; to: [:n | n printStringRoman ];
+		GET: '/user/<id>' do: [ :req :resp | 'user', (req param: #id) ];
+		GET: '/user/<id>/create' do: [ :req :resp | 'user create', (req param: #id) ];		
 		POST: '/user/<id>/create' do: [ 'post' ];
 		start.
 		
