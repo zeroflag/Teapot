@@ -20,32 +20,34 @@ Request >> doesNotUnderstand: aMessage [
 	^ aMessage sendTo: znRequest
 ]
 
-{ #category : #acccessing }
-Request >> form: aSymbol [
-	^ znRequest entity at: aSymbol
+{ #category : #private }
+Request >> formParam: aSymbol ifAbsent: aBlock [
+	^ (znRequest entity isKindOf: ZnApplicationFormUrlEncodedEntity) "XXX do something better" 
+		ifTrue: [ znRequest entity at: aSymbol ifAbsent: aBlock ]
+		ifFalse: aBlock
 ]
 
-{ #category : #acccessing }
-Request >> param: aString [
-	"Gets the value of a path parameter. E.g. /foo/<path-param>/bar"
-	
-	^ pathParams at: aString	
+{ #category : #'acccessing - params' }
+Request >> param: aSymbol [
+	^ self 
+		param: aSymbol 
+		ifAbsent: [ KeyNotFound signal: 'Param ', aSymbol printString, ' not found' ]
 ]
 
-{ #category : #acccessing }
-Request >> query: aSymbol [
-	"Gets a parameter from the query string"
-	
-	^ znRequest uri queryAt: aSymbol
+{ #category : #'acccessing - params' }
+Request >> param: aSymbol ifAbsent: aBlock [
+	"Gets the value of a path parameter, query parameter for form parameter.
+		E.g. /foo/<path-param>/bar
+		E.g. /foo?queryParam=value"
+
+	^ pathParams at: aSymbol ifAbsent: [ self queryOrFormParam: aSymbol ifAbsent: aBlock	"XXX do something better" ]
 ]
 
-{ #category : #acccessing }
-Request >> query: aSymbol ifAbsent: aBlock [
-	"Gets an optional parameter from the query string"
-	
+{ #category : #private }
+Request >> queryOrFormParam: aSymbol ifAbsent: aBlock [
 	^ znRequest uri 
 		queryAt: aSymbol 
-		ifAbsent: aBlock
+		ifAbsent: [ self formParam: aSymbol ifAbsent: aBlock ]
 ]
 
 { #category : #initialization }
