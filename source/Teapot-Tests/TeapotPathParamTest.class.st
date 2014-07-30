@@ -10,10 +10,10 @@ Class {
 { #category : #running }
 TeapotPathParamTest >> setUp [
 	server := Teapot on
-		GET: '/user/<id>' do: [ :req :resp | '1-', (req param: #id) ];
-		GET: '/user/<id>/create' do: [ :req :resp | '2-', (req param: #id) ];
-		GET: '/<id>/<user>' do: [ :req :resp | '3-', (req param: #id) ];				
-		POST: '/user/<id>/create' do: [ :req :resp | '4-', (req param: #id) ];
+		GET: '/user/<id>' do: [ :req :resp | '1-', (req at: #id) ];
+		GET: '/user/<id>/create' do: [ :req :resp | '2-', (req at: #id) ];
+		GET: '/<id>/<user>' do: [ :req :resp | '3-', (req at: #id) ];				
+		POST: '/user/<id>/create' do: [ :req :resp | '4-', (req at: #id) ];
 		start.		
 ]
 

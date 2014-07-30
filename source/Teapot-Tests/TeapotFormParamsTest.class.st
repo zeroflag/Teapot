@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 TeapotFormParamsTest >> setUp [
 	server := Teapot on
-		POST: '/form' do: [ :req :resp | (req param: #foo), '-', (req param: #bar) ];
+		POST: '/form' do: [ :req :resp | (req at: #foo), '-', (req at: #bar) ];		
 		start.
 ]
 
