@@ -2,34 +2,34 @@
 Http client for testing.
 "
 Class {
-	#name : #TestClient,
+	#name : #TeaClient,
 	#superclass : #Object,
 	#category : #'Teapot-Tests'
 }
 
 { #category : #private }
-TestClient class >> httpGet: aString [
+TeaClient class >> httpGet: aString [
 	^ ZnEasy get: 'http://localhost:8080/', aString
 
 	
 ]
 
 { #category : #private }
-TestClient class >> httpGetString: aString [
+TeaClient class >> httpGetString: aString [
 	^ (self httpGet: aString) entity string
 
 	
 ]
 
 { #category : #private }
-TestClient class >> httpPost: aString [
+TeaClient class >> httpPost: aString [
 	^ ZnEasy post: 'http://localhost:8080/', aString data: (ZnEntity text: 'any')
 
 	
 ]
 
 { #category : #private }
-TestClient class >> httpPostString: aString [
+TeaClient class >> httpPostString: aString [
 	^ (self httpPost: aString) entity string
 
 	

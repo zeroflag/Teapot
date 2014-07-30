@@ -24,26 +24,26 @@ TeapotPathParamTest >> tearDown [
 
 { #category : #tests }
 TeapotPathParamTest >> testPlaceholderAtLast [
-	self assert: (TestClient httpGetString: 'user/12') equals: '1-12'
+	self assert: (TeaClient httpGetString: 'user/12') equals: '1-12'
 	
 ]
 
 { #category : #tests }
 TeapotPathParamTest >> testPlaceholderFirst [
-	self assert: (TestClient httpGetString: '54/user') equals: '3-54'.
+	self assert: (TeaClient httpGetString: '54/user') equals: '3-54'.
 
 	
 ]
 
 { #category : #tests }
 TeapotPathParamTest >> testPlaceholderInside [
-	self assert: (TestClient httpGetString: 'user/34/create') equals: '2-34'.	
+	self assert: (TeaClient httpGetString: 'user/34/create') equals: '2-34'.	
 	
 ]
 
 { #category : #tests }
 TeapotPathParamTest >> testPlaceholderPost [
-	self assert: (TestClient httpPostString: '/user/789/create') equals: '4-789'.	
+	self assert: (TeaClient httpPostString: '/user/789/create') equals: '4-789'.	
 
 	
 ]

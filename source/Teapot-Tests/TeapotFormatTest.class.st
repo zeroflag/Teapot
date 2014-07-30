@@ -21,5 +21,5 @@ TeapotFormatTest >> tearDown [
 
 { #category : #tests }
 TeapotFormatTest >> testConverting [
-	self assert: (TestClient httpGetString: '/a') equals: 'IV'.	
+	self assert: (TeaClient httpGetString: '/a') equals: 'IV'.	
 ]

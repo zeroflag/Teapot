@@ -26,37 +26,37 @@ TeapotRoutingTest >> tearDown [
 
 { #category : #tests }
 TeapotRoutingTest >> test404 [
- 	self assert: (TestClient httpGet: '1/2/3/4') code equals: 404
+ 	self assert: (TeaClient httpGet: '1/2/3/4') code equals: 404
 ]
 
 { #category : #tests }
 TeapotRoutingTest >> testMultipleWildcard [
-	self assert: (TestClient httpGetString: 'x/foo/bar/z/baz') equals: '6'.
-	self assert: (TestClient httpGetString: 'x/foo/bar/z/baz/123') equals: '6'.
+	self assert: (TeaClient httpGetString: 'x/foo/bar/z/baz') equals: '6'.
+	self assert: (TeaClient httpGetString: 'x/foo/bar/z/baz/123') equals: '6'.
 	
 ]
 
 { #category : #tests }
 TeapotRoutingTest >> testNoWildcard [
-	self assert: (TestClient httpGetString: '') equals: '1'.
-	self assert: (TestClient httpGetString: '/a') equals: '2'.	
+	self assert: (TeaClient httpGetString: '') equals: '1'.
+	self assert: (TeaClient httpGetString: '/a') equals: '2'.	
 	
 ]
 
 { #category : #tests }
 TeapotRoutingTest >> testWildcardEnd [
-	self assert: (TestClient httpGetString: '/x/y/foo') equals: '5'.	
+	self assert: (TeaClient httpGetString: '/x/y/foo') equals: '5'.	
 	
 ]
 
 { #category : #tests }
 TeapotRoutingTest >> testWildcardFirst [
-	self assert: (TestClient httpGetString: 'foo/c') equals: '4'
+	self assert: (TeaClient httpGetString: 'foo/c') equals: '4'
 	
 ]
 
 { #category : #tests }
 TeapotRoutingTest >> testWildcardInside [
-	self assert: (TestClient httpGetString: 'a/bar/b') equals: '3'
+	self assert: (TeaClient httpGetString: 'a/bar/b') equals: '3'
 	
 ]
