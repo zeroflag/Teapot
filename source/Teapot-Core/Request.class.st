@@ -15,6 +15,22 @@ Request class >> fromZnRequest: aZnRequest pathParams: aDictionary [
 		pathParams: aDictionary
 ]
 
+{ #category : #'acccessing - params' }
+Request >> at: aSymbol [
+	^ self 
+		at: aSymbol 
+		ifAbsent: [ KeyNotFound signal: 'Param ', aSymbol printString, ' not found' ]
+]
+
+{ #category : #'acccessing - params' }
+Request >> at: aSymbol ifAbsent: aBlock [
+	"Gets the value of a path parameter, query parameter for form parameter.
+		E.g. /foo/<path-param>/bar
+		E.g. /foo?queryParam=value"
+
+	^ pathParams at: aSymbol ifAbsent: [ self queryOrFormParam: aSymbol ifAbsent: aBlock	"XXX do something better" ]
+]
+
 { #category : #'reflective operations' }
 Request >> doesNotUnderstand: aMessage [
 	^ aMessage sendTo: znRequest
@@ -25,22 +41,6 @@ Request >> formParam: aSymbol ifAbsent: aBlock [
 	^ (znRequest entity isKindOf: ZnApplicationFormUrlEncodedEntity) "XXX do something better" 
 		ifTrue: [ znRequest entity at: aSymbol ifAbsent: aBlock ]
 		ifFalse: aBlock
-]
-
-{ #category : #'acccessing - params' }
-Request >> param: aSymbol [
-	^ self 
-		param: aSymbol 
-		ifAbsent: [ KeyNotFound signal: 'Param ', aSymbol printString, ' not found' ]
-]
-
-{ #category : #'acccessing - params' }
-Request >> param: aSymbol ifAbsent: aBlock [
-	"Gets the value of a path parameter, query parameter for form parameter.
-		E.g. /foo/<path-param>/bar
-		E.g. /foo?queryParam=value"
-
-	^ pathParams at: aSymbol ifAbsent: [ self queryOrFormParam: aSymbol ifAbsent: aBlock	"XXX do something better" ]
 ]
 
 { #category : #private }
