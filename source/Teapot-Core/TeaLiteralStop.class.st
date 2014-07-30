@@ -14,7 +14,6 @@ TeaLiteralStop >> matches: urlSegments rest: adjacentPatterns placeholders: aDic
 
 { #category : #printing }
 TeaLiteralStop >> printOn: aStream [	
-	aStream 
-		nextPutAll: literal;
-		nextPut: $$
+	super printOn: aStream.
+	aStream nextPut: $$.
 ]

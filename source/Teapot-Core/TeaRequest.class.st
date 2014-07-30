@@ -1,3 +1,6 @@
+"
+I extend the ZnRequest with addition methods for convenience.
+"
 Class {
 	#name : #TeaRequest,
 	#superclass : #Object,

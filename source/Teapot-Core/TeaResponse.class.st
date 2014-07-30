@@ -1,3 +1,6 @@
+"
+I extend the ZnResponse with addition methods for convenience.
+"
 Class {
 	#name : #TeaResponse,
 	#superclass : #Object,

@@ -14,5 +14,6 @@ TeaWildcardStop >> matches: urlSegments rest: adjacentPatterns placeholders: aDi
 
 { #category : #printing }
 TeaWildcardStop >> printOn: aStream [
-	aStream nextPutAll: '*$'
+	super printOn: aStream.
+	aStream nextPut: $$.
 ]

@@ -28,7 +28,7 @@ TeaLiteral >> matches: urlSegments rest: adjacentPatterns placeholders: aDiction
 
 { #category : #printing }
 TeaLiteral >> printOn: aStream [
-	aStream nextPutAll: literal
+	aStream nextPutAll: literal.
 	
 ]
 
