@@ -2,20 +2,20 @@
 A wildcard url pattern segment that matches to anything.
 "
 Class {
-	#name : #Wildcard,
-	#superclass : #UrlPatternSegment,
+	#name : #TeaWildcard,
+	#superclass : #TeaUrlPatternSegment,
 	#category : #'Teapot-Core'
 }
 
 { #category : #'instance creation' }
-Wildcard class >> atLast: aBoolean [
+TeaWildcard class >> atLast: aBoolean [
 	^ aBoolean
-		ifTrue: [ WildcardStop new ]
-		ifFalse: [ Wildcard new ]
+		ifTrue: [ TeaWildcardStop new ]
+		ifFalse: [ TeaWildcard new ]
 ]
 
 { #category : #'url pattern segment' }
-Wildcard >> matches: urlSegments rest: adjacentPatterns placeholders: aDictionary [
+TeaWildcard >> matches: urlSegments rest: adjacentPatterns placeholders: aDictionary [
 	^ adjacentPatterns first 
 		matches: urlSegments allButFirst 
 		rest: adjacentPatterns allButFirst 
@@ -23,11 +23,11 @@ Wildcard >> matches: urlSegments rest: adjacentPatterns placeholders: aDictionar
 ]
 
 { #category : #private }
-Wildcard >> matchesTo: aString [
+TeaWildcard >> matchesTo: aString [
 	^ true
 ]
 
 { #category : #printing }
-Wildcard >> printOn: aStream [
+TeaWildcard >> printOn: aStream [
 	aStream nextPut: $*
 ]

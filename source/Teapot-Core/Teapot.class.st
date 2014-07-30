@@ -30,51 +30,51 @@ Teapot class >> stopAll [
 { #category : #'url mapping' }
 Teapot >> DELETE: patternString do: handlerBlock [
 	self addRoute:
-		(Route
+		(TeaRoute
 			method: #DELETE
 			urlPattern: patternString
 			handler: handlerBlock
-			transformer: Format text)
+			transformer: TeaFormat text)
 ]
 
 { #category : #'url mapping' }
 Teapot >> GET: patternString do: aBlock [
 	self addRoute:
-		(Route
+		(TeaRoute
 			method: #GET
 			urlPattern: patternString
 			handler: aBlock
-			transformer: Format text)
+			transformer: TeaFormat text)
 ]
 
 { #category : #'url mapping' }
 Teapot >> OPTIONS: patternString do: handlerBlock [
 	self addRoute:
-		(Route
+		(TeaRoute
 			method: #OPTIONS
 			urlPattern: patternString
 			handler: handlerBlock
-			transformer: Format text)
+			transformer: TeaFormat text)
 ]
 
 { #category : #'url mapping' }
 Teapot >> POST: patternString do: handlerBlock [
 	self addRoute:
-		(Route
+		(TeaRoute
 			method: #POST
 			urlPattern: patternString
 			handler: handlerBlock
-			transformer: Format text)
+			transformer: TeaFormat text)
 ]
 
 { #category : #'url mapping' }
 Teapot >> PUT: patternString do: handlerBlock [
 	self addRoute:
-		(Route
+		(TeaRoute
 			method: #PUT
 			urlPattern: patternString
 			handler: handlerBlock
-			transformer: Format text)
+			transformer: TeaFormat text)
 ]
 
 { #category : #private }

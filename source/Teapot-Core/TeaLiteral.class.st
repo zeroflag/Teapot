@@ -2,8 +2,8 @@
 A literal url pattern segment that matches to a string.
 "
 Class {
-	#name : #Literal,
-	#superclass : #UrlPatternSegment,
+	#name : #TeaLiteral,
+	#superclass : #TeaUrlPatternSegment,
 	#instVars : [
 		'literal'
 	],
@@ -11,14 +11,14 @@ Class {
 }
 
 { #category : #'instance creation' }
-Literal class >> fromString: aString atLast: aBoolean [
+TeaLiteral class >> fromString: aString atLast: aBoolean [
 	| class |
-	class := aBoolean ifTrue: [ LiteralStop ] ifFalse: [ Literal ].
+	class := aBoolean ifTrue: [ TeaLiteralStop ] ifFalse: [ TeaLiteral ].
 	^ class new setLiteral: aString
 ]
 
 { #category : #'url pattern segment' }
-Literal >> matches: urlSegments rest: adjacentPatterns placeholders: aDictionary [
+TeaLiteral >> matches: urlSegments rest: adjacentPatterns placeholders: aDictionary [
 	^ literal = urlSegments first and: 
 		[ adjacentPatterns first 
 			matches: urlSegments allButFirst 
@@ -27,13 +27,13 @@ Literal >> matches: urlSegments rest: adjacentPatterns placeholders: aDictionary
 ]
 
 { #category : #printing }
-Literal >> printOn: aStream [
+TeaLiteral >> printOn: aStream [
 	aStream nextPutAll: literal
 	
 ]
 
 { #category : #initialization }
-Literal >> setLiteral: aString [
+TeaLiteral >> setLiteral: aString [
 	literal := aString.
 	^ self
 ]

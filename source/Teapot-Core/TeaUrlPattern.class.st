@@ -10,7 +10,7 @@ Which will create a pattern that matches to an URL like this:
 	/foo/xyz/12/bar
 "
 Class {
-	#name : #UrlPattern,
+	#name : #TeaUrlPattern,
 	#superclass : #Object,
 	#instVars : [
 		'segments'
@@ -19,18 +19,18 @@ Class {
 }
 
 { #category : #private }
-UrlPattern class >> createSegment: aString atLast: aBoolean [
+TeaUrlPattern class >> createSegment: aString atLast: aBoolean [
 	aString = '*' 
-		ifTrue: [ ^ Wildcard atLast: aBoolean ].
+		ifTrue: [ ^ TeaWildcard atLast: aBoolean ].
 	(aString beginsWith: '<')
-		ifTrue: [ ^ Placeholder fromString: aString atLast: aBoolean ].
-	^ Literal 
+		ifTrue: [ ^ TeaPlaceholder fromString: aString atLast: aBoolean ].
+	^ TeaLiteral 
 		fromString: aString 
 		atLast: aBoolean
 ]
 
 { #category : #private }
-UrlPattern class >> parseSegments: aString [
+TeaUrlPattern class >> parseSegments: aString [
 	| tokens |
 	tokens := aString findTokens: '/'.
 	^ tokens collectWithIndex: [ :each :idx | 
@@ -40,14 +40,14 @@ UrlPattern class >> parseSegments: aString [
 ]
 
 { #category : #'instance creation' }
-UrlPattern class >> parseString: aString [
+TeaUrlPattern class >> parseString: aString [
 	^ self new setSegments: (self parseSegments: aString)
 ]
 
 { #category : #'url matcher' }
-UrlPattern >> matchesUrl: anUrl placeholders: aDictionary [
+TeaUrlPattern >> matchesUrl: anUrl placeholders: aDictionary [
 	| urlSegments |
-	urlSegments := self padUrlSegments: anUrl with: Padding size: segments size.
+	urlSegments := self padUrlSegments: anUrl with: TeaPadding size: segments size.
 	segments isEmpty
 		ifTrue: [ ^ urlSegments isEmpty ].
 	^ segments first 
@@ -57,7 +57,7 @@ UrlPattern >> matchesUrl: anUrl placeholders: aDictionary [
 ]
 
 { #category : #private }
-UrlPattern >> padUrlSegments: anUrl with: padding size: anInteger [
+TeaUrlPattern >> padUrlSegments: anUrl with: padding size: anInteger [
 	| urlSegments |
 	anUrl segments ifNil: [ ^ OrderedCollection new ].
 	urlSegments := self trimTrailingSlash: anUrl segments.
@@ -67,20 +67,20 @@ UrlPattern >> padUrlSegments: anUrl with: padding size: anInteger [
 ]
 
 { #category : #printing }
-UrlPattern >> printOn: aStream [
+TeaUrlPattern >> printOn: aStream [
 	segments 
 		do: [ :each | each printOn: aStream ]
 		separatedBy: [ aStream nextPut: $/ ]
 ]
 
 { #category : #initialization }
-UrlPattern >> setSegments: anArray [
+TeaUrlPattern >> setSegments: anArray [
 	segments := anArray.
 	^ self
 ]
 
 { #category : #private }
-UrlPattern >> trimTrailingSlash: urlSegments [ 
+TeaUrlPattern >> trimTrailingSlash: urlSegments [ 
 	^ urlSegments last = '/' 
 		ifTrue: [ urlSegments allButLast ]
 		ifFalse: [ urlSegments ]

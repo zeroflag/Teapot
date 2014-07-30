@@ -2,15 +2,15 @@
 I'm a placeholder at the last position.
 "
 Class {
-	#name : #PlaceholderStop,
-	#superclass : #Placeholder,
+	#name : #TeaPlaceholderStop,
+	#superclass : #TeaPlaceholder,
 	#category : #'Teapot-Core'
 }
 
 { #category : #'url pattern segment' }
-PlaceholderStop >> matches: urlSegments rest: adjacentPatterns placeholders: aDictionary [
+TeaPlaceholderStop >> matches: urlSegments rest: adjacentPatterns placeholders: aDictionary [
 	| match |
-	match := urlSegments size = 1 and: [ urlSegments first ~= Padding ].
+	match := urlSegments size = 1 and: [ urlSegments first ~= TeaPadding ].
 	match ifTrue:
 		 [ aDictionary
 			at: placeholderName 
@@ -19,7 +19,7 @@ PlaceholderStop >> matches: urlSegments rest: adjacentPatterns placeholders: aDi
 ]
 
 { #category : #printing }
-PlaceholderStop >> printOn: aStream [
+TeaPlaceholderStop >> printOn: aStream [
 	aStream 
 		nextPut: $<;
 		nextPutAll: placeholderName;

@@ -1,54 +1,59 @@
 Class {
-	#name : #Format,
+	#name : #TeaFormat,
 	#superclass : #Object,
 	#category : #'Teapot-Core'
 }
 
 { #category : #'instance creation' }
-Format class >> html [
+TeaFormat class >> html [
 	^ [ :content :req :resp | 
-		resp headers contentType: 'text/html'. 
+		resp setContentType: 'text/html'. 
 		content ]
 ]
 
 { #category : #'instance creation' }
-Format class >> json [
+TeaFormat class >> json [
 	^ [ :object :req :resp | 
-		resp headers contentType: 'application/json'.
+		resp setContentType: 'application/json'.
 		(Smalltalk at: #NeoJSONWriter) toString: object ]
 ]
 
 { #category : #'instance creation' }
-Format class >> jsonPretty [
+TeaFormat class >> jsonPretty [
 	^ [ :object :req :resp | 
-		resp headers contentType: 'application/json'.
+		resp setContentType: 'application/json'.
 		(Smalltalk at: #NeoJSONWriter) toStringPretty: object ]
 ]
 
-{ #category : #'as yet unclassified' }
-Format class >> mustache: templateString contentType: contentType [
+{ #category : #'instance creation' }
+TeaFormat class >> mustache: templateString contentType: contentType [
 	^ [ :model :req :resp | 
-		resp headers contentType: contentType.
+		resp setContentType: contentType.
 		((Smalltalk at: #MustacheTemplate) on: templateString) value: model ]
 ]
 
 { #category : #'instance creation' }
-Format class >> ston [
+TeaFormat class >> mustacheHtml: templateString [ 
+	^ self mustache: templateString contentType: 'text/html'
+]
+
+{ #category : #'instance creation' }
+TeaFormat class >> ston [
 	^ [ :object :req :resp | 
-		resp headers contentType: 'text/plain'.
+		resp setContentType: 'text/plain'.
 		(Smalltalk at: #STON) toString: object ]
 ]
 
 { #category : #'instance creation' }
-Format class >> stonPretty [
+TeaFormat class >> stonPretty [
 	^ [ :object :req :resp | 
-		resp headers contentType: 'text/plain'.
+		resp setContentType: 'text/plain'.
 		(Smalltalk at: #STON) toString: object ]
 ]
 
 { #category : #'instance creation' }
-Format class >> text [
+TeaFormat class >> text [
 	^ [ :content :req :resp | 
-		resp headers contentType: 'text/plain'. 
+		resp setContentType: 'text/plain'. 
 		content ]
 ]

@@ -1,5 +1,5 @@
 Class {
-	#name : #Request,
+	#name : #TeaRequest,
 	#superclass : #Object,
 	#instVars : [
 		'znRequest',
@@ -9,21 +9,21 @@ Class {
 }
 
 { #category : #'instance creation' }
-Request class >> fromZnRequest: aZnRequest pathParams: aDictionary [
+TeaRequest class >> fromZnRequest: aZnRequest pathParams: aDictionary [
 	^ self new 
 		setZnRequest: aZnRequest 
 		pathParams: aDictionary
 ]
 
 { #category : #'acccessing - params' }
-Request >> at: aSymbol [
+TeaRequest >> at: aSymbol [
 	^ self 
 		at: aSymbol 
 		ifAbsent: [ KeyNotFound signal: 'Param ', aSymbol printString, ' not found' ]
 ]
 
 { #category : #'acccessing - params' }
-Request >> at: aSymbol ifAbsent: aBlock [
+TeaRequest >> at: aSymbol ifAbsent: aBlock [
 	"Gets the value of a path parameter, query parameter for form parameter.
 		E.g. /foo/<path-param>/bar
 		E.g. /foo?queryParam=value"
@@ -32,26 +32,26 @@ Request >> at: aSymbol ifAbsent: aBlock [
 ]
 
 { #category : #'reflective operations' }
-Request >> doesNotUnderstand: aMessage [
+TeaRequest >> doesNotUnderstand: aMessage [
 	^ aMessage sendTo: znRequest
 ]
 
 { #category : #private }
-Request >> formParam: aSymbol ifAbsent: aBlock [
+TeaRequest >> formParam: aSymbol ifAbsent: aBlock [
 	^ (znRequest entity isKindOf: ZnApplicationFormUrlEncodedEntity) "XXX do something better" 
 		ifTrue: [ znRequest entity at: aSymbol ifAbsent: aBlock ]
 		ifFalse: aBlock
 ]
 
 { #category : #private }
-Request >> queryOrFormParam: aSymbol ifAbsent: aBlock [
+TeaRequest >> queryOrFormParam: aSymbol ifAbsent: aBlock [
 	^ znRequest uri 
 		queryAt: aSymbol 
 		ifAbsent: [ self formParam: aSymbol ifAbsent: aBlock ]
 ]
 
 { #category : #initialization }
-Request >> setZnRequest: aZnRequest pathParams: aDictionary [
+TeaRequest >> setZnRequest: aZnRequest pathParams: aDictionary [
 	znRequest := aZnRequest.
 	pathParams := aDictionary.
 	^ self

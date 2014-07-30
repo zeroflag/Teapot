@@ -2,7 +2,7 @@
 A route handles http requests if the url pattern matches to the request url. The handle is an arbitrary block that will be evaluated in case of an url match.
 "
 Class {
-	#name : #Route,
+	#name : #TeaRoute,
 	#superclass : #Object,
 	#instVars : [
 		'handler',
@@ -14,23 +14,24 @@ Class {
 }
 
 { #category : #'instance creation' }
-Route class >> method: aSymbol urlPattern: patternString handler: handlerBlock transformer: transformerBlock [
+TeaRoute class >> method: aSymbol urlPattern: patternString handler: handlerBlock transformer: transformerBlock [
 	^ self new 
-		setPattern: (UrlPattern parseString: patternString)
+		setPattern: (TeaUrlPattern parseString: patternString)
 		method: aSymbol
 		handler: handlerBlock
 		transformer: transformerBlock
 ]
 
 { #category : #route }
-Route >> handleRequest: aZnRequest response: aZnResponse [
+TeaRoute >> handleRequest: aZnRequest response: aZnResponse [
 	| matches placeholders |
 	placeholders := Dictionary new.
 	matches := self matchesRequest: aZnRequest placeholders: placeholders.
 	matches
 		ifTrue: [ 
-			| result request |
-			request := Request fromZnRequest: aZnRequest pathParams: placeholders.
+			| result request response |
+			request := TeaRequest fromZnRequest: aZnRequest pathParams: placeholders.
+			response := TeaResponse fromZnResponse: aZnResponse.
 			result := handler cull: request cull: aZnResponse.
 			result := transformer cull: result cull: request cull: aZnResponse.			
 			aZnResponse entity: (ZnStringEntity with: result type: aZnResponse headers contentType) ].
@@ -38,13 +39,13 @@ Route >> handleRequest: aZnRequest response: aZnResponse [
 ]
 
 { #category : #private }
-Route >> matchesRequest: aZnRequest placeholders: placeholders [
+TeaRoute >> matchesRequest: aZnRequest placeholders: placeholders [
 	^ aZnRequest method = method 
 		and: [ urlPattern matchesUrl: aZnRequest url placeholders: placeholders ]
 ]
 
 { #category : #initialization }
-Route >> setPattern: anUrlPattern method: aSymbol handler: handlerBlock transformer: transformerBlock [
+TeaRoute >> setPattern: anUrlPattern method: aSymbol handler: handlerBlock transformer: transformerBlock [
 	urlPattern := anUrlPattern.
 	method := aSymbol.
 	handler := handlerBlock.
@@ -53,6 +54,6 @@ Route >> setPattern: anUrlPattern method: aSymbol handler: handlerBlock transfor
 ]
 
 { #category : #route }
-Route >> transformer: aBlock [
+TeaRoute >> transformer: aBlock [
 	transformer := aBlock
 ]

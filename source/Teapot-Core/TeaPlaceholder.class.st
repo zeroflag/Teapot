@@ -2,8 +2,8 @@
 I'm a placeholder with a key. My content is substituted with a value.
 "
 Class {
-	#name : #Placeholder,
-	#superclass : #UrlPatternSegment,
+	#name : #TeaPlaceholder,
+	#superclass : #TeaUrlPatternSegment,
 	#instVars : [
 		'placeholderName',
 		'type'
@@ -12,18 +12,18 @@ Class {
 }
 
 { #category : #private }
-Placeholder class >> createPlaceholderName: key type: typeSymbol atLast: aBoolean [
+TeaPlaceholder class >> createPlaceholderName: key type: typeSymbol atLast: aBoolean [
 	| class |
 	class := aBoolean
-		ifTrue: [ PlaceholderStop ]
-		ifFalse: [ Placeholder ].
+		ifTrue: [ TeaPlaceholderStop ]
+		ifFalse: [ TeaPlaceholder ].
 	^ class new 
 		setPlaceholderName: key 
 		type: typeSymbol
 ]
 
 { #category : #'instance creation' }
-Placeholder class >> fromString: aString atLast: aBoolean [
+TeaPlaceholder class >> fromString: aString atLast: aBoolean [
 	| spec type key |
 	self mustBeValidPlaceholder: aString.
 	spec := aString allButFirst allButLast findTokens: ':'.
@@ -36,13 +36,13 @@ Placeholder class >> fromString: aString atLast: aBoolean [
 ]
 
 { #category : #private }
-Placeholder class >> mustBeValidPlaceholder: aString [
+TeaPlaceholder class >> mustBeValidPlaceholder: aString [
 	((aString beginsWith: '<') and: [ aString endsWith: '>' ])
 		ifFalse: [ self error: 'Invalid placeholder name: ', aString ]
 ]
 
 { #category : #'url pattern segment' }
-Placeholder >> matches: urlSegments rest: adjacentPatterns placeholders: aDictionary [
+TeaPlaceholder >> matches: urlSegments rest: adjacentPatterns placeholders: aDictionary [
 	aDictionary 
 		at: placeholderName 
 		put: (urlSegments first perform: type).
@@ -53,7 +53,7 @@ Placeholder >> matches: urlSegments rest: adjacentPatterns placeholders: aDictio
 ]
 
 { #category : #printing }
-Placeholder >> printOn: aStream [
+TeaPlaceholder >> printOn: aStream [
 	aStream 
 		nextPut: $<;
 		nextPutAll: placeholderName;
@@ -61,7 +61,7 @@ Placeholder >> printOn: aStream [
 ]
 
 { #category : #initialization }
-Placeholder >> setPlaceholderName: aString type: typeSymbol [
+TeaPlaceholder >> setPlaceholderName: aString type: typeSymbol [
 	placeholderName := aString asSymbol.
 	type := typeSymbol.
 	^ self
