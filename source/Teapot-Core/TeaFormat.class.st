@@ -1,3 +1,14 @@
+"
+I have various response transformer methods on my class side, that can be used as follows:
+
+Teapot on
+	GET: '/books' 
+	do: [ books values ]; to: TeaFormat json;
+	start.
+	
+Some of the transformers require optional dependencies, like Neo-JSON, STON, or Mustache.
+
+"
 Class {
 	#name : #TeaFormat,
 	#superclass : #Object,
@@ -7,21 +18,21 @@ Class {
 { #category : #'instance creation' }
 TeaFormat class >> html [
 	^ [ :content :req :resp | 
-		resp setContentType: 'text/html'. 
+		resp setContentType: ZnMimeType textHtml.
 		content ]
 ]
 
 { #category : #'instance creation' }
 TeaFormat class >> json [
 	^ [ :object :req :resp | 
-		resp setContentType: 'application/json'.
+		resp setContentType: ZnMimeType applicationJson.
 		(Smalltalk at: #NeoJSONWriter) toString: object ]
 ]
 
 { #category : #'instance creation' }
 TeaFormat class >> jsonPretty [
 	^ [ :object :req :resp | 
-		resp setContentType: 'application/json'.
+		resp setContentType: ZnMimeType applicationJson.
 		(Smalltalk at: #NeoJSONWriter) toStringPretty: object ]
 ]
 
@@ -34,26 +45,26 @@ TeaFormat class >> mustache: templateString contentType: contentType [
 
 { #category : #'instance creation' }
 TeaFormat class >> mustacheHtml: templateString [ 
-	^ self mustache: templateString contentType: 'text/html'
+	^ self mustache: templateString contentType: ZnMimeType textHtml.
 ]
 
 { #category : #'instance creation' }
 TeaFormat class >> ston [
 	^ [ :object :req :resp | 
-		resp setContentType: 'text/plain'.
+		resp setContentType: ZnMimeType textPlain.
 		(Smalltalk at: #STON) toString: object ]
 ]
 
 { #category : #'instance creation' }
 TeaFormat class >> stonPretty [
 	^ [ :object :req :resp | 
-		resp setContentType: 'text/plain'.
-		(Smalltalk at: #STON) toString: object ]
+		resp setContentType: ZnMimeType textPlain.
+		(Smalltalk at: #STON) toStringPretty: object ]
 ]
 
 { #category : #'instance creation' }
 TeaFormat class >> text [
 	^ [ :content :req :resp | 
-		resp setContentType: 'text/plain'. 
+		resp setContentType: ZnMimeType textPlain.
 		content ]
 ]
