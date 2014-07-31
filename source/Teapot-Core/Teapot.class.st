@@ -29,92 +29,76 @@ Teapot class >> stopAll [
 
 { #category : #'url mapping' }
 Teapot >> CONNECT: patternString do: handlerBlock [
-	currentRoute := dispatcher addRoute:
-		(TeaRoute
-			method: #CONNECT
-			urlPattern: patternString
-			handler: handlerBlock
-			transformer: TeaFormat text)
+	self 
+		newRouteMethod: #CONNECT 
+		pattern: patternString 
+		handler: handlerBlock
 ]
 
 { #category : #'url mapping' }
 Teapot >> DELETE: patternString do: handlerBlock [
-	currentRoute := dispatcher addRoute:
-		(TeaRoute
-			method: #DELETE
-			urlPattern: patternString
-			handler: handlerBlock
-			transformer: TeaFormat text)
+	self 
+		newRouteMethod: #DELETE
+		pattern: patternString 
+		handler: handlerBlock
 ]
 
 { #category : #'url mapping' }
-Teapot >> GET: patternString do: aBlock [
-	currentRoute := dispatcher addRoute:
-		(TeaRoute
-			method: #GET
-			urlPattern: patternString
-			handler: aBlock
-			transformer: TeaFormat text)
+Teapot >> GET: patternString do: handlerBlock [
+	self 
+		newRouteMethod: #GET
+		pattern: patternString 
+		handler: handlerBlock
 ]
 
 { #category : #'url mapping' }
-Teapot >> HEAD: patternString do: aBlock [
-	currentRoute := dispatcher addRoute:
-		(TeaRoute
-			method: #HEAD
-			urlPattern: patternString
-			handler: aBlock
-			transformer: TeaFormat text)
+Teapot >> HEAD: patternString do: handlerBlock [
+	self 
+		newRouteMethod: #HEAD
+		pattern: patternString 
+		handler: handlerBlock
 ]
 
 { #category : #'url mapping' }
 Teapot >> OPTIONS: patternString do: handlerBlock [
-	currentRoute := dispatcher addRoute:
-		(TeaRoute
-			method: #OPTIONS
-			urlPattern: patternString
-			handler: handlerBlock
-			transformer: TeaFormat text)
+	self 
+		newRouteMethod: #OPTIONS
+		pattern: patternString 
+		handler: handlerBlock
+
 ]
 
 { #category : #'url mapping' }
 Teapot >> PATCH: patternString do: handlerBlock [
-	currentRoute := dispatcher addRoute:
-		(TeaRoute
-			method: #PATCH
-			urlPattern: patternString
-			handler: handlerBlock
-			transformer: TeaFormat text)
+	self 
+		newRouteMethod: #PATCH
+		pattern: patternString 
+		handler: handlerBlock
 ]
 
 { #category : #'url mapping' }
 Teapot >> POST: patternString do: handlerBlock [
-	currentRoute := dispatcher addRoute:
-		(TeaRoute
-			method: #POST
-			urlPattern: patternString
-			handler: handlerBlock
-			transformer: TeaFormat text)
+	self 
+		newRouteMethod: #POST
+		pattern: patternString 
+		handler: handlerBlock
 ]
 
 { #category : #'url mapping' }
 Teapot >> PUT: patternString do: handlerBlock [
-	currentRoute := dispatcher addRoute:
-		(TeaRoute
-			method: #PUT
-			urlPattern: patternString
-			handler: handlerBlock
-			transformer: TeaFormat text)
+	self 
+		newRouteMethod: #PUT
+		pattern: patternString 
+		handler: handlerBlock
+
 ]
 
 { #category : #'url mapping' }
 Teapot >> TRACE: patternString do: handlerBlock [
-	currentRoute := dispatcher addRoute:
-		(TeaRoute
-			method: #TRACE
-			urlPattern: patternString
-			handler: handlerBlock
-			transformer: TeaFormat text)
+	self 
+		newRouteMethod: #TRACE
+		pattern: patternString 
+		handler: handlerBlock
 ]
 
 { #category : #initialization }
@@ -126,6 +110,16 @@ Teapot >> initialize [
 { #category : #controlling }
 Teapot >> logToTranscript [
 	^ server logToTranscript
+]
+
+{ #category : #private }
+Teapot >> newRouteMethod: methodSymbol pattern: patternString handler: handlerBlock [
+	currentRoute := dispatcher addRoute:
+		(TeaRoute
+			method: methodSymbol
+			urlPattern: patternString
+			handler: handlerBlock
+			transformer: TeaFormat text)
 ]
 
 { #category : #controlling }
