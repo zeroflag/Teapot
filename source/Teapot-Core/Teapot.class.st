@@ -136,5 +136,5 @@ Teapot >> stop [
 { #category : #'url mapping' }
 Teapot >> to: transformerBlock [
 	"transform the result of the handler block"
-	currentRoute transformer: transformerBlock
+	currentRoute responseTransformer: transformerBlock
 ]

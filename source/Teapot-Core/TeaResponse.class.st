@@ -15,6 +15,11 @@ TeaResponse class >> fromZnResponse: aZnResponse [
 	^ self new setZnResponse: aZnResponse
 ]
 
+{ #category : #accessing }
+TeaResponse >> contentType [
+	^ znResponse headers contentType 
+]
+
 { #category : #'reflective operations' }
 TeaResponse >> doesNotUnderstand: aMessage [
 	^ aMessage sendTo: znResponse 

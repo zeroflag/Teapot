@@ -7,8 +7,8 @@ Class {
 	#instVars : [
 		'handler',
 		'urlPattern',
-		'transformer',
-		'method'
+		'method',
+		'responseTransformer'
 	],
 	#category : #'Teapot-Core'
 }
@@ -32,9 +32,9 @@ TeaRoute >> handleRequest: aZnRequest response: aZnResponse [
 			| result request response |
 			request := TeaRequest fromZnRequest: aZnRequest pathParams: placeholders.
 			response := TeaResponse fromZnResponse: aZnResponse.
-			result := handler cull: request cull: aZnResponse.
-			result := transformer cull: result cull: request cull: aZnResponse.			
-			aZnResponse entity: (ZnStringEntity with: result type: aZnResponse headers contentType) ].
+			result := handler cull: request cull: response.
+			result := responseTransformer cull: result cull: request cull: response.			
+			aZnResponse entity: (ZnStringEntity with: result type: response contentType) ].
 	^ matches
 ]
 
@@ -44,16 +44,16 @@ TeaRoute >> matchesRequest: aZnRequest placeholders: placeholders [
 		and: [ urlPattern matchesUrl: aZnRequest url placeholders: placeholders ]
 ]
 
+{ #category : #route }
+TeaRoute >> responseTransformer: aBlock [
+	responseTransformer := aBlock
+]
+
 { #category : #initialization }
 TeaRoute >> setPattern: anUrlPattern method: aSymbol handler: handlerBlock transformer: transformerBlock [
 	urlPattern := anUrlPattern.
 	method := aSymbol.
 	handler := handlerBlock.
-	transformer := transformerBlock.
+	responseTransformer := transformerBlock.
 	^ self
-]
-
-{ #category : #route }
-TeaRoute >> transformer: aBlock [
-	transformer := aBlock
 ]
