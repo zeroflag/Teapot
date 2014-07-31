@@ -28,6 +28,16 @@ Teapot class >> stopAll [
 ]
 
 { #category : #'url mapping' }
+Teapot >> CONNECT: patternString do: handlerBlock [
+	self addRoute:
+		(TeaRoute
+			method: #CONNECT
+			urlPattern: patternString
+			handler: handlerBlock
+			transformer: TeaFormat text)
+]
+
+{ #category : #'url mapping' }
 Teapot >> DELETE: patternString do: handlerBlock [
 	self addRoute:
 		(TeaRoute
@@ -48,10 +58,30 @@ Teapot >> GET: patternString do: aBlock [
 ]
 
 { #category : #'url mapping' }
+Teapot >> HEAD: patternString do: aBlock [
+	self addRoute:
+		(TeaRoute
+			method: #HEAD
+			urlPattern: patternString
+			handler: aBlock
+			transformer: TeaFormat text)
+]
+
+{ #category : #'url mapping' }
 Teapot >> OPTIONS: patternString do: handlerBlock [
 	self addRoute:
 		(TeaRoute
 			method: #OPTIONS
+			urlPattern: patternString
+			handler: handlerBlock
+			transformer: TeaFormat text)
+]
+
+{ #category : #'url mapping' }
+Teapot >> PATCH: patternString do: handlerBlock [
+	self addRoute:
+		(TeaRoute
+			method: #PATCH
 			urlPattern: patternString
 			handler: handlerBlock
 			transformer: TeaFormat text)
@@ -72,6 +102,16 @@ Teapot >> PUT: patternString do: handlerBlock [
 	self addRoute:
 		(TeaRoute
 			method: #PUT
+			urlPattern: patternString
+			handler: handlerBlock
+			transformer: TeaFormat text)
+]
+
+{ #category : #'url mapping' }
+Teapot >> TRACE: patternString do: handlerBlock [
+	self addRoute:
+		(TeaRoute
+			method: #TRACE
 			urlPattern: patternString
 			handler: handlerBlock
 			transformer: TeaFormat text)
