@@ -11,8 +11,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'server',
-		'routes',
-		'currentRoute'
+		'currentRoute',
+		'dispatcher'
 	],
 	#category : #'Teapot-Core'
 }
@@ -29,7 +29,7 @@ Teapot class >> stopAll [
 
 { #category : #'url mapping' }
 Teapot >> CONNECT: patternString do: handlerBlock [
-	self addRoute:
+	currentRoute := dispatcher addRoute:
 		(TeaRoute
 			method: #CONNECT
 			urlPattern: patternString
@@ -39,7 +39,7 @@ Teapot >> CONNECT: patternString do: handlerBlock [
 
 { #category : #'url mapping' }
 Teapot >> DELETE: patternString do: handlerBlock [
-	self addRoute:
+	currentRoute := dispatcher addRoute:
 		(TeaRoute
 			method: #DELETE
 			urlPattern: patternString
@@ -49,7 +49,7 @@ Teapot >> DELETE: patternString do: handlerBlock [
 
 { #category : #'url mapping' }
 Teapot >> GET: patternString do: aBlock [
-	self addRoute:
+	currentRoute := dispatcher addRoute:
 		(TeaRoute
 			method: #GET
 			urlPattern: patternString
@@ -59,7 +59,7 @@ Teapot >> GET: patternString do: aBlock [
 
 { #category : #'url mapping' }
 Teapot >> HEAD: patternString do: aBlock [
-	self addRoute:
+	currentRoute := dispatcher addRoute:
 		(TeaRoute
 			method: #HEAD
 			urlPattern: patternString
@@ -69,7 +69,7 @@ Teapot >> HEAD: patternString do: aBlock [
 
 { #category : #'url mapping' }
 Teapot >> OPTIONS: patternString do: handlerBlock [
-	self addRoute:
+	currentRoute := dispatcher addRoute:
 		(TeaRoute
 			method: #OPTIONS
 			urlPattern: patternString
@@ -79,7 +79,7 @@ Teapot >> OPTIONS: patternString do: handlerBlock [
 
 { #category : #'url mapping' }
 Teapot >> PATCH: patternString do: handlerBlock [
-	self addRoute:
+	currentRoute := dispatcher addRoute:
 		(TeaRoute
 			method: #PATCH
 			urlPattern: patternString
@@ -89,7 +89,7 @@ Teapot >> PATCH: patternString do: handlerBlock [
 
 { #category : #'url mapping' }
 Teapot >> POST: patternString do: handlerBlock [
-	self addRoute:
+	currentRoute := dispatcher addRoute:
 		(TeaRoute
 			method: #POST
 			urlPattern: patternString
@@ -99,7 +99,7 @@ Teapot >> POST: patternString do: handlerBlock [
 
 { #category : #'url mapping' }
 Teapot >> PUT: patternString do: handlerBlock [
-	self addRoute:
+	currentRoute := dispatcher addRoute:
 		(TeaRoute
 			method: #PUT
 			urlPattern: patternString
@@ -109,7 +109,7 @@ Teapot >> PUT: patternString do: handlerBlock [
 
 { #category : #'url mapping' }
 Teapot >> TRACE: patternString do: handlerBlock [
-	self addRoute:
+	currentRoute := dispatcher addRoute:
 		(TeaRoute
 			method: #TRACE
 			urlPattern: patternString
@@ -117,24 +117,10 @@ Teapot >> TRACE: patternString do: handlerBlock [
 			transformer: TeaFormat text)
 ]
 
-{ #category : #private }
-Teapot >> addRoute: aRoute [
-	currentRoute := routes add: aRoute.
-	
-]
-
-{ #category : #'zn delegate' }
-Teapot >> handleRequest: aZnRequest [
-	^ self 
-		routeRequest: aZnRequest
-		response: self newResponse
-
-]
-
 { #category : #initialization }
 Teapot >> initialize [
 	super initialize.
-	routes := OrderedCollection new.	
+	dispatcher := TeaDispatcher new.
 ]
 
 { #category : #controlling }
@@ -142,29 +128,10 @@ Teapot >> logToTranscript [
 	^ server logToTranscript
 ]
 
-{ #category : #private }
-Teapot >> newResponse [
-	| response |
-	response := ZnResponse new 
-		statusLine: ZnStatusLine ok;
-		headers: ZnHeaders defaultResponseHeaders;
-		yourself.
-	response headers contentType: 'text/plain'. "TODO, van default transformer, de ha a user to:-nal megad vmit es nem allit be semmit akkor elszall"
-	^ response
-]
-
-{ #category : #private }
-Teapot >> routeRequest: aZnRequest response: aZnResponse [
-	routes 
-		detect: [ :each | each handleRequest: aZnRequest response: aZnResponse ]
-		ifNone: [ ^ ZnResponse notFound: aZnRequest uri ].
-	^ aZnResponse
-]
-
 { #category : #controlling }
 Teapot >> start [
 	server := (ZnServer startOn: 8080) 
-		delegate: self;
+		delegate: dispatcher;
 		yourself
 ]
 
