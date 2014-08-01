@@ -28,77 +28,77 @@ Teapot class >> stopAll [
 ]
 
 { #category : #'url mapping' }
-Teapot >> CONNECT: patternString do: handlerBlock [
+Teapot >> CONNECT: patternHandlerAssoc [
 	self 
 		newRouteMethod: #CONNECT 
-		pattern: patternString 
-		handler: handlerBlock
+		pattern: patternHandlerAssoc key
+		handler: patternHandlerAssoc value
 ]
 
 { #category : #'url mapping' }
-Teapot >> DELETE: patternString do: handlerBlock [
+Teapot >> DELETE: patternHandlerAssoc [
 	self 
 		newRouteMethod: #DELETE
-		pattern: patternString 
-		handler: handlerBlock
+		pattern: patternHandlerAssoc key
+		handler: patternHandlerAssoc value
 ]
 
 { #category : #'url mapping' }
-Teapot >> GET: patternString do: handlerBlock [
+Teapot >> GET: patternHandlerAssoc [
 	self 
 		newRouteMethod: #GET
-		pattern: patternString 
-		handler: handlerBlock
+		pattern: patternHandlerAssoc key
+		handler: patternHandlerAssoc value
 ]
 
 { #category : #'url mapping' }
-Teapot >> HEAD: patternString do: handlerBlock [
+Teapot >> HEAD: patternHandlerAssoc [
 	self 
 		newRouteMethod: #HEAD
-		pattern: patternString 
-		handler: handlerBlock
+		pattern: patternHandlerAssoc key
+		handler: patternHandlerAssoc value
 ]
 
 { #category : #'url mapping' }
-Teapot >> OPTIONS: patternString do: handlerBlock [
+Teapot >> OPTIONS: patternHandlerAssoc [
 	self 
 		newRouteMethod: #OPTIONS
-		pattern: patternString 
-		handler: handlerBlock
+		pattern: patternHandlerAssoc key
+		handler: patternHandlerAssoc value
 
 ]
 
 { #category : #'url mapping' }
-Teapot >> PATCH: patternString do: handlerBlock [
+Teapot >> PATCH: patternHandlerAssoc [
 	self 
 		newRouteMethod: #PATCH
-		pattern: patternString 
-		handler: handlerBlock
+		pattern: patternHandlerAssoc key
+		handler: patternHandlerAssoc value
 ]
 
 { #category : #'url mapping' }
-Teapot >> POST: patternString do: handlerBlock [
+Teapot >> POST: patternHandlerAssoc [
 	self 
 		newRouteMethod: #POST
-		pattern: patternString 
-		handler: handlerBlock
+		pattern: patternHandlerAssoc key
+		handler: patternHandlerAssoc value
 ]
 
 { #category : #'url mapping' }
-Teapot >> PUT: patternString do: handlerBlock [
+Teapot >> PUT: patternHandlerAssoc [
 	self 
 		newRouteMethod: #PUT
-		pattern: patternString 
-		handler: handlerBlock
+		pattern: patternHandlerAssoc key
+		handler: patternHandlerAssoc value
 
 ]
 
 { #category : #'url mapping' }
-Teapot >> TRACE: patternString do: handlerBlock [
+Teapot >> TRACE: patternHandlerAssoc [
 	self 
 		newRouteMethod: #TRACE
-		pattern: patternString 
-		handler: handlerBlock
+		pattern: patternHandlerAssoc key 
+		handler: patternHandlerAssoc value
 ]
 
 { #category : #initialization }
