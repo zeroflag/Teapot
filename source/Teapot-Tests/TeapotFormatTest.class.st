@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 TeapotFormatTest >> setUp [
 	server := Teapot on
-		GET: '/a' do: [ 4 ]; to: [:n | n printStringRoman ];
+		GET: '/a' -> [ 4 ]; to: [:n | n printStringRoman ];
 		start		
 ]
 

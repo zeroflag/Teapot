@@ -10,9 +10,9 @@ Class {
 { #category : #running }
 TeapotQueryParamsTest >> setUp [
 	server := Teapot on
-		GET: '/query' do: [ :req :resp | req at: #foo ];
-		GET: '/queryopt' do: [ :req :resp | req at: #foo ifAbsent: [ 'default' ] ];		
-		start		
+		GET: '/query' -> [ :req :resp | req at: #foo ];
+		GET: '/queryopt' -> [ :req :resp | req at: #foo ifAbsent: [ 'default' ] ];		
+		start
 ]
 
 { #category : #running }
