@@ -1,9 +1,9 @@
 "
-I'm a ZnDelegate. I dispatches http requests to routes.
+I'm a ZnDelegate. I serve dynamically generated content.
 "
 Class {
-	#name : #TeaDispatcher,
-	#superclass : #Object,
+	#name : #TeaDynamicRouter,
+	#superclass : #TeaRouter,
 	#instVars : [
 		'routes'
 	],
@@ -11,13 +11,13 @@ Class {
 }
 
 { #category : #'route dispatcher' }
-TeaDispatcher >> addRoute: aRoute [
+TeaDynamicRouter >> addRoute: aRoute [
 	^ routes add: aRoute.
 	
 ]
 
 { #category : #'zn delegate' }
-TeaDispatcher >> handleRequest: aZnRequest [
+TeaDynamicRouter >> handleRequest: aZnRequest [
 	| response |
 	response := self newResponse.
 	routes
@@ -27,13 +27,13 @@ TeaDispatcher >> handleRequest: aZnRequest [
 ]
 
 { #category : #initialization }
-TeaDispatcher >> initialize [
+TeaDynamicRouter >> initialize [
 	super initialize.
 	routes := OrderedCollection new.
 ]
 
 { #category : #private }
-TeaDispatcher >> newResponse [
+TeaDynamicRouter >> newResponse [
 	| response |
 	response := ZnResponse new 
 		statusLine: ZnStatusLine ok;

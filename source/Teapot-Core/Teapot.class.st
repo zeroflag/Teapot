@@ -12,7 +12,9 @@ Class {
 	#instVars : [
 		'server',
 		'currentRoute',
-		'dispatcher'
+		'port',
+		'dynamicRouter',
+		'staticRouter'
 	],
 	#category : #'Teapot-Core'
 }
@@ -104,7 +106,10 @@ Teapot >> TRACE: patternHandlerAssoc [
 { #category : #initialization }
 Teapot >> initialize [
 	super initialize.
-	dispatcher := TeaDispatcher new.
+	dynamicRouter := TeaDynamicRouter new.
+	staticRouter := TeaStaticRouter new.
+	port := 8080.
+
 ]
 
 { #category : #controlling }
@@ -114,7 +119,7 @@ Teapot >> logToTranscript [
 
 { #category : #private }
 Teapot >> newRouteMethod: methodSymbol pattern: patternString handler: handlerBlock [
-	currentRoute := dispatcher addRoute:
+	currentRoute := dynamicRouter addRoute:
 		(TeaRoute
 			method: methodSymbol
 			urlPattern: patternString
@@ -122,10 +127,32 @@ Teapot >> newRouteMethod: methodSymbol pattern: patternString handler: handlerBl
 			transformer: TeaFormat text)
 ]
 
+{ #category : #accessing }
+Teapot >> port [
+	^ port
+]
+
+{ #category : #accessing }
+Teapot >> port: aNumber [
+	port := aNumber
+]
+
+{ #category : #'url mapping' }
+Teapot >> serveStatic: urlPrefixString from: pathString [	
+	staticRouter 
+		urlPrefix: urlPrefixString 
+		path: pathString.
+]
+
+{ #category : #accessing }
+Teapot >> server [
+	^ server
+]
+
 { #category : #controlling }
 Teapot >> start [
-	server := (ZnServer startOn: 8080) 
-		delegate: dispatcher;
+	server := (ZnServer startOn: self port) 
+		delegate: (TeaCompositeRouter routers: { dynamicRouter. staticRouter });
 		yourself
 ]
 
