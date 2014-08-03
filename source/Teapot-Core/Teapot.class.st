@@ -103,6 +103,16 @@ Teapot >> TRACE: patternHandlerAssoc [
 		handler: patternHandlerAssoc value
 ]
 
+{ #category : #'response transform' }
+Teapot >> format: transformerBlockOrSymbol [
+	| transformer |
+	
+	transformer := transformerBlockOrSymbol isSymbol
+		ifTrue: [ TeaFormat perform: transformerBlockOrSymbol ]
+		ifFalse: [ transformerBlockOrSymbol ].		
+	currentRoute responseTransformer: transformer
+]
+
 { #category : #initialization }
 Teapot >> initialize [
 	super initialize.
@@ -124,7 +134,7 @@ Teapot >> newRouteMethod: methodSymbol pattern: patternString handler: handlerBl
 			method: methodSymbol
 			urlPattern: patternString
 			handler: handlerBlock
-			transformer: TeaFormat text)
+			transformer: TeaFormat html)
 ]
 
 { #category : #accessing }
@@ -159,10 +169,4 @@ Teapot >> start [
 { #category : #controlling }
 Teapot >> stop [
 	server ifNotNil: [ server stop ]
-]
-
-{ #category : #'url mapping' }
-Teapot >> to: transformerBlock [
-	"transform the result of the handler block"
-	currentRoute responseTransformer: transformerBlock
 ]

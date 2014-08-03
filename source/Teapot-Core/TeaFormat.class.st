@@ -18,28 +18,28 @@ Class {
 { #category : #'instance creation' }
 TeaFormat class >> html [
 	^ [ :content :req :resp | 
-		resp setContentType: ZnMimeType textHtml.
+		resp contentType: ZnMimeType textHtml.
 		content ]
 ]
 
 { #category : #'instance creation' }
 TeaFormat class >> json [
 	^ [ :object :req :resp | 
-		resp setContentType: ZnMimeType applicationJson.
+		resp contentType: ZnMimeType applicationJson.
 		(Smalltalk at: #NeoJSONWriter) toString: object ]
 ]
 
 { #category : #'instance creation' }
 TeaFormat class >> jsonPretty [
 	^ [ :object :req :resp | 
-		resp setContentType: ZnMimeType applicationJson.
+		resp contentType: ZnMimeType applicationJson.
 		(Smalltalk at: #NeoJSONWriter) toStringPretty: object ]
 ]
 
 { #category : #'instance creation' }
 TeaFormat class >> mustache: templateString contentType: contentType [
 	^ [ :model :req :resp | 
-		resp setContentType: contentType.
+		resp contentType: contentType.
 		((Smalltalk at: #MustacheTemplate) on: templateString) value: model ]
 ]
 
@@ -51,20 +51,20 @@ TeaFormat class >> mustacheHtml: templateString [
 { #category : #'instance creation' }
 TeaFormat class >> ston [
 	^ [ :object :req :resp | 
-		resp setContentType: ZnMimeType textPlain.
+		resp contentType: ZnMimeType textPlain.
 		(Smalltalk at: #STON) toString: object ]
 ]
 
 { #category : #'instance creation' }
 TeaFormat class >> stonPretty [
 	^ [ :object :req :resp | 
-		resp setContentType: ZnMimeType textPlain.
+		resp contentType: ZnMimeType textPlain.
 		(Smalltalk at: #STON) toStringPretty: object ]
 ]
 
 { #category : #'instance creation' }
 TeaFormat class >> text [
 	^ [ :content :req :resp | 
-		resp setContentType: ZnMimeType textPlain.
+		resp contentType: ZnMimeType textPlain.
 		content ]
 ]

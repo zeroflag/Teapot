@@ -20,6 +20,11 @@ TeaResponse >> contentType [
 	^ znResponse headers contentType 
 ]
 
+{ #category : #accessing }
+TeaResponse >> contentType: aZnMimeType [
+	^ znResponse setContentType: aZnMimeType
+]
+
 { #category : #'reflective operations' }
 TeaResponse >> doesNotUnderstand: aMessage [
 	^ aMessage sendTo: znResponse 

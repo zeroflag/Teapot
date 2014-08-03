@@ -39,6 +39,6 @@ TeaDynamicRouter >> newResponse [
 		statusLine: ZnStatusLine ok;
 		headers: ZnHeaders defaultResponseHeaders;
 		yourself.
-	response headers contentType: ZnMimeType textPlain. "TODO, van default transformer, de ha a user to:-nal megad vmit es nem allit be semmit akkor elszall"
+	response headers contentType: ZnMimeType textHtml.
 	^ response
 ]
