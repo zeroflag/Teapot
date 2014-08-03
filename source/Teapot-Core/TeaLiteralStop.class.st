@@ -9,7 +9,7 @@ Class {
 
 { #category : #'url pattern segment' }
 TeaLiteralStop >> matches: urlSegments rest: adjacentPatterns placeholders: aDictionary [
-	^ literal = urlSegments first and: [ urlSegments size = 1 ]
+	^ urlSegments size = 1 and: [ literal = urlSegments first ]
 ]
 
 { #category : #printing }
