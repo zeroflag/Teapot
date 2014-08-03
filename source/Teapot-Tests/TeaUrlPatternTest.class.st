@@ -94,7 +94,7 @@ TeaUrlPatternTest >> testPlaceholders [
 TeaUrlPatternTest >> testRoot [
 	self pattern: '/' matches: '/'.	
 	self pattern: '/' noMatch: '/a'.	
-
+	self pattern: '/a' noMatch: '/'.
 ]
 
 { #category : #tests }
