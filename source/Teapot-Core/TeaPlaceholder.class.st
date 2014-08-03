@@ -6,32 +6,32 @@ Class {
 	#superclass : #TeaUrlPatternSegment,
 	#instVars : [
 		'placeholderName',
-		'type'
+		'typeConstraint'
 	],
 	#category : #'Teapot-Core'
 }
 
 { #category : #private }
-TeaPlaceholder class >> createPlaceholderName: key type: typeSymbol atLast: aBoolean [
+TeaPlaceholder class >> createPlaceholderName: key typeConstraint: aTypeConstraint atLast: aBoolean [
 	| class |
 	class := aBoolean
 		ifTrue: [ TeaPlaceholderStop ]
 		ifFalse: [ TeaPlaceholder ].
 	^ class new 
 		setPlaceholderName: key 
-		type: typeSymbol
+		typeConstraint: aTypeConstraint
 ]
 
 { #category : #'instance creation' }
 TeaPlaceholder class >> fromString: aString atLast: aBoolean [
-	| spec type key |
+	| spec typeConstraint key |
 	self mustBeValidPlaceholder: aString.
 	spec := aString allButFirst allButLast findTokens: ':'.
 	key := spec first.
-	type := spec at: 2 ifAbsent: #asString.
+	typeConstraint := spec at: 2 ifAbsent: #IsObject.
 	^ self 
 		createPlaceholderName: key 
-		type: type asSymbol
+		typeConstraint: (Smalltalk at: typeConstraint asSymbol)
 		atLast: aBoolean
 ]
 
@@ -43,9 +43,11 @@ TeaPlaceholder class >> mustBeValidPlaceholder: aString [
 
 { #category : #'url pattern segment' }
 TeaPlaceholder >> matches: urlSegments rest: adjacentPatterns placeholders: aDictionary [
+	(typeConstraint matchesTo: urlSegments first) 
+		ifFalse: [ ^ false ].			
 	aDictionary 
 		at: placeholderName 
-		put: (urlSegments first perform: type).
+		put: (typeConstraint parseString: urlSegments first).				
 	^ adjacentPatterns first 
 		matches: urlSegments allButFirst 
 		rest: adjacentPatterns allButFirst 
@@ -61,8 +63,8 @@ TeaPlaceholder >> printOn: aStream [
 ]
 
 { #category : #initialization }
-TeaPlaceholder >> setPlaceholderName: aString type: typeSymbol [
+TeaPlaceholder >> setPlaceholderName: aString typeConstraint: aTypeConstraint [
 	placeholderName := aString asSymbol.
-	type := typeSymbol.
+	typeConstraint := aTypeConstraint.
 	^ self
 ]

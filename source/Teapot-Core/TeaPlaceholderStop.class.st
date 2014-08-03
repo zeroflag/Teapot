@@ -10,11 +10,13 @@ Class {
 { #category : #'url pattern segment' }
 TeaPlaceholderStop >> matches: urlSegments rest: adjacentPatterns placeholders: aDictionary [
 	| match |
-	match := urlSegments size = 1 and: [ urlSegments first ~= TeaPadding ].
+	match := urlSegments size = 1 
+		and: [ urlSegments first ~= TeaPadding 
+		and: [ (typeConstraint matchesTo: urlSegments first) ] ].
 	match ifTrue:
 		 [ aDictionary
 			at: placeholderName 
-			put: (urlSegments first perform: type) ].
+			put: (typeConstraint parseString: urlSegments first) ].
 	^ match
 ]
 
