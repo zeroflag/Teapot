@@ -56,17 +56,27 @@ TeaUrlPatternTest >> testPlaceholderSubstitute [
 ]
 
 { #category : #tests }
-TeaUrlPatternTest >> testPlaceholderType [
+TeaUrlPatternTest >> testPlaceholderTypeMatch [
 	| placeholders |
-	placeholders := self pattern: '/<id:asInteger>' matches: '/12'.
+	placeholders := self pattern: '/<id:IsInteger>' matches: '/12'.
 	self assert: (placeholders at: #id) equals: 12.
 	
-	placeholders := self pattern: '/<id:asInteger>/abc' matches: '/34/abc'.
-	self assert: (placeholders at: #id) equals: 34.
+	placeholders := self pattern: '/<id:IsInteger>/abc' matches: '/-34/abc'.
+	self assert: (placeholders at: #id) equals: -34.
 	
-	placeholders := self pattern: '/<float:asNumber>/<sym:asSymbol>' matches: '/3.14/test'.
+	placeholders := self pattern: '/<float:IsNumber>/<int:IsNumber>' matches: '/3.14/3'.
 	self assert: (placeholders at: #float) equals: 3.14.
-	self assert: (placeholders at: #sym) equals: #test.	
+	self assert: (placeholders at: #int) equals: 3.	
+]
+
+{ #category : #tests }
+TeaUrlPatternTest >> testPlaceholderTypeNoMatch [
+	self pattern: '/<id:IsInteger>' noMatch: '/foobar'.	
+	self pattern: '/<id:IsNumber>' noMatch: '/foobar'.
+	self pattern: '/<id:IsInteger>' noMatch: '/12.3'.
+
+	
+	
 ]
 
 { #category : #tests }
