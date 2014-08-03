@@ -26,6 +26,6 @@ TeaCompositeRouter >> handleRequest: aZnRequest [
 
 { #category : #initialization }
 TeaCompositeRouter >> setRouters: teaRouterCollection [
-	routers := teaRouterCollection.
+	routers := teaRouterCollection asArray.
 	^ self
 ]
