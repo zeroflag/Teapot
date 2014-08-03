@@ -59,8 +59,9 @@ TeaUrlPattern >> matchesUrl: anUrl placeholders: aDictionary [
 { #category : #private }
 TeaUrlPattern >> padUrlSegments: anUrl with: padding size: anInteger [
 	| urlSegments |
-	anUrl segments ifNil: [ ^ OrderedCollection new ].
-	urlSegments := self trimTrailingSlash: anUrl segments.
+	urlSegments := anUrl segments isEmptyOrNil 
+		ifTrue: [ OrderedCollection new ]
+		ifFalse: [ self trimTrailingSlash: anUrl segments ].
 	urlSegments size < segments size
 		ifTrue: [ urlSegments := urlSegments forceTo: anInteger paddingWith: padding ].
 	^ urlSegments
@@ -81,7 +82,7 @@ TeaUrlPattern >> setSegments: anArray [
 
 { #category : #private }
 TeaUrlPattern >> trimTrailingSlash: urlSegments [ 
-	^ urlSegments last = '/' 
+	^ (urlSegments isNotEmpty and: [ urlSegments last = '/' ])
 		ifTrue: [ urlSegments allButLast ]
 		ifFalse: [ urlSegments ]
 ]
