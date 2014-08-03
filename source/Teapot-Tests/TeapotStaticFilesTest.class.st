@@ -2,22 +2,36 @@ Class {
 	#name : #TeapotStaticFilesTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'server'
+		'server',
+		'htdocs'
 	],
 	#category : #'Teapot-Tests'
 }
 
+{ #category : #private }
+TeapotStaticFilesTest >> createTempHtdocs [
+	| tmpHtdocs |
+	tmpHtdocs := FileLocator temp asFileReference / 'test_htdocs'.
+	tmpHtdocs createDirectory.
+	tmpHtdocs / 'index.html' writeStreamDo: [ :stream | stream nextPutAll: 'static index' ].
+	tmpHtdocs / 'a.txt' writeStreamDo: [ :stream | stream nextPutAll: 'a' ].
+	tmpHtdocs / 'b.txt' writeStreamDo: [ :stream | stream nextPutAll: 'static' ].
+	^ tmpHtdocs
+]
+
 { #category : #running }
 TeapotStaticFilesTest >> setUp [
+	htdocs := self createTempHtdocs.
 	server := Teapot on
 		GET: 'here/are/statics/b.txt' -> 'dynamic';
-		serveStatic: 'here/are/statics' from: 'c:/temp/htdocs'; "TODO"
-		start.		
+		serveStatic: 'here/are/statics' from: htdocs;
+		start
 ]
 
 { #category : #running }
 TeapotStaticFilesTest >> tearDown [
-	server stop
+	htdocs deleteAll.
+	server stop.
 ]
 
 { #category : #tests }
