@@ -14,7 +14,8 @@ Class {
 		'currentRoute',
 		'port',
 		'dynamicRouter',
-		'staticRouter'
+		'staticRouter',
+		'compositeRouter'
 	],
 	#category : #'Teapot-Core'
 }
@@ -103,6 +104,14 @@ Teapot >> TRACE: patternHandlerAssoc [
 		handler: patternHandlerAssoc value
 ]
 
+{ #category : #'error handing' }
+Teapot >> error: anExceptionSetHandlerAssoc [    
+	compositeRouter 
+		addErrorHandler: anExceptionSetHandlerAssoc value 
+		exceptions: anExceptionSetHandlerAssoc key   
+    
+]
+
 { #category : #'response transform' }
 Teapot >> format: transformerBlockOrSymbol [
 	| transformer |
@@ -118,6 +127,7 @@ Teapot >> initialize [
 	super initialize.
 	dynamicRouter := TeaDynamicRouter new.
 	staticRouter := TeaStaticRouter new.
+	compositeRouter := TeaCompositeRouter routers: { dynamicRouter. staticRouter }.
 	port := 8080.
 
 ]
@@ -162,7 +172,7 @@ Teapot >> server [
 { #category : #controlling }
 Teapot >> start [
 	server := (ZnServer startOn: self port) 
-		delegate: (TeaCompositeRouter routers: { dynamicRouter. staticRouter });
+		delegate: compositeRouter;
 		yourself
 ]
 
