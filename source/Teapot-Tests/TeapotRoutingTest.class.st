@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 TeapotRoutingTest >> setUp [
 	server := Teapot on
-		GET: '/' -> 1;
+		GET: '/' -> '1';
 		GET: '/a' -> '2';
 		GET: '/a/*/b' -> [ '3' ];
 		GET: '/*/c' -> [ '4' ];	
