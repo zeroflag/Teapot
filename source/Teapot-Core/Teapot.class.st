@@ -15,10 +15,16 @@ Class {
 		'port',
 		'dynamicRouter',
 		'staticRouter',
-		'compositeRouter'
+		'compositeRouter',
+		'defaultTransformer'
 	],
 	#category : #'Teapot-Core'
 }
+
+{ #category : #'instance creation' }
+Teapot class >> defaultFormat: transformerBlockOrSymbol [
+	^ self new setDefaultFormat: transformerBlockOrSymbol
+]
 
 { #category : #'instance creation' }
 Teapot class >> on [
@@ -104,6 +110,11 @@ Teapot >> TRACE: patternHandlerAssoc [
 		handler: patternHandlerAssoc value
 ]
 
+{ #category : #private }
+Teapot >> defaultTransformer [
+	^ defaultTransformer
+]
+
 { #category : #'error handing' }
 Teapot >> error: anExceptionSetHandlerAssoc [    
 	compositeRouter 
@@ -114,12 +125,8 @@ Teapot >> error: anExceptionSetHandlerAssoc [
 
 { #category : #'response transform' }
 Teapot >> format: transformerBlockOrSymbol [
-	| transformer |
+	currentRoute responseTransformer: (self responseTransformer: transformerBlockOrSymbol)
 	
-	transformer := transformerBlockOrSymbol isSymbol
-		ifTrue: [ TeaFormat perform: transformerBlockOrSymbol ]
-		ifFalse: [ transformerBlockOrSymbol ].		
-	currentRoute responseTransformer: transformer
 ]
 
 { #category : #initialization }
@@ -128,6 +135,7 @@ Teapot >> initialize [
 	dynamicRouter := TeaDynamicRouter new.
 	staticRouter := TeaStaticRouter new.
 	compositeRouter := TeaCompositeRouter routers: { dynamicRouter. staticRouter }.
+	defaultTransformer := TeaFormat html.
 	port := 8080.
 
 ]
@@ -144,7 +152,7 @@ Teapot >> newRouteMethod: methodSymbol pattern: patternString handler: handlerBl
 			method: methodSymbol
 			urlPattern: patternString
 			handler: handlerBlock
-			transformer: TeaFormat html)
+			transformer: self defaultTransformer)
 ]
 
 { #category : #accessing }
@@ -157,6 +165,13 @@ Teapot >> port: aNumber [
 	port := aNumber
 ]
 
+{ #category : #private }
+Teapot >> responseTransformer: transformerBlockOrSymbol [
+	^ transformerBlockOrSymbol isSymbol
+		ifTrue: [ TeaFormat perform: transformerBlockOrSymbol ]
+		ifFalse: [ transformerBlockOrSymbol ]
+]
+
 { #category : #'url mapping' }
 Teapot >> serveStatic: urlPrefixString from: pathString [	
 	staticRouter 
@@ -167,6 +182,12 @@ Teapot >> serveStatic: urlPrefixString from: pathString [
 { #category : #accessing }
 Teapot >> server [
 	^ server
+]
+
+{ #category : #initialization }
+Teapot >> setDefaultFormat: transformerBlockOrSymbol [
+	defaultTransformer := self responseTransformer: transformerBlockOrSymbol.
+	^ self
 ]
 
 { #category : #controlling }
