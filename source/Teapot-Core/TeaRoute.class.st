@@ -33,8 +33,7 @@ TeaRoute >> handleRequest: aZnRequest response: aZnResponse [
 			request := TeaRequest fromZnRequest: aZnRequest pathParams: placeholders.
 			response := TeaResponse fromZnResponse: aZnResponse.
 			result := handler handleTeaRequest: request response: response.
-			result := responseTransformer cull: result cull: request cull: response.			
-			aZnResponse entity: (ZnStringEntity with: result type: response contentType) ].
+			aZnResponse entity: (responseTransformer cull: result cull: request cull: response) ].
 	^ matches
 ]
 
