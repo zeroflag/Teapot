@@ -13,8 +13,9 @@ TeapotErrorHandlingTest >> setUp [
 		GET: '/zerodiv' -> [ 1 / 0 ];
 		GET: '/sub' -> [ #() at: 123 ];			
 		GET: '/domain' -> [ -2 sqrt ];
-		error: ZeroDivide -> [ :ex :req :resp | 'zerodiv handled' ];
-		error: SubscriptOutOfBounds, DomainError -> [ :ex :req :resp | 'outofbounds/domainerror handled' ];		
+		exception: ZeroDivide -> [ :ex :req | ZnResponse ok: (ZnStringEntity text: 'zerodiv handled') ];
+		exception: SubscriptOutOfBounds, DomainError -> 
+			[ :ex :req | ZnResponse ok: (ZnStringEntity text: 'outofbounds/domainerror handled') ];
 		start		
 ]
 
