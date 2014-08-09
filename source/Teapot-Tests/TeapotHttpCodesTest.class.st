@@ -10,9 +10,9 @@ Class {
 { #category : #running }
 TeapotHttpCodesTest >> setUp [
 	server := Teapot on
-		GET: 'badrequest' -> [ :req :resp | resp code: 400 ];
-		GET: 'forbidden' -> [ :req :resp | resp code: 403 reason: 'go away' ];
-		start		
+		GET: 'badrequest' -> [ :req | req abort: 400 ];
+		GET: 'forbidden' -> [ :req | req abort: 403 reason: 'go away' ];
+		start.
 ]
 
 { #category : #running }
