@@ -18,6 +18,16 @@ TeaRequest class >> fromZnRequest: aZnRequest pathParams: aDictionary [
 		pathParams: aDictionary
 ]
 
+{ #category : #aborting }
+TeaRequest >> abort: anInteger [
+	self abort: anInteger reason: nil
+]
+
+{ #category : #aborting }
+TeaRequest >> abort: anInteger reason: aString [
+	(TeaAbort code: anInteger reason: aString) signal
+]
+
 { #category : #'acccessing - params' }
 TeaRequest >> at: aSymbol [
 	^ self 

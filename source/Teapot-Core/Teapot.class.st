@@ -111,6 +111,16 @@ Teapot >> TRACE: patternHandlerAssoc [
 ]
 
 { #category : #private }
+Teapot >> addAbortHandlerTo: aRouter [
+	aRouter
+		addErrorHandler: [ :ex | ZnResponse new
+				statusLine: ex asStatusLine;
+				headers: ZnHeaders defaultResponseHeaders;
+				yourself ]
+		exceptions: TeaAbort
+]
+
+{ #category : #private }
 Teapot >> defaultTransformer [
 	^ defaultTransformer
 ]
@@ -128,10 +138,10 @@ Teapot >> initialize [
 	super initialize.
 	dynamicRouter := TeaDynamicRouter new.
 	staticRouter := TeaStaticRouter new.
-	compositeRouter := TeaCompositeRouter routers: { dynamicRouter. staticRouter }.
+	compositeRouter := TeaCompositeRouter routers: {dynamicRouter. staticRouter}.
+	self addAbortHandlerTo: compositeRouter.
 	defaultTransformer := TeaFormat html.
-	port := 8080.
-
+	port := 8080
 ]
 
 { #category : #controlling }

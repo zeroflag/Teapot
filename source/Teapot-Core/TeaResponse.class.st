@@ -16,19 +16,6 @@ TeaResponse class >> fromZnResponse: aZnResponse [
 ]
 
 { #category : #accessing }
-TeaResponse >> code: anInteger [
-	^ self code: anInteger reason: nil
-]
-
-{ #category : #accessing }
-TeaResponse >> code: anInteger reason: aString [
-	znResponse statusLine 
-		code: anInteger;
-		reason: aString.
-	^ ''
-]
-
-{ #category : #accessing }
 TeaResponse >> contentType [
 	^ znResponse headers contentType 
 ]
