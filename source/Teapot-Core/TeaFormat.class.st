@@ -37,11 +37,11 @@ TeaFormat class >> jsonPretty [
 ]
 
 { #category : #'instance creation' }
-TeaFormat class >> mustache: templateString contentType: contentType [
+TeaFormat class >> mustache: templateStringOrStream contentType: contentType [
 	^ [ :model :req :resp | 
 			ZnStringEntity 
-				with: (((Smalltalk at: #MustacheTemplate) on: templateString) value: model asDictionary) 
-				type: contentType ]
+				with: (((Smalltalk at: #MustacheTemplate) on: templateStringOrStream) value: model asDictionary) 
+				type: contentType ].
 ]
 
 { #category : #'instance creation' }
