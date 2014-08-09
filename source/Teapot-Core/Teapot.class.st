@@ -123,12 +123,6 @@ Teapot >> error: anExceptionSetHandlerAssoc [
     
 ]
 
-{ #category : #'response transform' }
-Teapot >> format: transformerBlockOrSymbol [
-	currentRoute responseTransformer: (self responseTransformer: transformerBlockOrSymbol)
-	
-]
-
 { #category : #initialization }
 Teapot >> initialize [
 	super initialize.
@@ -153,6 +147,12 @@ Teapot >> newRouteMethod: methodSymbol pattern: patternString handler: handlerBl
 			urlPattern: patternString
 			handler: handlerBlock
 			transformer: self defaultTransformer)
+]
+
+{ #category : #'response transform' }
+Teapot >> output: transformerBlockOrSymbol [
+	currentRoute responseTransformer: (self responseTransformer: transformerBlockOrSymbol)
+	
 ]
 
 { #category : #accessing }
