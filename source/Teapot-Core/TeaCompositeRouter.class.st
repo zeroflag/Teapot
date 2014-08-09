@@ -21,19 +21,25 @@ TeaCompositeRouter >> addErrorHandler: errorHandler exceptions: anExceptionSet [
 	errorhandlers add: anExceptionSet -> errorHandler
 ]
 
+{ #category : #private }
+TeaCompositeRouter >> handleException: anError request: aZnRequest [
+	| handler |
+	handler := errorhandlers 
+		detect: [ :each | each key handles: anError ] 
+		ifNone: [ anError pass ].
+	^ handler value 
+		cull: anError
+		cull: aZnRequest
+]
+
 { #category : #'zn delegate' }
-TeaCompositeRouter >> handleRequest: aZnRequest [
-	| response |
-	[ 
-		routers do: [ :each | 
-			response := each handleRequest: aZnRequest.
-			response isNotFound ifFalse: [ ^ response ] ] 
-	]
-	on: Error
-	do: [ :ex | | result |
-		result := self onError: ex request: aZnRequest response: response. "TODO response nil, visszateresi ertek?"
-		^ ZnResponse ok: (ZnStringEntity text: result) 
-	].
+TeaCompositeRouter >> handleRequest: aZnRequest [	
+	[ routers do: [ :each | | response |
+		response := each handleRequest: aZnRequest.
+		response isNotFound ifFalse: [ ^ response ] ] 
+	] on: Exception
+	  do: [ :ex | ^ self handleException: ex request: aZnRequest ].
+		
 	^ ZnResponse notFound: aZnRequest uri
 ]
 
@@ -41,18 +47,6 @@ TeaCompositeRouter >> handleRequest: aZnRequest [
 TeaCompositeRouter >> initialize [
 	super initialize.
 	errorhandlers := OrderedCollection new.
-]
-
-{ #category : #private }
-TeaCompositeRouter >> onError: anError request: aZnRequest response: response [
-	| handler |
-	handler := errorhandlers 
-		detect: [ :each | each key handles: anError ] 
-		ifNone: [ anError pass ].
-	^ handler value 
-		cull: anError
-		cull: aZnRequest 
-		cull: response
 ]
 
 { #category : #initialization }

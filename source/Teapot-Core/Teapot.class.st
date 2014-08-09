@@ -116,7 +116,7 @@ Teapot >> defaultTransformer [
 ]
 
 { #category : #'error handing' }
-Teapot >> error: anExceptionSetHandlerAssoc [    
+Teapot >> exception: anExceptionSetHandlerAssoc [    
 	compositeRouter 
 		addErrorHandler: anExceptionSetHandlerAssoc value 
 		exceptions: anExceptionSetHandlerAssoc key   
@@ -192,9 +192,10 @@ Teapot >> setDefaultFormat: transformerBlockOrSymbol [
 
 { #category : #controlling }
 Teapot >> start [
-	server := (ZnServer startOn: self port) 
+	server := (ZnServer startOn: self port)
 		delegate: compositeRouter;
-		yourself
+		yourself.
+	^ self
 ]
 
 { #category : #controlling }
