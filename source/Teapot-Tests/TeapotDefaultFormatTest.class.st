@@ -11,7 +11,7 @@ Class {
 TeapotDefaultFormatTest >> setUp [
 	server := (Teapot defaultFormat: #text)
 		GET: 'default' -> 'any';
-		GET: 'html' -> 'any'; format: #html;
+		GET: 'html' -> 'any'; output: #html;
 		start		
 ]
 

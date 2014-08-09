@@ -32,7 +32,7 @@ TeapotStreamingTest >> setUp [
 	downloadFile := self createDownloadableFile.
 	server := Teapot on
 		GET: '/stream' -> downloadFile readStream;
-		format: #stream;
+		output: #stream;
 		start
 ]
 

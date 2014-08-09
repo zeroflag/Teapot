@@ -10,9 +10,9 @@ Class {
 { #category : #running }
 TeapotFormatTest >> setUp [
 	server := Teapot on
-		GET: '/a' -> [ 4 ]; format: [:n | ZnStringEntity text: n printStringRoman ];
+		GET: '/a' -> [ 4 ]; output: [:n | ZnStringEntity text: n printStringRoman ];
 		GET: 'default' -> 'any';
-		GET: '/plain' -> 'any'; format: #text;
+		GET: '/plain' -> 'any'; output: #text;
 		start		
 ]
 
