@@ -18,27 +18,15 @@ TeaDynamicRouter >> addRoute: aRoute [
 
 { #category : #'zn delegate' }
 TeaDynamicRouter >> handleRequest: aZnRequest [
-	| response |
-	response := self newResponse.
-	routes
-		detect: [ :each | each handleRequest: aZnRequest response: response ]
-		ifNone: [ ^ ZnResponse notFound: aZnRequest uri ].
-	^ response
+	routes do: [ :each | | aZnResponse |
+		aZnResponse := each handleRequest: aZnRequest.
+		aZnResponse isNotFound ifFalse: [ ^ aZnResponse ] ].
+	
+	^ ZnResponse notFound: aZnRequest uri
 ]
 
 { #category : #initialization }
 TeaDynamicRouter >> initialize [
 	super initialize.
 	routes := OrderedCollection new.
-]
-
-{ #category : #private }
-TeaDynamicRouter >> newResponse [
-	| response |
-	response := ZnResponse new 
-		statusLine: ZnStatusLine ok;
-		headers: ZnHeaders defaultResponseHeaders;
-		yourself.
-	response headers contentType: ZnMimeType textHtml.
-	^ response
 ]

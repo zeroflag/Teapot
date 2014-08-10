@@ -15,72 +15,82 @@ Class {
 	#category : #'Teapot-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : #'response transformers' }
+TeaFormat class >> contentType: aZnMimeType [ 
+	^ [ :object |
+		object asTeaResponse 
+			setContentType: aZnMimeType 
+			yourself ]
+]
+
+{ #category : #'response transformers' }
 TeaFormat class >> html [
-	^ [ :str :req :resp | ZnStringEntity with: str type: ZnMimeType textHtml ]
+	^ self contentType: ZnMimeType textHtml
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'response transformers' }
 TeaFormat class >> json [
-	^ [ :object :req :resp | 
-			ZnStringEntity 
-				with: ((Smalltalk at: #NeoJSONWriter) toString: object) 
-				type: ZnMimeType applicationJson ]
+	^ [ :object | 
+		ZnResponse ok: (ZnStringEntity 
+			with: ((Smalltalk at: #NeoJSONWriter) toString: object) 
+			type: ZnMimeType applicationJson) ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'response transformers' }
 TeaFormat class >> jsonPretty [
-	^ [ :object :req :resp | 
-			ZnStringEntity 
-				with: ((Smalltalk at: #NeoJSONWriter) toStringPretty: object) 
-				type: ZnMimeType applicationJson ]
+	^ [ :object | 
+		ZnResponse ok: (ZnStringEntity 
+			with: ((Smalltalk at: #NeoJSONWriter) toStringPretty: object) 
+			type: ZnMimeType applicationJson) ]		
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'response transformers' }
 TeaFormat class >> mustache: templateStringOrStream contentType: contentType [
-	^ [ :model :req :resp | 
-			ZnStringEntity 
-				with: (((Smalltalk at: #MustacheTemplate) on: templateStringOrStream) value: model asDictionary) 
-				type: contentType ].
+	^ [ :object | 
+		ZnResponse ok: (ZnStringEntity 
+			with: (((Smalltalk at: #MustacheTemplate) on: templateStringOrStream) value: object asDictionary) 
+			type: contentType) ]
+
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'response transformers' }
 TeaFormat class >> mustacheHtml: templateString [ 
 	^ self mustache: templateString contentType: ZnMimeType textHtml.
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'response transformers' }
 TeaFormat class >> ston [
-	^ [ :object :req :resp | 
-			ZnStringEntity 
-				with: ((Smalltalk at: #STON) toString: object) 
-				type: ZnMimeType textPlain ]
+	^ [ :object | 
+		ZnResponse ok: (ZnStringEntity 
+			with: ((Smalltalk at: #STON) toString: object) 
+			type: ZnMimeType textPlain) ]				
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'response transformers' }
 TeaFormat class >> stonPretty [
-	^ [ :object :req :resp | 
-			ZnStringEntity 
-				with: ((Smalltalk at: #STON) toStringPretty: object) 
-				type: ZnMimeType textPlain ]
+	^ [ :object | 
+		ZnResponse ok: (ZnStringEntity 
+			with: ((Smalltalk at: #STON) toStringPretty: object) 
+			type: ZnMimeType textPlain) ]				
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'response transformers' }
 TeaFormat class >> stream [
 	^ self stream: ZnMimeType applicationOctetStream 
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'response transformers' }
 TeaFormat class >> stream: aZnMimeType [
-	^ [ :stream :req :resp | 		
-		ZnStreamingEntity 
-			readFrom: stream 
+	^ [ :aStream | 	
+		ZnResponse ok: (ZnStreamingEntity 
+			readFrom: aStream
 			usingType: aZnMimeType
-			andLength: stream size ]
+			andLength: aStream size) ]
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'response transformers' }
 TeaFormat class >> text [
-	^ [ :str :req :resp | ZnStringEntity with: str type: ZnMimeType textPlain ]
+	^ self contentType: ZnMimeType textPlain
+
 ]

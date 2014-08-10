@@ -11,11 +11,41 @@ Teapot on
 Class {
 	#name : #Send,
 	#superclass : #Object,
+	#instVars : [
+		'selector',
+		'receiver'
+	],
 	#category : #'Teapot-Core'
 }
 
 { #category : #'instance creation' }
 Send class >> message: aSymbol to: anObject [
-	^ [ :arg1 :arg2 | 
-		anObject perform: aSymbol withEnoughArguments: { arg1 . arg2 } ]
+	^ self new 
+		setSelector: aSymbol 
+		receiver: anObject
+]
+
+{ #category : #'tea handler' }
+Send >> handleTeaException: anException request: aZnRequest [
+	^ receiver 
+		perform: selector 
+		withEnoughArguments: { anException. aZnRequest }
+	
+
+]
+
+{ #category : #'tea handler' }
+Send >> handleTeaRequest: aTeaRequest [
+	^ receiver 
+		perform: selector 
+		withEnoughArguments: { aTeaRequest }
+	
+
+]
+
+{ #category : #initialization }
+Send >> setSelector: aSymbol receiver: anObject [
+	selector := aSymbol.
+	receiver := anObject.
+	^ self	
 ]

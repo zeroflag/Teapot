@@ -23,18 +23,18 @@ TeaRoute class >> method: aSymbol urlPattern: patternString handler: handlerBloc
 ]
 
 { #category : #route }
-TeaRoute >> handleRequest: aZnRequest response: aZnResponse [
+TeaRoute >> handleRequest: aZnRequest [
 	| matches placeholders |
 	placeholders := Dictionary new.
 	matches := self matchesRequest: aZnRequest placeholders: placeholders.
-	matches
-		ifTrue: [ 
-			| result request response |
-			request := TeaRequest fromZnRequest: aZnRequest pathParams: placeholders.
-			response := TeaResponse fromZnResponse: aZnResponse.
-			result := handler handleTeaRequest: request response: response.
-			aZnResponse entity: (responseTransformer cull: result cull: request cull: response) ].
 	^ matches
+		ifTrue: 
+			[ | request object |
+			request := TeaRequest fromZnRequest: aZnRequest pathParams: placeholders.
+			object := handler handleTeaRequest: request.
+			responseTransformer cull: object cull: request ]
+		ifFalse: 
+			[ ZnResponse notFound: aZnRequest uri ]
 ]
 
 { #category : #private }
