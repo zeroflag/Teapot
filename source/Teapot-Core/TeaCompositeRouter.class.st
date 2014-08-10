@@ -1,5 +1,5 @@
 "
-I'm a composite zn delegate, built from other zn delegates. I forward the request to the first delegate that returns other than 404.
+I'm a composite zn delegate, built from other zn delegates. I forward the request to the first delegate that returns other than 404 as response. Errors are handled with the help of the registered error handlers.
 "
 Class {
 	#name : #TeaCompositeRouter,

@@ -2,8 +2,10 @@
 I'm the Teapot server on top of ZnServer. I can handle URL routing as follows:
 
 Teapot on
-	GET: '/user' do: [ 'Test user' ];	
-	GET: '/user/:id' do: [ :req :resp :params | (params at: #id) ];
+      GET: '/hi' -> 'Hello World!';
+	GET: '/users' -> [ users ]; output: #json	
+	GET: '/user/<id>' -> [ :req | (req at: #id) ]; output: #ston;
+	PUT: '/user/<id>' -> [ :req | (req at: #id) ]
 	start.
 "
 Class {

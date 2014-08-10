@@ -1,5 +1,5 @@
 "
-My subclasses form te elements of url patterns.
+My subclasses form the elements of url patterns.
 
 "
 Class {

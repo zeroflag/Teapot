@@ -1,5 +1,5 @@
 "
-An url pattern segment that matches to nothing.
+I'm a placeholder at the last position.
 "
 Class {
 	#name : #TeaLiteralStop,
