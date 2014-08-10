@@ -13,7 +13,8 @@ TeapotMessageSendTest >> msg1 [
 ]
 
 { #category : #'web controller' }
-TeapotMessageSendTest >> msg2Req: req resp: resp [
+TeapotMessageSendTest >> msg2Req: req nil: resp [
+	self assert: resp isNil.
 	^ 'msg2 ', (req at: #param)
 ]
 
@@ -26,7 +27,7 @@ TeapotMessageSendTest >> msg3Req: req [
 TeapotMessageSendTest >> setUp [
 	server := Teapot on
 		GET: '/msg1' -> (Send message: #msg1 to: self);
-		GET: '/msg2/<param>' -> (Send message: #msg2Req:resp: to: self);		
+		GET: '/msg2/<param>' -> (Send message: #msg2Req:nil: to: self);		
 		GET: '/msg3/<param>' -> (Send message: #msg3Req: to: self);					
 		start.		
 ]
