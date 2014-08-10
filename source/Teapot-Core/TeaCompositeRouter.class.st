@@ -22,14 +22,14 @@ TeaCompositeRouter >> addErrorHandler: errorHandler exceptions: anExceptionSet [
 ]
 
 { #category : #private }
-TeaCompositeRouter >> handleException: anError request: aZnRequest [
+TeaCompositeRouter >> handleException: anException request: aZnRequest [
 	| handler |
 	handler := errorhandlers 
-		detect: [ :each | each key handles: anError ] 
-		ifNone: [ anError pass ].
+		detect: [ :each | each key handles: anException ] 
+		ifNone: [ anException pass ].
 	^ handler value 
-		cull: anError
-		cull: aZnRequest
+		handleTeaException: anException 
+		request: aZnRequest		
 ]
 
 { #category : #'zn delegate' }
