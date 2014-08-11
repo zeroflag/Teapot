@@ -17,7 +17,7 @@ TeapotBeforeTest >> logRequest: aTeaRequest [
 TeapotBeforeTest >> setUp [
 	log := OrderedCollection new.
 	server := Teapot on
-		before: [ :req | ((req at: 'user') = 'admin' and: [ (req at: 'pass') = '****' ]) ifFalse: [ req abort: 403 ] ];
+		before: [ :req | ((req at: #user) = 'admin' and: [ (req at: #pass) = '****' ]) ifFalse: [ req abort: 403 ] ];
 		before: (Send message: #logRequest: to: self);
 		before: 'any';
 		GET: 'secure' -> 'protected';
