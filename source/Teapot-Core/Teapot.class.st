@@ -126,6 +126,12 @@ Teapot >> addAbortHandlerTo: aRouter [
 		exceptions: TeaAbort
 ]
 
+{ #category : #filters }
+Teapot >> before: beforehandler [
+	compositeRouter addBeforeFilter: beforehandler
+	
+]
+
 { #category : #private }
 Teapot >> defaultTransformer [
 	^ defaultTransformer
