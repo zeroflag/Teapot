@@ -12,17 +12,17 @@ Class {
 	#instVars : [
 		'handler',
 		'urlPattern',
-		'method',
-		'responseTransformer'
+		'responseTransformer',
+		'methodMatcher'
 	],
 	#category : #'Teapot-Core'
 }
 
 { #category : #'instance creation' }
-TeaRoute class >> method: aSymbol urlPattern: patternString handler: handlerBlock transformer: transformerBlock [
+TeaRoute class >> method: aMethodMatcher urlPattern: anUrlPattern handler: handlerBlock transformer: transformerBlock [
 	^ self new 
-		setPattern: (TeaUrlPattern parseString: patternString)
-		method: aSymbol
+		setPattern: anUrlPattern
+		method: aMethodMatcher
 		handler: handlerBlock
 		transformer: transformerBlock
 ]
@@ -44,7 +44,7 @@ TeaRoute >> handleRequest: aZnRequest [
 
 { #category : #private }
 TeaRoute >> matchesRequest: aZnRequest placeholders: placeholders [
-	^ aZnRequest method = method 
+	^  (methodMatcher matchesHttpMethod: aZnRequest method)
 		and: [ urlPattern matchesUrl: aZnRequest url placeholders: placeholders ]
 ]
 
@@ -54,9 +54,9 @@ TeaRoute >> responseTransformer: aBlock [
 ]
 
 { #category : #initialization }
-TeaRoute >> setPattern: anUrlPattern method: aSymbol handler: handlerBlock transformer: transformerBlock [
+TeaRoute >> setPattern: anUrlPattern method: aMethodMatcher handler: handlerBlock transformer: transformerBlock [
 	urlPattern := anUrlPattern.
-	method := aSymbol.
+	methodMatcher := aMethodMatcher.
 	handler := handlerBlock.
 	responseTransformer := transformerBlock.
 	^ self

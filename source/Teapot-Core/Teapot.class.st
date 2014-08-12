@@ -127,9 +127,13 @@ Teapot >> addAbortHandlerTo: aRouter [
 ]
 
 { #category : #filters }
-Teapot >> before: beforehandler [
-	compositeRouter addBeforeFilter: beforehandler
-	
+Teapot >> before: patternHandlerAssoc [
+	compositeRouter addBeforeFilter:
+		(TeaRoute
+			method: TeaMethodMatcher any
+			urlPattern: (TeaUrlPattern parseString: patternHandlerAssoc key)
+			handler: patternHandlerAssoc value
+			transformer: self defaultTransformer)
 ]
 
 { #category : #private }
@@ -165,8 +169,8 @@ Teapot >> logToTranscript [
 Teapot >> newRouteMethod: methodSymbol pattern: patternString handler: handlerBlock [
 	currentRoute := dynamicRouter addRoute:
 		(TeaRoute
-			method: methodSymbol
-			urlPattern: patternString
+			method: (TeaMethodMatcher exactly: methodSymbol)
+			urlPattern: (TeaUrlPattern parseString: patternString)
 			handler: handlerBlock
 			transformer: self defaultTransformer)
 ]

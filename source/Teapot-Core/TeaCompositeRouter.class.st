@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'routers',
 		'errorhandlers',
-		'beforehandlers'
+		'beforeRoutes'
 	],
 	#category : #'Teapot-Core'
 }
@@ -18,8 +18,8 @@ TeaCompositeRouter class >> routers: teaRouterCollection [
 ]
 
 { #category : #filters }
-TeaCompositeRouter >> addBeforeFilter: beforehandler [
-	beforehandlers add: beforehandler
+TeaCompositeRouter >> addBeforeFilter: aRoute [
+	beforeRoutes add: aRoute
 ]
 
 { #category : #'error handing' }
@@ -40,9 +40,7 @@ TeaCompositeRouter >> exceptionOccurred: anException request: aZnRequest [
 
 { #category : #'zn delegate' }
 TeaCompositeRouter >> handleRequest: aZnRequest [	
-	"TODO TeaRequest gyartas mar kint?"
-	[ beforehandlers do: 
-		[ :each | each handleTeaRequest: (TeaRequest fromZnRequest: aZnRequest pathParams: Dictionary new) ].
+	[ beforeRoutes do: [ :each | each handleRequest: aZnRequest ].
 	 routers do: [ :each | | response |
 		response := each handleRequest: aZnRequest.
 		response isNotFound ifFalse: [ ^ response ] ] 
@@ -56,7 +54,7 @@ TeaCompositeRouter >> handleRequest: aZnRequest [
 TeaCompositeRouter >> initialize [
 	super initialize.
 	errorhandlers := OrderedCollection new.
-	beforehandlers := OrderedCollection new.
+	beforeRoutes := OrderedCollection new.
 ]
 
 { #category : #initialization }
