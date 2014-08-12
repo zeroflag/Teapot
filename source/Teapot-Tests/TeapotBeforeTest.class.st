@@ -17,11 +17,12 @@ TeapotBeforeTest >> logRequest: aTeaRequest [
 TeapotBeforeTest >> setUp [
 	log := OrderedCollection new.
 	server := Teapot on
-		before: [ :req | ((req at: #user) = 'admin' and: [ (req at: #pass) = '****' ]) ifFalse: [ req abort: 403 ] ];
-		before: (Send message: #logRequest: to: self);
-		before: 'any';
-		GET: 'secure' -> 'protected';
-		GET: 'secure2' -> 'protected';		
+		before: '/secure/*' -> [ :req | ((req at: #user) = 'admin' and: [ (req at: #pass) = '****' ]) ifFalse: [ req abort: 403 ] ];
+		before: '*' -> (Send message: #logRequest: to: self);
+		before: '*' -> 'any';
+		GET: '/secure' -> 'protected';
+		GET: '/secure/1/2/3' -> 'protected';
+		POST: '/public' -> 'public';
 		start		
 ]
 
@@ -31,20 +32,22 @@ TeapotBeforeTest >> tearDown [
 ]
 
 { #category : #tests }
-TeapotBeforeTest >> testAcceptsAuthenticatedUser [
+TeapotBeforeTest >> testAuthentication [
 	self assert: (TeaClient httpGetString: '/secure?user=admin&pass=****') equals: 'protected'.
+	self assert: (TeaClient httpGetString: '/secure/1/2/3?user=admin&pass=****') equals: 'protected'.
+		
+	self assert: (TeaClient httpGet: '/secure?user=user01&pass=****') code equals: 403.
+	self assert: (TeaClient httpGet: '/secure/1/2/3?user=user02&pass=****') code equals: 403.	
+	
+	self assert: (TeaClient httpPostString: '/public?user=any') equals: 'public'.
 ]
 
 { #category : #tests }
 TeapotBeforeTest >> testMultipleBeforeHandlers [
 	TeaClient httpGet: '/secure?user=admin&pass=****'.
-	TeaClient httpGet: '/secure2?user=admin&pass=****'.	
-	TeaClient httpGet: '/secure?user=user01&pass=user01'. "403 before second filter"
+	TeaClient httpGet: '/secure/1/2/3?user=admin&pass=****'.	
+	TeaClient httpGet: '/secure?user=user01&pass=****'. "403 before second filter"
+	TeaClient httpPost: '/public?user=pubuser'.		
 		
-	self assert: log asArray equals: #(admin admin).
-]
-
-{ #category : #tests }
-TeapotBeforeTest >> testRejectUnauthenticatedUser [
-	self assert: (TeaClient httpGet: '/secure?user=user01&pass=user01') code equals: 403.
+	self assert: log asArray equals: #(admin admin pubuser).
 ]
