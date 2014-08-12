@@ -10,7 +10,7 @@ Class {
 { #category : #private }
 TeapotErrorHandlingTest >> handleError: ex request: req [
 	self assert: (ex isKindOf: Exception).
-	self assert: (req isKindOf: ZnRequest).
+	self assert: (req isKindOf: TeaRequest).
 	^ ZnResponse ok: (ZnStringEntity text: 'outofbounds/domainerror handled')
 ]
 
