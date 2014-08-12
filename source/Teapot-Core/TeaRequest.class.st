@@ -12,10 +12,13 @@ Class {
 }
 
 { #category : #'instance creation' }
+TeaRequest class >> fromZnRequest: aZnRequest [
+	^ self fromZnRequest: aZnRequest pathParams: Dictionary new
+]
+
+{ #category : #'instance creation' }
 TeaRequest class >> fromZnRequest: aZnRequest pathParams: aDictionary [
-	^ self new 
-		setZnRequest: aZnRequest 
-		pathParams: aDictionary
+	^ self new setZnRequest: aZnRequest pathParams: aDictionary
 ]
 
 { #category : #aborting }

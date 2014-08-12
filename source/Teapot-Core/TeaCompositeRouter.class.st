@@ -28,14 +28,14 @@ TeaCompositeRouter >> addErrorHandler: errorHandler exceptions: anExceptionSet [
 ]
 
 { #category : #private }
-TeaCompositeRouter >> exceptionOccurred: anException request: aZnRequest [
+TeaCompositeRouter >> exceptionOccurred: anException request: aTeaRequest [
 	| handler |
 	handler := errorhandlers 
 		detect: [ :each | each key handles: anException ] 
 		ifNone: [ anException pass ].
 	^ handler value 
 		handleTeaException: anException 
-		request: aZnRequest		
+		request: aTeaRequest
 ]
 
 { #category : #'zn delegate' }
@@ -45,8 +45,8 @@ TeaCompositeRouter >> handleRequest: aZnRequest [
 		response := each handleRequest: aZnRequest.
 		response isNotFound ifFalse: [ ^ response ] ] 
 	] on: Exception
-	  do: [ :ex | ^ self exceptionOccurred: ex request: aZnRequest ]. "TODO TeaRequest instead of ZN"
-		
+	  do: [ :ex | 
+		^ self exceptionOccurred: ex request: (TeaRequest fromZnRequest: aZnRequest) ].
 	^ ZnResponse notFound: aZnRequest uri
 ]
 

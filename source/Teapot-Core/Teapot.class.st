@@ -133,7 +133,7 @@ Teapot >> before: patternHandlerAssoc [
 			method: TeaMethodMatcher any
 			urlPattern: (TeaUrlPattern parseString: patternHandlerAssoc key)
 			handler: patternHandlerAssoc value
-			transformer: self defaultTransformer)
+			transformer: TeaFormat none)
 ]
 
 { #category : #private }

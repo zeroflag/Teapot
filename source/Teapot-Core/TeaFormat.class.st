@@ -58,6 +58,11 @@ TeaFormat class >> mustacheHtml: templateString [
 ]
 
 { #category : #'response transformers' }
+TeaFormat class >> none [
+	^ [ nil ]
+]
+
+{ #category : #'response transformers' }
 TeaFormat class >> ston [
 	^ [ :object | 
 		ZnResponse ok: (ZnStringEntity 

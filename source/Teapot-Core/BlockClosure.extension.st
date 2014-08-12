@@ -1,8 +1,8 @@
 Extension { #name : #BlockClosure }
 
 { #category : #'*Teapot-Core' }
-BlockClosure >> handleTeaException: anException request: aZnRequest [
-	^ self cull: anException cull: aZnRequest
+BlockClosure >> handleTeaException: anException request: aTeaRequest [
+	^ self cull: anException cull: aTeaRequest
 ]
 
 { #category : #'*Teapot-Core' }

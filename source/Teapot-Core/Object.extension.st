@@ -9,7 +9,7 @@ Object >> asTeaResponse [
 ]
 
 { #category : #'*Teapot-Core' }
-Object >> handleTeaException: anException request: aZnRequest [
+Object >> handleTeaException: anException request: aTeaRequest [
 	^ self
 ]
 

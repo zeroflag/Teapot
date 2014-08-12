@@ -26,10 +26,10 @@ Send class >> message: aSymbol to: anObject [
 ]
 
 { #category : #'tea handler' }
-Send >> handleTeaException: anException request: aZnRequest [
+Send >> handleTeaException: anException request: aTeaRequest [
 	^ receiver 
 		perform: selector 
-		withEnoughArguments: { anException. aZnRequest }
+		withEnoughArguments: { anException. aTeaRequest }
 	
 
 ]
