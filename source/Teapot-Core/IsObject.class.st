@@ -9,7 +9,7 @@ Teapot on
 
 This route matches to the '/users/12' but does not match to '/users/foobar'. In case of matching, the the path paramter ""id"" will be converted to an integer.
 
-You can extend the built in type constraints with your own constraints, by implementing the ""placeholder type constraint"" protocol.
+You can extend the built in type constraints with your own constraints, by implementing the ""placeholder type constraint"" protocol. Then you can use the class name in the URL.
 "
 Class {
 	#name : #IsObject,

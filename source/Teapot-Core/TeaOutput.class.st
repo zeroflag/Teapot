@@ -45,9 +45,12 @@ TeaOutput class >> jsonPretty [
 
 { #category : #'response transformers' }
 TeaOutput class >> mustache: templateStringOrStream contentType: contentType [
-	^ [ :object | 
+	^ [ :object | | model |
+		model := (object respondsTo: #asDictionary)
+			ifTrue: [ object asDictionary ]
+			ifFalse: [ object ].		
 		ZnResponse ok: (ZnStringEntity 
-			with: (((Smalltalk at: #MustacheTemplate) on: templateStringOrStream) value: object asDictionary) 
+			with: (((Smalltalk at: #MustacheTemplate) on: templateStringOrStream) value: model) 
 			type: contentType) ]
 
 ]
