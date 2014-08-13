@@ -9,13 +9,13 @@ Some of the transformers require optional dependencies, like Neo-JSON, STON, or 
 
 "
 Class {
-	#name : #TeaFormat,
+	#name : #TeaOutput,
 	#superclass : #Object,
 	#category : #'Teapot-Core'
 }
 
 { #category : #'response transformers' }
-TeaFormat class >> contentType: aZnMimeType [ 
+TeaOutput class >> contentType: aZnMimeType [ 
 	^ [ :object |
 		object asTeaResponse 
 			setContentType: aZnMimeType 
@@ -23,12 +23,12 @@ TeaFormat class >> contentType: aZnMimeType [
 ]
 
 { #category : #'response transformers' }
-TeaFormat class >> html [
+TeaOutput class >> html [
 	^ self contentType: ZnMimeType textHtml
 ]
 
 { #category : #'response transformers' }
-TeaFormat class >> json [
+TeaOutput class >> json [
 	^ [ :object | 
 		ZnResponse ok: (ZnStringEntity 
 			with: ((Smalltalk at: #NeoJSONWriter) toString: object) 
@@ -36,7 +36,7 @@ TeaFormat class >> json [
 ]
 
 { #category : #'response transformers' }
-TeaFormat class >> jsonPretty [
+TeaOutput class >> jsonPretty [
 	^ [ :object | 
 		ZnResponse ok: (ZnStringEntity 
 			with: ((Smalltalk at: #NeoJSONWriter) toStringPretty: object) 
@@ -44,7 +44,7 @@ TeaFormat class >> jsonPretty [
 ]
 
 { #category : #'response transformers' }
-TeaFormat class >> mustache: templateStringOrStream contentType: contentType [
+TeaOutput class >> mustache: templateStringOrStream contentType: contentType [
 	^ [ :object | 
 		ZnResponse ok: (ZnStringEntity 
 			with: (((Smalltalk at: #MustacheTemplate) on: templateStringOrStream) value: object asDictionary) 
@@ -53,17 +53,17 @@ TeaFormat class >> mustache: templateStringOrStream contentType: contentType [
 ]
 
 { #category : #'response transformers' }
-TeaFormat class >> mustacheHtml: templateString [ 
+TeaOutput class >> mustacheHtml: templateString [ 
 	^ self mustache: templateString contentType: ZnMimeType textHtml.
 ]
 
 { #category : #'response transformers' }
-TeaFormat class >> none [
+TeaOutput class >> none [
 	^ [ nil ]
 ]
 
 { #category : #'response transformers' }
-TeaFormat class >> ston [
+TeaOutput class >> ston [
 	^ [ :object | 
 		ZnResponse ok: (ZnStringEntity 
 			with: ((Smalltalk at: #STON) toString: object) 
@@ -71,7 +71,7 @@ TeaFormat class >> ston [
 ]
 
 { #category : #'response transformers' }
-TeaFormat class >> stonPretty [
+TeaOutput class >> stonPretty [
 	^ [ :object | 
 		ZnResponse ok: (ZnStringEntity 
 			with: ((Smalltalk at: #STON) toStringPretty: object) 
@@ -79,12 +79,12 @@ TeaFormat class >> stonPretty [
 ]
 
 { #category : #'response transformers' }
-TeaFormat class >> stream [
+TeaOutput class >> stream [
 	^ self stream: ZnMimeType applicationOctetStream 
 ]
 
 { #category : #'response transformers' }
-TeaFormat class >> stream: aZnMimeType [
+TeaOutput class >> stream: aZnMimeType [
 	^ [ :aStream | 	
 		ZnResponse ok: (ZnStreamingEntity 
 			readFrom: aStream
@@ -94,7 +94,7 @@ TeaFormat class >> stream: aZnMimeType [
 ]
 
 { #category : #'response transformers' }
-TeaFormat class >> text [
+TeaOutput class >> text [
 	^ self contentType: ZnMimeType textPlain
 
 ]

@@ -18,23 +18,29 @@ Class {
 	#instVars : [
 		'server',
 		'currentRoute',
-		'port',
 		'dynamicRouter',
 		'staticRouter',
 		'compositeRouter',
-		'defaultTransformer'
+		'defaultOutput'
 	],
 	#category : #'Teapot-Core'
 }
 
 { #category : #'instance creation' }
-Teapot class >> defaultFormat: transformerBlockOrSymbol [
-	^ self new setDefaultFormat: transformerBlockOrSymbol
+Teapot class >> configure: optionsAssociations [
+	"Create a new Teapot instance with optional properties.
+ 	 - Teapot properties: #defaultOutput
+	 - ZnServer properties: See options protocol of ZnServer for specific usages.	
+	Example: Teapot configure: { #defaultOutput -> #json. #port -> 8080 }."
+	
+	^ self new initializeOptions: optionsAssociations
 ]
 
 { #category : #'instance creation' }
 Teapot class >> on [
-	^ self new
+	"Create Teapot with default properties."
+	
+	^ self configure: { }
 ]
 
 { #category : #controlling }
@@ -133,12 +139,7 @@ Teapot >> before: patternHandlerAssoc [
 			method: TeaMethodMatcher any
 			urlPattern: (TeaUrlPattern parseString: patternHandlerAssoc key)
 			handler: patternHandlerAssoc value
-			transformer: TeaFormat none)
-]
-
-{ #category : #private }
-Teapot >> defaultTransformer [
-	^ defaultTransformer
+			transformer: TeaOutput none)
 ]
 
 { #category : #'error handing' }
@@ -150,14 +151,18 @@ Teapot >> exception: anExceptionSetHandlerAssoc [
 ]
 
 { #category : #initialization }
-Teapot >> initialize [
-	super initialize.
+Teapot >> initializeOptions: optionsAssociations [		
 	dynamicRouter := TeaDynamicRouter new.
 	staticRouter := TeaStaticRouter new.
-	compositeRouter := TeaCompositeRouter routers: {dynamicRouter. staticRouter}.
+	compositeRouter := TeaCompositeRouter routers: {dynamicRouter. staticRouter}.	
 	self addAbortHandlerTo: compositeRouter.
-	defaultTransformer := TeaFormat html.
-	port := 8080
+
+	server := ZnServer defaultServerClass new.
+	server delegate: compositeRouter.
+	
+	optionsAssociations do: [ :each | server optionAt: each key put:  each value ].
+	defaultOutput := self responseTransformer: (optionsAssociations asDictionary at: #defaultOutput ifAbsent: #html).							
+	^ self
 ]
 
 { #category : #controlling }
@@ -172,7 +177,7 @@ Teapot >> newRouteMethod: methodSymbol pattern: patternString handler: handlerBl
 			method: (TeaMethodMatcher exactly: methodSymbol)
 			urlPattern: (TeaUrlPattern parseString: patternString)
 			handler: handlerBlock
-			transformer: self defaultTransformer)
+			transformer: defaultOutput)
 ]
 
 { #category : #'response transform' }
@@ -181,20 +186,10 @@ Teapot >> output: transformerBlockOrSymbol [
 	
 ]
 
-{ #category : #accessing }
-Teapot >> port [
-	^ port
-]
-
-{ #category : #accessing }
-Teapot >> port: aNumber [
-	port := aNumber
-]
-
 { #category : #private }
 Teapot >> responseTransformer: transformerBlockOrSymbol [
 	^ transformerBlockOrSymbol isSymbol
-		ifTrue: [ TeaFormat perform: transformerBlockOrSymbol ]
+		ifTrue: [ TeaOutput perform: transformerBlockOrSymbol ]
 		ifFalse: [ transformerBlockOrSymbol ]
 ]
 
@@ -210,21 +205,19 @@ Teapot >> server [
 	^ server
 ]
 
-{ #category : #initialization }
-Teapot >> setDefaultFormat: transformerBlockOrSymbol [
-	defaultTransformer := self responseTransformer: transformerBlockOrSymbol.
-	^ self
+{ #category : #controlling }
+Teapot >> start [
+	^ server start.
 ]
 
 { #category : #controlling }
-Teapot >> start [
-	server := (ZnServer startOn: self port)
-		delegate: compositeRouter;
-		yourself.
+Teapot >> startOn: portNumber [
+	server port: portNumber.
+	server start.
 	^ self
 ]
 
 { #category : #controlling }
 Teapot >> stop [
-	server ifNotNil: [ server stop ]
+	server stop
 ]
