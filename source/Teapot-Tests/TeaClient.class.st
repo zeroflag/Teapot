@@ -9,7 +9,7 @@ Class {
 
 { #category : #private }
 TeaClient class >> httpGet: aString [
-	^ ZnEasy get: 'http://localhost:8080/', aString
+	^ ZnEasy get: 'http://localhost:1701/', aString
 
 	
 ]
@@ -23,7 +23,7 @@ TeaClient class >> httpGetString: aString [
 
 { #category : #private }
 TeaClient class >> httpPost: aString [
-	^ ZnEasy post: 'http://localhost:8080/', aString data: (ZnEntity text: 'any')
+	^ ZnEasy post: 'http://localhost:1701/', aString data: (ZnEntity text: 'any')
 
 	
 ]

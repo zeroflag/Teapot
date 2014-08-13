@@ -9,7 +9,7 @@ Class {
 
 { #category : #running }
 TeapotDefaultFormatTest >> setUp [
-	server := (Teapot defaultFormat: #text)
+	server := (Teapot configure: { #defaultOutput -> #text })
 		GET: 'default' -> 'any';
 		GET: 'html' -> 'any'; output: #html;
 		start		

@@ -22,7 +22,7 @@ TeapotFormParamsTest >> tearDown [
 { #category : #tests }
 TeapotFormParamsTest >> testFormParams [
 	| result |
-	result := ZnEasy post: 'http://localhost:8080/form' data: (ZnApplicationFormUrlEncodedEntity new 
+	result := ZnEasy post: 'http://localhost:1701/form' data: (ZnApplicationFormUrlEncodedEntity new 
 		at: 'foo' put: 'abc'; 
 		at: 'bar' put: '123'; 
 		yourself).
