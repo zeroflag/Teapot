@@ -3,7 +3,7 @@ A literal url pattern segment that matches to a string.
 "
 Class {
 	#name : #TeaLiteral,
-	#superclass : #TeaUrlPatternSegment,
+	#superclass : #TeaGlobUrlSegment,
 	#instVars : [
 		'literal'
 	],

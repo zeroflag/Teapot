@@ -3,7 +3,7 @@ I'm a placeholder with a key. My content is substituted with a value.
 "
 Class {
 	#name : #TeaPlaceholder,
-	#superclass : #TeaUrlPatternSegment,
+	#superclass : #TeaGlobUrlSegment,
 	#instVars : [
 		'placeholderName',
 		'typeConstraint'

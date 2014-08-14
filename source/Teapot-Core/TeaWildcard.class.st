@@ -3,7 +3,7 @@ A wildcard url pattern segment that matches to anything.
 "
 Class {
 	#name : #TeaWildcard,
-	#superclass : #TeaUrlPatternSegment,
+	#superclass : #TeaGlobUrlSegment,
 	#category : #'Teapot-Core'
 }
 
