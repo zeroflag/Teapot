@@ -8,7 +8,7 @@ Class {
 TeaUrlPatternTest >> pattern: patternString matches: urlString [
 	| placeholders |
 	placeholders := Dictionary new.
-	self assert: ((TeaUrlPattern parseString: patternString) matchesUrl: urlString asUrl placeholders: placeholders).
+	self assert: ((TeaGlobUrlPattern parseString: patternString) matchesUrl: urlString asUrl placeholders: placeholders).
 	^ placeholders
 ]
 
@@ -16,7 +16,7 @@ TeaUrlPatternTest >> pattern: patternString matches: urlString [
 TeaUrlPatternTest >> pattern: patternString noMatch: urlString [
 	| placeholders |
 	placeholders := Dictionary new.
-	self deny: ((TeaUrlPattern parseString: patternString) matchesUrl: urlString asUrl placeholders: placeholders).
+	self deny: ((TeaGlobUrlPattern parseString: patternString) matchesUrl: urlString asUrl placeholders: placeholders).
 	^ placeholders
 ]
 
