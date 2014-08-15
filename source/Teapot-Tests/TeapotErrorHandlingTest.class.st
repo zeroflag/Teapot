@@ -20,10 +20,10 @@ TeapotErrorHandlingTest >> setUp [
 		GET: '/zerodiv' -> [ 1 / 0 ];
 		GET: '/sub' -> [ #() at: 123 ];			
 		GET: '/domain' -> [ -2 sqrt ];
-		GET: '/nonbool' -> [ 1 ifTrue: [  ] ];
+		GET: '/nonbool' -> [ NotYetImplemented signal ];
 		exception: ZeroDivide -> [ :ex :req | ZnResponse ok: (ZnStringEntity text: 'zerodiv handled') ];
 		exception: SubscriptOutOfBounds, DomainError -> (Send message: #handleError:request: to: self);
-		exception: NonBooleanReceiver -> (ZnResponse ok: (ZnStringEntity text: 'nonbool handled'));
+		exception: NotYetImplemented -> (ZnResponse ok: (ZnStringEntity text: 'nonbool handled'));
 		start		
 ]
 
