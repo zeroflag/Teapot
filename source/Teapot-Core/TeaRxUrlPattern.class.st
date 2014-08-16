@@ -18,9 +18,8 @@ TeaRxUrlPattern class >> fromRxMatcher: aRxMatcher [
 
 { #category : #private }
 TeaRxUrlPattern >> hasMatched: aZnUrl [
-	| match | "XXX RxMatcher has state. Consider something better"
-	lock critical: [ match := (regexp matches: aZnUrl path) or: [ regexp matches: '/', aZnUrl path ] ].
-	^ match
+	"XXX RxMatcher has state. Consider something better"
+	^ lock critical: [ (regexp matches: aZnUrl path) or: [ regexp matches: '/', aZnUrl path ] ]
 ]
 
 { #category : #initialization }

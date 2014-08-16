@@ -53,7 +53,7 @@ Teapot >> CONNECT: patternActionAssoc [
 	self 
 		addRouteMethod: #CONNECT 
 		pattern: patternActionAssoc key
-		handler: patternActionAssoc value
+		action: patternActionAssoc value
 ]
 
 { #category : #'url mapping' }
@@ -61,7 +61,7 @@ Teapot >> DELETE: patternActionAssoc [
 	self 
 		addRouteMethod: #DELETE
 		pattern: patternActionAssoc key
-		handler: patternActionAssoc value
+		action: patternActionAssoc value
 ]
 
 { #category : #'url mapping' }
@@ -69,7 +69,7 @@ Teapot >> GET: patternActionAssoc [
 	self 
 		addRouteMethod: #GET
 		pattern: patternActionAssoc key
-		handler: patternActionAssoc value
+		action: patternActionAssoc value
 ]
 
 { #category : #'url mapping' }
@@ -77,7 +77,7 @@ Teapot >> HEAD: patternActionAssoc [
 	self 
 		addRouteMethod: #HEAD
 		pattern: patternActionAssoc key
-		handler: patternActionAssoc value
+		action: patternActionAssoc value
 ]
 
 { #category : #'url mapping' }
@@ -85,7 +85,7 @@ Teapot >> OPTIONS: patternActionAssoc [
 	self 
 		addRouteMethod: #OPTIONS
 		pattern: patternActionAssoc key
-		handler: patternActionAssoc value
+		action: patternActionAssoc value
 
 ]
 
@@ -94,7 +94,7 @@ Teapot >> PATCH: patternActionAssoc [
 	self 
 		addRouteMethod: #PATCH
 		pattern: patternActionAssoc key
-		handler: patternActionAssoc value
+		action: patternActionAssoc value
 ]
 
 { #category : #'url mapping' }
@@ -102,7 +102,7 @@ Teapot >> POST: patternActionAssoc [
 	self 
 		addRouteMethod: #POST
 		pattern: patternActionAssoc key
-		handler: patternActionAssoc value
+		action: patternActionAssoc value
 ]
 
 { #category : #'url mapping' }
@@ -110,7 +110,7 @@ Teapot >> PUT: patternActionAssoc [
 	self 
 		addRouteMethod: #PUT
 		pattern: patternActionAssoc key
-		handler: patternActionAssoc value
+		action: patternActionAssoc value
 
 ]
 
@@ -119,7 +119,7 @@ Teapot >> TRACE: patternActionAssoc [
 	self 
 		addRouteMethod: #TRACE
 		pattern: patternActionAssoc key 
-		handler: patternActionAssoc value
+		action: patternActionAssoc value
 ]
 
 { #category : #private }
@@ -133,12 +133,12 @@ Teapot >> addAbortHandlerTo: aRouter [
 ]
 
 { #category : #private }
-Teapot >> addRouteMethod: methodSymbol pattern: pattern handler: handlerBlock [
+Teapot >> addRouteMethod: methodSymbol pattern: pattern action: aTeaAction [
 	currentRoute := dynamicRouter addRoute:
 		(TeaRoute
 			method: (TeaMethodMatcher exactly: methodSymbol)
 			urlPattern: pattern asTeaUrlPattern
-			action: handlerBlock
+			action: aTeaAction
 			transformer: defaultOutput)
 ]
 
