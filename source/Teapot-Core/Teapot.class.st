@@ -31,7 +31,7 @@ Teapot class >> configure: optionsAssociations [
 	"Create a new Teapot instance with optional properties.
  	 - Teapot properties: #defaultOutput
 	 - ZnServer properties: See options protocol of ZnServer for specific usages.	
-	Example: Teapot configure: { #defaultOutput -> #json. #port -> 8080 }."
+	Example: Teapot configure: { #defaultOutput -> #json. #port -> 8080. #debugMode -> true }."
 	
 	^ self new initializeOptions: optionsAssociations
 ]
@@ -49,77 +49,77 @@ Teapot class >> stopAll [
 ]
 
 { #category : #'url mapping' }
-Teapot >> CONNECT: patternHandlerAssoc [
+Teapot >> CONNECT: patternActionAssoc [
 	self 
-		newRouteMethod: #CONNECT 
-		pattern: patternHandlerAssoc key
-		handler: patternHandlerAssoc value
+		addRouteMethod: #CONNECT 
+		pattern: patternActionAssoc key
+		handler: patternActionAssoc value
 ]
 
 { #category : #'url mapping' }
-Teapot >> DELETE: patternHandlerAssoc [
+Teapot >> DELETE: patternActionAssoc [
 	self 
-		newRouteMethod: #DELETE
-		pattern: patternHandlerAssoc key
-		handler: patternHandlerAssoc value
+		addRouteMethod: #DELETE
+		pattern: patternActionAssoc key
+		handler: patternActionAssoc value
 ]
 
 { #category : #'url mapping' }
-Teapot >> GET: patternHandlerAssoc [
+Teapot >> GET: patternActionAssoc [
 	self 
-		newRouteMethod: #GET
-		pattern: patternHandlerAssoc key
-		handler: patternHandlerAssoc value
+		addRouteMethod: #GET
+		pattern: patternActionAssoc key
+		handler: patternActionAssoc value
 ]
 
 { #category : #'url mapping' }
-Teapot >> HEAD: patternHandlerAssoc [
+Teapot >> HEAD: patternActionAssoc [
 	self 
-		newRouteMethod: #HEAD
-		pattern: patternHandlerAssoc key
-		handler: patternHandlerAssoc value
+		addRouteMethod: #HEAD
+		pattern: patternActionAssoc key
+		handler: patternActionAssoc value
 ]
 
 { #category : #'url mapping' }
-Teapot >> OPTIONS: patternHandlerAssoc [
+Teapot >> OPTIONS: patternActionAssoc [
 	self 
-		newRouteMethod: #OPTIONS
-		pattern: patternHandlerAssoc key
-		handler: patternHandlerAssoc value
-
-]
-
-{ #category : #'url mapping' }
-Teapot >> PATCH: patternHandlerAssoc [
-	self 
-		newRouteMethod: #PATCH
-		pattern: patternHandlerAssoc key
-		handler: patternHandlerAssoc value
-]
-
-{ #category : #'url mapping' }
-Teapot >> POST: patternHandlerAssoc [
-	self 
-		newRouteMethod: #POST
-		pattern: patternHandlerAssoc key
-		handler: patternHandlerAssoc value
-]
-
-{ #category : #'url mapping' }
-Teapot >> PUT: patternHandlerAssoc [
-	self 
-		newRouteMethod: #PUT
-		pattern: patternHandlerAssoc key
-		handler: patternHandlerAssoc value
+		addRouteMethod: #OPTIONS
+		pattern: patternActionAssoc key
+		handler: patternActionAssoc value
 
 ]
 
 { #category : #'url mapping' }
-Teapot >> TRACE: patternHandlerAssoc [
+Teapot >> PATCH: patternActionAssoc [
 	self 
-		newRouteMethod: #TRACE
-		pattern: patternHandlerAssoc key 
-		handler: patternHandlerAssoc value
+		addRouteMethod: #PATCH
+		pattern: patternActionAssoc key
+		handler: patternActionAssoc value
+]
+
+{ #category : #'url mapping' }
+Teapot >> POST: patternActionAssoc [
+	self 
+		addRouteMethod: #POST
+		pattern: patternActionAssoc key
+		handler: patternActionAssoc value
+]
+
+{ #category : #'url mapping' }
+Teapot >> PUT: patternActionAssoc [
+	self 
+		addRouteMethod: #PUT
+		pattern: patternActionAssoc key
+		handler: patternActionAssoc value
+
+]
+
+{ #category : #'url mapping' }
+Teapot >> TRACE: patternActionAssoc [
+	self 
+		addRouteMethod: #TRACE
+		pattern: patternActionAssoc key 
+		handler: patternActionAssoc value
 ]
 
 { #category : #private }
@@ -132,21 +132,31 @@ Teapot >> addAbortHandlerTo: aRouter [
 		exceptions: TeaAbort
 ]
 
-{ #category : #filters }
-Teapot >> before: patternHandlerAssoc [
+{ #category : #private }
+Teapot >> addRouteMethod: methodSymbol pattern: pattern handler: handlerBlock [
+	currentRoute := dynamicRouter addRoute:
+		(TeaRoute
+			method: (TeaMethodMatcher exactly: methodSymbol)
+			urlPattern: pattern asTeaUrlPattern
+			action: handlerBlock
+			transformer: defaultOutput)
+]
+
+{ #category : #'url mapping' }
+Teapot >> before: patternActionAssoc [
 	compositeRouter addBeforeFilter:
 		(TeaRoute
 			method: TeaMethodMatcher any
-			urlPattern: patternHandlerAssoc key asTeaUrlPattern
-			action: patternHandlerAssoc value
+			urlPattern: patternActionAssoc key asTeaUrlPattern
+			action: patternActionAssoc value
 			transformer: TeaOutput none)
 ]
 
 { #category : #'error handing' }
-Teapot >> exception: anExceptionSetHandlerAssoc [    
+Teapot >> exception: anExceptionSetActionAssoc [    
 	compositeRouter 
-		addErrorHandler: anExceptionSetHandlerAssoc value 
-		exceptions: anExceptionSetHandlerAssoc key   
+		addErrorHandler: anExceptionSetActionAssoc value 
+		exceptions: anExceptionSetActionAssoc key   
     
 ]
 
@@ -163,21 +173,6 @@ Teapot >> initializeOptions: optionsAssociations [
 	optionsAssociations do: [ :each | server optionAt: each key put:  each value ].
 	defaultOutput := self responseTransformer: (optionsAssociations asDictionary at: #defaultOutput ifAbsent: #html).							
 	^ self
-]
-
-{ #category : #controlling }
-Teapot >> logToTranscript [
-	^ server logToTranscript
-]
-
-{ #category : #private }
-Teapot >> newRouteMethod: methodSymbol pattern: pattern handler: handlerBlock [
-	currentRoute := dynamicRouter addRoute:
-		(TeaRoute
-			method: (TeaMethodMatcher exactly: methodSymbol)
-			urlPattern: pattern asTeaUrlPattern
-			action: handlerBlock
-			transformer: defaultOutput)
 ]
 
 { #category : #'response transform' }
@@ -207,14 +202,7 @@ Teapot >> server [
 
 { #category : #controlling }
 Teapot >> start [
-	^ server start.
-]
-
-{ #category : #controlling }
-Teapot >> startOn: portNumber [
-	server port: portNumber.
-	server start.
-	^ self
+	^ server start
 ]
 
 { #category : #controlling }

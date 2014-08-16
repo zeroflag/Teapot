@@ -43,6 +43,16 @@ Send >> handleTeaRequest: aTeaRequest [
 
 ]
 
+{ #category : #printing }
+Send >> printOn: aStream [
+	aStream 
+		nextPutAll: '(Send message: ';
+		nextPutAll: selector printString;
+		nextPutAll: ' to: '.
+	receiver printOn: aStream.
+	aStream nextPut: $)
+]
+
 { #category : #initialization }
 Send >> setSelector: aSymbol receiver: anObject [
 	selector := aSymbol.

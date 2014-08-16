@@ -5,19 +5,24 @@ Class {
 	#name : #TeaMethodMatcher,
 	#superclass : #Object,
 	#instVars : [
-		'matcherBlock'
+		'matcherBlock',
+		'name'
 	],
 	#category : #'Teapot-Core'
 }
 
 { #category : #'instance creation' }
 TeaMethodMatcher class >> any [
-	^ self new setMatcherBlock: [ :anyMethod | true ]
+	^ self new 
+		setMatcherBlock: [ :anyMethod | true ] 
+		name: 'ANY'
 ]
 
 { #category : #'instance creation' }
 TeaMethodMatcher class >> exactly: aSymbol [
-	^ self new setMatcherBlock: [ :actual | actual = aSymbol ]
+	^ self new 
+		setMatcherBlock: [ :actual | actual = aSymbol ] 
+		name: aSymbol asString
 ]
 
 { #category : #'http method matcher' }
@@ -25,8 +30,16 @@ TeaMethodMatcher >> matchesHttpMethod: aSymbol [
 	^ matcherBlock value: aSymbol	
 ]
 
+{ #category : #printing }
+TeaMethodMatcher >> printOn: aStream [
+	aStream 
+		nextPutAll: name;
+		nextPut: $:
+]
+
 { #category : #initialization }
-TeaMethodMatcher >> setMatcherBlock: aBlockClosure [ 
+TeaMethodMatcher >> setMatcherBlock: aBlockClosure name: aString [
 	matcherBlock := aBlockClosure.
+	name := aString.
 	^ self
 ]

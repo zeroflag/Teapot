@@ -19,9 +19,3 @@ TeaPlaceholderStop >> matches: urlSegments rest: adjacentPatterns placeholders: 
 			put: (typeConstraint parseString: urlSegments first) ].
 	^ match
 ]
-
-{ #category : #printing }
-TeaPlaceholderStop >> printOn: aStream [
-	super printOn: aStream.
-	aStream nextPut: $$.
-]

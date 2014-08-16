@@ -69,9 +69,11 @@ TeaGlobUrlPattern >> padUrlSegments: anUrl with: padding size: anInteger [
 
 { #category : #printing }
 TeaGlobUrlPattern >> printOn: aStream [
+	aStream nextPut: $'.
 	segments 
 		do: [ :each | each printOn: aStream ]
-		separatedBy: [ aStream nextPut: $/ ]
+		separatedBy: [ aStream nextPut: $/ ].
+	aStream nextPut: $'.
 ]
 
 { #category : #initialization }

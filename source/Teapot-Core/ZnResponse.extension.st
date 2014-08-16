@@ -4,3 +4,8 @@ Extension { #name : #ZnResponse }
 ZnResponse >> asTeaResponse: aResponseTransformer request: aTeaRequest [
 	^ self
 ]
+
+{ #category : #'*Teapot-Core' }
+ZnResponse >> handleTeaException: anException request: aTeaRequest [
+	^ self
+]

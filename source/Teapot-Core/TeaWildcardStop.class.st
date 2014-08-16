@@ -11,9 +11,3 @@ Class {
 TeaWildcardStop >> matches: urlSegments rest: adjacentPatterns placeholders: aDictionary [
 	^ true
 ]
-
-{ #category : #printing }
-TeaWildcardStop >> printOn: aStream [
-	super printOn: aStream.
-	aStream nextPut: $$.
-]

@@ -19,12 +19,12 @@ Class {
 }
 
 { #category : #'instance creation' }
-TeaRoute class >> method: aMethodMatcher urlPattern: anUrlPattern action: action transformer: transformerBlock [
+TeaRoute class >> method: aMethodMatcher urlPattern: anUrlPattern action: aTeaAction transformer: aResponseTransformer [
 	^ self new 
 		setPattern: anUrlPattern
 		method: aMethodMatcher
-		action: action
-		transformer: transformerBlock
+		action: aTeaAction
+		transformer: aResponseTransformer
 ]
 
 { #category : #route }
@@ -48,16 +48,25 @@ TeaRoute >> matchesRequest: aZnRequest placeholders: placeholders [
 		and: [ urlPattern matchesUrl: aZnRequest url placeholders: placeholders ]
 ]
 
+{ #category : #printing }
+TeaRoute >> printOn: aStream [
+	methodMatcher printOn: aStream.
+	aStream space.
+	urlPattern printOn: aStream.
+	aStream nextPutAll: ' -> '.
+	action printOn: aStream.
+]
+
 { #category : #route }
 TeaRoute >> responseTransformer: aBlock [
 	responseTransformer := aBlock
 ]
 
 { #category : #initialization }
-TeaRoute >> setPattern: anUrlPattern method: aMethodMatcher action: aTeaAction transformer: transformerBlock [
+TeaRoute >> setPattern: anUrlPattern method: aMethodMatcher action: aTeaAction transformer: aResponseTransformer [
 	urlPattern := anUrlPattern.
 	methodMatcher := aMethodMatcher.
 	action := aTeaAction.
-	responseTransformer := transformerBlock.
+	responseTransformer := aResponseTransformer.
 	^ self
 ]

@@ -11,9 +11,3 @@ Class {
 TeaLiteralStop >> matches: urlSegments rest: adjacentPatterns placeholders: aDictionary [
 	^ urlSegments size = 1 and: [ literal = urlSegments first ]
 ]
-
-{ #category : #printing }
-TeaLiteralStop >> printOn: aStream [	
-	super printOn: aStream.
-	aStream nextPut: $$.
-]
