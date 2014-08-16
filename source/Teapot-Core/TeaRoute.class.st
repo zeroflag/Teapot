@@ -10,20 +10,20 @@ Class {
 	#name : #TeaRoute,
 	#superclass : #Object,
 	#instVars : [
-		'handler',
 		'urlPattern',
 		'responseTransformer',
-		'methodMatcher'
+		'methodMatcher',
+		'action'
 	],
 	#category : #'Teapot-Core'
 }
 
 { #category : #'instance creation' }
-TeaRoute class >> method: aMethodMatcher urlPattern: anUrlPattern handler: handlerBlock transformer: transformerBlock [
+TeaRoute class >> method: aMethodMatcher urlPattern: anUrlPattern action: action transformer: transformerBlock [
 	^ self new 
 		setPattern: anUrlPattern
 		method: aMethodMatcher
-		handler: handlerBlock
+		action: action
 		transformer: transformerBlock
 ]
 
@@ -36,7 +36,7 @@ TeaRoute >> handleRequest: aZnRequest [
 		ifTrue: 
 			[ | request result |
 			request := TeaRequest fromZnRequest: aZnRequest pathParams: placeholders.
-			result := handler handleTeaRequest: request.
+			result := action handleTeaRequest: request.
 			result asTeaResponse: responseTransformer request: request ]
 		ifFalse: 
 			[ ZnResponse notFound: aZnRequest uri ]
@@ -54,10 +54,10 @@ TeaRoute >> responseTransformer: aBlock [
 ]
 
 { #category : #initialization }
-TeaRoute >> setPattern: anUrlPattern method: aMethodMatcher handler: handlerBlock transformer: transformerBlock [
+TeaRoute >> setPattern: anUrlPattern method: aMethodMatcher action: aTeaAction transformer: transformerBlock [
 	urlPattern := anUrlPattern.
 	methodMatcher := aMethodMatcher.
-	handler := handlerBlock.
+	action := aTeaAction.
 	responseTransformer := transformerBlock.
 	^ self
 ]

@@ -8,12 +8,12 @@ Class {
 	#category : #'Teapot-Core'
 }
 
-{ #category : #'placeholder type constraint' }
+{ #category : #'type constraint' }
 IsInteger class >> matchesTo: aString [
 	^ '-?\d+' asRegex matches: aString
 ]
 
-{ #category : #'placeholder type constraint' }
+{ #category : #'type constraint' }
 IsInteger class >> parseString: aString [
 	^ aString asInteger
 ]

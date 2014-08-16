@@ -22,11 +22,6 @@ TeaWildcard >> matches: urlSegments rest: adjacentPatterns placeholders: aDictio
 		placeholders: aDictionary
 ]
 
-{ #category : #private }
-TeaWildcard >> matchesTo: aString [
-	^ true
-]
-
 { #category : #printing }
 TeaWildcard >> printOn: aStream [
 	aStream nextPut: $*

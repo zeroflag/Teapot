@@ -8,15 +8,13 @@ Class {
 	#category : #'Teapot-Core'
 }
 
-{ #category : #'placeholder type constraint' }
+{ #category : #'type constraint' }
 IsNumber class >> matchesTo: aString [
-	Number 
-		readFrom: aString 
-		ifFail: [ ^false ].
+	Number readFrom: aString ifFail: [ ^false ].
 	^ true
 ]
 
-{ #category : #'placeholder type constraint' }
+{ #category : #'type constraint' }
 IsNumber class >> parseString: aString [
 	^ aString asNumber
 ]

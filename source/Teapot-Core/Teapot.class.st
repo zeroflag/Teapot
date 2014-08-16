@@ -138,7 +138,7 @@ Teapot >> before: patternHandlerAssoc [
 		(TeaRoute
 			method: TeaMethodMatcher any
 			urlPattern: patternHandlerAssoc key asTeaUrlPattern
-			handler: patternHandlerAssoc value
+			action: patternHandlerAssoc value
 			transformer: TeaOutput none)
 ]
 
@@ -176,7 +176,7 @@ Teapot >> newRouteMethod: methodSymbol pattern: pattern handler: handlerBlock [
 		(TeaRoute
 			method: (TeaMethodMatcher exactly: methodSymbol)
 			urlPattern: pattern asTeaUrlPattern
-			handler: handlerBlock
+			action: handlerBlock
 			transformer: defaultOutput)
 ]
 

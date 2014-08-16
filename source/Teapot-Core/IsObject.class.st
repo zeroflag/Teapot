@@ -17,12 +17,12 @@ Class {
 	#category : #'Teapot-Core'
 }
 
-{ #category : #'placeholder type constraint' }
+{ #category : #'type constraint' }
 IsObject class >> matchesTo: aString [
 	^ true
 ]
 
-{ #category : #'placeholder type constraint' }
+{ #category : #'type constraint' }
 IsObject class >> parseString: aString [
 	^ aString
 ]

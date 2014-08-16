@@ -25,7 +25,7 @@ Send class >> message: aSymbol to: anObject [
 		receiver: anObject
 ]
 
-{ #category : #'tea handler' }
+{ #category : #'tea action' }
 Send >> handleTeaException: anException request: aTeaRequest [
 	^ receiver 
 		perform: selector 
@@ -34,7 +34,7 @@ Send >> handleTeaException: anException request: aTeaRequest [
 
 ]
 
-{ #category : #'tea handler' }
+{ #category : #'tea action' }
 Send >> handleTeaRequest: aTeaRequest [
 	^ receiver 
 		perform: selector 
