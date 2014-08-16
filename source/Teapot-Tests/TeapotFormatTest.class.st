@@ -13,7 +13,7 @@ TeapotFormatTest >> setUp [
 		GET: '/a' -> [ 4 ]; output: [ :n :req | ZnResponse ok: (ZnStringEntity text: n printStringRoman) ];
 		GET: 'default' -> 'any';
 		GET: '/plain' -> 'any'; output: #text;
-		GET: 'pdf' -> 'any'; output: (TeaOutput contentType: ZnMimeType applicationPdf);
+		GET: 'pdf' -> 'any'; output: (TeaOutput stringWithContentType: ZnMimeType applicationPdf);
 		start		
 ]
 
