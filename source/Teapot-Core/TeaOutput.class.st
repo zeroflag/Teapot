@@ -15,17 +15,8 @@ Class {
 }
 
 { #category : #'response transformers' }
-TeaOutput class >> contentType: aZnMimeType [ 
-	^ [ :object | | entity |
-		entity := (ZnStringEntity type: aZnMimeType) 
-			string: object asString;
-			yourself.		
-		ZnResponse ok: entity ]
-]
-
-{ #category : #'response transformers' }
 TeaOutput class >> html [
-	^ self contentType: ZnMimeType textHtml
+	^ self stringWithContentType: ZnMimeType textHtml
 ]
 
 { #category : #'response transformers' }
@@ -98,7 +89,16 @@ TeaOutput class >> stream: aZnMimeType [
 ]
 
 { #category : #'response transformers' }
+TeaOutput class >> stringWithContentType: aZnMimeType [ 
+	^ [ :object | | entity |
+		entity := (ZnStringEntity type: aZnMimeType) 
+			string: object asString;
+			yourself.		
+		ZnResponse ok: entity ]
+]
+
+{ #category : #'response transformers' }
 TeaOutput class >> text [
-	^ self contentType: ZnMimeType textPlain
+	^ self stringWithContentType: ZnMimeType textPlain
 
 ]
