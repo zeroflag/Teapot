@@ -1,8 +1,8 @@
 Extension { #name : #Object }
 
 { #category : #'*Teapot-Core' }
-Object >> asTeaResponse [
-	^ ZnResponse ok: (ZnStringEntity html: self asString)
+Object >> asTeaResponse: aResponseTransformer request: aTeaRequest [
+	^ aResponseTransformer cull: self cull: aTeaRequest
 	
 	
 

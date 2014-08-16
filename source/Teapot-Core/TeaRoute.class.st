@@ -34,10 +34,10 @@ TeaRoute >> handleRequest: aZnRequest [
 	matches := self matchesRequest: aZnRequest placeholders: placeholders.
 	^ matches
 		ifTrue: 
-			[ | request object |
+			[ | request result |
 			request := TeaRequest fromZnRequest: aZnRequest pathParams: placeholders.
-			object := handler handleTeaRequest: request.
-			responseTransformer cull: object cull: request ]
+			result := handler handleTeaRequest: request.
+			result asTeaResponse: responseTransformer request: request ]
 		ifFalse: 
 			[ ZnResponse notFound: aZnRequest uri ]
 ]

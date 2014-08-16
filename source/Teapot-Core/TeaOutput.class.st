@@ -16,10 +16,11 @@ Class {
 
 { #category : #'response transformers' }
 TeaOutput class >> contentType: aZnMimeType [ 
-	^ [ :object |
-		object asTeaResponse 
-			setContentType: aZnMimeType 
-			yourself ]
+	^ [ :object | | entity |
+		entity := (ZnStringEntity type: aZnMimeType) 
+			string: object asString;
+			yourself.		
+		ZnResponse ok: entity ]
 ]
 
 { #category : #'response transformers' }

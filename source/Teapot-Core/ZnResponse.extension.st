@@ -1,6 +1,6 @@
 Extension { #name : #ZnResponse }
 
 { #category : #'*Teapot-Core' }
-ZnResponse >> asTeaResponse [
+ZnResponse >> asTeaResponse: aResponseTransformer request: aTeaRequest [
 	^ self
 ]
