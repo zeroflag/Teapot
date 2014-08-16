@@ -28,14 +28,6 @@ TeaOutput class >> json [
 ]
 
 { #category : #'response transformers' }
-TeaOutput class >> jsonPretty [
-	^ [ :object | 
-		ZnResponse ok: (ZnStringEntity 
-			with: ((Smalltalk at: #NeoJSONWriter) toStringPretty: object) 
-			type: ZnMimeType applicationJson) ]		
-]
-
-{ #category : #'response transformers' }
 TeaOutput class >> mustache: templateStringOrStream contentType: contentType [
 	^ [ :object | | model |
 		model := (object respondsTo: #asDictionary)
@@ -62,14 +54,6 @@ TeaOutput class >> ston [
 	^ [ :object | 
 		ZnResponse ok: (ZnStringEntity 
 			with: ((Smalltalk at: #STON) toString: object) 
-			type: ZnMimeType textPlain) ]				
-]
-
-{ #category : #'response transformers' }
-TeaOutput class >> stonPretty [
-	^ [ :object | 
-		ZnResponse ok: (ZnStringEntity 
-			with: ((Smalltalk at: #STON) toStringPretty: object) 
 			type: ZnMimeType textPlain) ]				
 ]
 

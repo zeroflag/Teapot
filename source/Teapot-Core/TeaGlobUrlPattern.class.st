@@ -24,9 +24,7 @@ TeaGlobUrlPattern class >> createSegment: aString atLast: aBoolean [
 		ifTrue: [ ^ TeaWildcard atLast: aBoolean ].
 	(aString beginsWith: '<')
 		ifTrue: [ ^ TeaPlaceholder fromString: aString atLast: aBoolean ].
-	^ TeaLiteral 
-		fromString: aString 
-		atLast: aBoolean
+	^ TeaLiteral fromString: aString atLast: aBoolean
 ]
 
 { #category : #private }
@@ -34,9 +32,7 @@ TeaGlobUrlPattern class >> parseSegments: aString [
 	| tokens |
 	tokens := aString findTokens: '/'.
 	^ tokens collectWithIndex: [ :each :idx | 
-			self 
-				createSegment: each 
-				atLast: idx = tokens size ]
+		self createSegment: each atLast: idx = tokens size ]
 ]
 
 { #category : #'instance creation' }
