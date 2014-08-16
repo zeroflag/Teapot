@@ -152,7 +152,7 @@ Teapot >> before: patternActionAssoc [
 			transformer: TeaOutput none)
 ]
 
-{ #category : #'error handing' }
+{ #category : #'url mapping' }
 Teapot >> exception: anExceptionSetActionAssoc [    
 	compositeRouter 
 		addErrorHandler: anExceptionSetActionAssoc value 
@@ -175,7 +175,7 @@ Teapot >> initializeOptions: optionsAssociations [
 	^ self
 ]
 
-{ #category : #'response transform' }
+{ #category : #'url mapping' }
 Teapot >> output: transformerBlockOrSymbol [
 	currentRoute responseTransformer: (self responseTransformer: transformerBlockOrSymbol)
 	
