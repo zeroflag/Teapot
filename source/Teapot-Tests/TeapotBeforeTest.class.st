@@ -9,6 +9,14 @@ Class {
 }
 
 { #category : #private }
+TeapotBeforeTest >> forbidden [
+	^ ZnResponse new
+		statusLine: ZnStatusLine forbidden;
+		headers: ZnHeaders defaultResponseHeaders;
+		yourself
+]
+
+{ #category : #private }
 TeapotBeforeTest >> logRequest: aTeaRequest [
 	log add: (aTeaRequest at: #user)
 ]
@@ -17,7 +25,8 @@ TeapotBeforeTest >> logRequest: aTeaRequest [
 TeapotBeforeTest >> setUp [
 	log := OrderedCollection new.
 	server := Teapot on
-		before: '/secure/*' -> [ :req | ((req at: #user) = 'admin' and: [ (req at: #pass) = '****' ]) ifFalse: [ req abort: 403 ] ];
+		before: '/secure/*' -> [ :req | ((req at: #user) = 'admin' and: [ (req at: #pass) = '****' ]) 
+			ifFalse: [ req abort: self forbidden ] ];
 		before: '*' -> (Send message: #logRequest: to: self);
 		before: '*' -> 'any';
 		GET: '/secure' -> 'protected';

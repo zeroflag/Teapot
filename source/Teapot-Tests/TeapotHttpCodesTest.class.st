@@ -10,8 +10,8 @@ Class {
 { #category : #running }
 TeapotHttpCodesTest >> setUp [
 	server := Teapot on
-		GET: 'badrequest' -> [ :req | req abort: 400 ];
-		GET: 'forbidden' -> [ :req | req abort: 403 reason: 'go away' ];
+		GET: 'badrequest' -> [ :req | req abort: (ZnResponse badRequest: req) ];
+		GET: 'unauthorized' -> [ :req | req abort: (ZnResponse unauthorized) ];
 		start.
 ]
 
@@ -23,5 +23,5 @@ TeapotHttpCodesTest >> tearDown [
 { #category : #tests }
 TeapotHttpCodesTest >> testErrorCodes [
 	self assert: (TeaClient httpGet: '/badrequest') code equals: 400.
-	self assert: (TeaClient httpGet: '/forbidden') code equals: 403.
+	self assert: (TeaClient httpGet: '/unauthorized') code equals: 401.
 ]
