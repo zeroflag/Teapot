@@ -125,10 +125,7 @@ Teapot >> TRACE: patternActionAssoc [
 { #category : #private }
 Teapot >> addAbortHandlerTo: aRouter [
 	aRouter
-		addErrorHandler: [ :ex | ZnResponse new
-				statusLine: ex asStatusLine;
-				headers: ZnHeaders defaultResponseHeaders;
-				yourself ]
+		addErrorHandler: [ :ex | ex asZnResponse ]
 		exceptions: TeaAbort
 ]
 

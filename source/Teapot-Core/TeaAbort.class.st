@@ -5,29 +5,23 @@ Class {
 	#name : #TeaAbort,
 	#superclass : #Error,
 	#instVars : [
-		'code',
-		'reason'
+		'response'
 	],
 	#category : #'Teapot-Core'
 }
 
 { #category : #'instance creation' }
-TeaAbort class >> code: anInteger reason: aString [
-	^ self new
-		setCode: anInteger
-		reason: aString	
+TeaAbort class >> response: aZnResponse [
+	^ self new setResponse: aZnResponse
 ]
 
 { #category : #converting }
-TeaAbort >> asStatusLine [
-	^ (ZnStatusLine code: code)
-		reason: reason;
-		yourself
+TeaAbort >> asZnResponse [
+	^ response
 ]
 
 { #category : #initialization }
-TeaAbort >> setCode: anInteger reason: aString [
-	code := anInteger.
-	reason := aString.
+TeaAbort >> setResponse: aZnResponse [
+	response := aZnResponse.
 	^ self
 ]
