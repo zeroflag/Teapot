@@ -147,3 +147,24 @@ ConfigurationOfTeapot >> project [
 		project loadType: #linear. "change to #atomic if desired"
 		project ]
 ]
+
+{ #category : #'symbolic versions' }
+ConfigurationOfTeapot >> stable: spec [
+	<symbolicVersion: #'stable'>
+
+	spec for: #'common' version: '0.8'.
+
+]
+
+{ #category : #versions }
+ConfigurationOfTeapot >> version08: spec [
+	<version: '0.8' imports: #('0.1-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 0.8'.
+		spec author: 'AttilaMagyar'.
+		spec timestamp: '8/24/2014 20:01'.
+		spec package: 'Teapot-Core' with: 'Teapot-Core-AttilaMagyar.52'. ].
+
+]
