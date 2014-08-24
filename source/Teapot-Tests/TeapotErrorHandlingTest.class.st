@@ -21,9 +21,12 @@ TeapotErrorHandlingTest >> setUp [
 		GET: '/sub' -> [ #() at: 123 ];			
 		GET: '/domain' -> [ -2 sqrt ];
 		GET: '/nonbool' -> [ NotYetImplemented signal ];
-		exception: ZeroDivide -> [ :ex :req | ZnResponse ok: (ZnStringEntity text: 'zerodiv handled') ];
+		GET: '/keynotfound' -> [ KeyNotFound signal ];
+		exception: ZeroDivide -> [ :ex :req | 'zerodiv handled' ];
 		exception: SubscriptOutOfBounds, DomainError -> (Send message: #handleError:request: to: self);
 		exception: NotYetImplemented -> (ZnResponse ok: (ZnStringEntity text: 'nonbool handled'));
+		exception: KeyNotFound -> 42;
+		output: [ :n :req | ZnResponse ok: (ZnStringEntity text: n printStringRoman) ];
 		start		
 ]
 
@@ -41,6 +44,11 @@ TeapotErrorHandlingTest >> testHandlesExceptionSet [
 { #category : #tests }
 TeapotErrorHandlingTest >> testHandlesOneException [
 	self assert: (TeaClient httpGetString: '/zerodiv') equals: 'zerodiv handled'.	
+]
+
+{ #category : #tests }
+TeapotErrorHandlingTest >> testTransformingErroHandlerResponse [
+	self assert: (TeaClient httpGetString: '/keynotfound') equals: 'XLII'.
 ]
 
 { #category : #tests }
