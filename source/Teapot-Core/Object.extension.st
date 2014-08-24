@@ -9,6 +9,11 @@ Object >> asTeaResponse: aResponseTransformer request: aTeaRequest [
 ]
 
 { #category : #'*Teapot-Core' }
+Object >> handleTeaException: anException request: aTeaRequest [
+	^ self
+]
+
+{ #category : #'*Teapot-Core' }
 Object >> handleTeaRequest: aTeaRequest [
 	^ self
 ]

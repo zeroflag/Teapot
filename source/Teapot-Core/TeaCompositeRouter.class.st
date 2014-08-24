@@ -23,19 +23,18 @@ TeaCompositeRouter >> addBeforeFilter: aRoute [
 ]
 
 { #category : #'error handing' }
-TeaCompositeRouter >> addErrorHandler: errorHandler exceptions: anExceptionSet [
-	errorhandlers add: anExceptionSet -> errorHandler
+TeaCompositeRouter >> addErrorHandler: aTeaErrorHandler [
+	^ errorhandlers add: aTeaErrorHandler
 ]
 
 { #category : #private }
 TeaCompositeRouter >> exceptionOccurred: anException request: aTeaRequest [
 	| handler |
 	handler := errorhandlers 
-		detect: [ :each | each key handles: anException ] 
-		ifNone: [ anException pass ].
-	^ handler value 
-		handleTeaException: anException 
-		request: aTeaRequest
+		detect: [ :each | each canHandleError: anException ]
+		ifNone: [ anException pass ].		
+	^ handler handleError: anException request: aTeaRequest.
+	
 ]
 
 { #category : #'zn delegate' }

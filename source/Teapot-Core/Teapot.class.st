@@ -123,13 +123,6 @@ Teapot >> TRACE: patternActionAssoc [
 ]
 
 { #category : #private }
-Teapot >> addAbortHandlerTo: aRouter [
-	aRouter
-		addErrorHandler: [ :ex | ex asZnResponse ]
-		exceptions: TeaAbort
-]
-
-{ #category : #private }
 Teapot >> addRouteMethod: methodSymbol pattern: pattern action: aTeaAction [
 	currentRoute := dynamicRouter addRoute:
 		(TeaRoute
@@ -150,11 +143,12 @@ Teapot >> before: patternActionAssoc [
 ]
 
 { #category : #'url mapping' }
-Teapot >> exception: anExceptionSetActionAssoc [    
-	compositeRouter 
-		addErrorHandler: anExceptionSetActionAssoc value 
-		exceptions: anExceptionSetActionAssoc key   
-    
+Teapot >> exception: anExceptionSetActionAssoc [
+	currentRoute := compositeRouter addErrorHandler:
+		(TeaErrorHandler
+			for: anExceptionSetActionAssoc key
+			action: anExceptionSetActionAssoc value
+			responseTransformer: defaultOutput)
 ]
 
 { #category : #initialization }
@@ -162,7 +156,7 @@ Teapot >> initializeOptions: optionsAssociations [
 	dynamicRouter := TeaDynamicRouter new.
 	staticRouter := TeaStaticRouter new.
 	compositeRouter := TeaCompositeRouter routers: {dynamicRouter. staticRouter}.	
-	self addAbortHandlerTo: compositeRouter.
+	self exception: TeaAbort -> [ :ex | ex asZnResponse ].
 
 	server := ZnServer defaultServerClass new.
 	server delegate: compositeRouter.
