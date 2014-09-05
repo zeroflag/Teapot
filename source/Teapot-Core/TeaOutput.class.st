@@ -23,7 +23,7 @@ TeaOutput class >> html [
 TeaOutput class >> json [
 	^ [ :object | 
 		ZnResponse ok: (ZnStringEntity 
-			with: ((Smalltalk at: #NeoJSONWriter) toString: object) 
+			with: ((self optionalClass: #NeoJSONWriter) toString: object) 
 			type: ZnMimeType applicationJson) ]
 ]
 
@@ -34,7 +34,7 @@ TeaOutput class >> mustache: templateStringOrStream contentType: contentType [
 			ifTrue: [ object asDictionary ]
 			ifFalse: [ object ].		
 		ZnResponse ok: (ZnStringEntity 
-			with: (((Smalltalk at: #MustacheTemplate) on: templateStringOrStream) value: model) 
+			with: (((self optionalClass: #MustacheTemplate) on: templateStringOrStream) value: model) 
 			type: contentType) ]
 
 ]
@@ -49,11 +49,18 @@ TeaOutput class >> none [
 	^ [ nil ]
 ]
 
+{ #category : #private }
+TeaOutput class >> optionalClass: aSymbol [
+	[ ^ Smalltalk at: aSymbol ]
+		on: KeyNotFound
+		do: [ self error: 'An optional dependency ', aSymbol, ' was not found. Please load it first.' ]
+]
+
 { #category : #'response transformers' }
 TeaOutput class >> ston [
 	^ [ :object | 
 		ZnResponse ok: (ZnStringEntity 
-			with: ((Smalltalk at: #STON) toString: object) 
+			with: ((self optionalClass: #STON) toString: object) 
 			type: ZnMimeType textPlain) ]				
 ]
 
