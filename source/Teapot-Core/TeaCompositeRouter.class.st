@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'routers',
 		'errorhandlers',
-		'beforeRoutes'
+		'afterActions',
+		'beforeActions'
 	],
 	#category : #'Teapot-Core'
 }
@@ -18,8 +19,13 @@ TeaCompositeRouter class >> routers: teaRouterCollection [
 ]
 
 { #category : #filters }
-TeaCompositeRouter >> addBeforeFilter: aRoute [
-	beforeRoutes add: aRoute
+TeaCompositeRouter >> addAfterAction: aRoute [
+	afterActions add: aRoute
+]
+
+{ #category : #filters }
+TeaCompositeRouter >> addBeforeAction: aRoute [
+	beforeActions add: aRoute
 ]
 
 { #category : #'error handing' }
@@ -28,32 +34,46 @@ TeaCompositeRouter >> addErrorHandler: aTeaErrorHandler [
 ]
 
 { #category : #private }
-TeaCompositeRouter >> exceptionOccurred: anException request: aTeaRequest [
+TeaCompositeRouter >> evaluateAfterActions: aZnRequest [
+	afterActions do: [ :each | each handleRequest: aZnRequest ]
+]
+
+{ #category : #private }
+TeaCompositeRouter >> evaluateBeforeActions: aZnRequest [
+	beforeActions do: [ :each | each handleRequest: aZnRequest ]
+]
+
+{ #category : #private }
+TeaCompositeRouter >> exceptionOccurred: anException request: aZnRequest [
 	| handler |
 	handler := errorhandlers 
 		detect: [ :each | each canHandleError: anException ]
 		ifNone: [ anException pass ].		
-	^ handler handleError: anException request: aTeaRequest.
+	^ handler handleError: anException request: (TeaRequest fromZnRequest: aZnRequest).
 	
 ]
 
 { #category : #'zn delegate' }
-TeaCompositeRouter >> handleRequest: aZnRequest [	
-	[ beforeRoutes do: [ :each | each handleRequest: aZnRequest ].
-	 routers do: [ :each | | response |
-		response := each handleRequest: aZnRequest.
-		response isNotFound ifFalse: [ ^ response ] ] 
-	] on: Exception
-	  do: [ :ex | 
-		^ self exceptionOccurred: ex request: (TeaRequest fromZnRequest: aZnRequest) ].
+TeaCompositeRouter >> handleRequest: aZnRequest [
+	[  	 
+		[ self evaluateBeforeActions: aZnRequest.
+		  routers do: [ :each | | response |
+			response := each handleRequest: aZnRequest.
+			response isNotFound ifFalse: [ ^ response ] ] 
+		] on: Exception
+	  	  do: [ :ex | ^ self exceptionOccurred: ex request: aZnRequest ].
+	] ensure: [ self evaluateAfterActions: aZnRequest ].
+
 	^ ZnResponse notFound: aZnRequest uri
+		
 ]
 
 { #category : #initialization }
 TeaCompositeRouter >> initialize [
 	super initialize.
 	errorhandlers := OrderedCollection new.
-	beforeRoutes := OrderedCollection new.
+	beforeActions := OrderedCollection new.
+	afterActions := OrderedCollection new.
 ]
 
 { #category : #initialization }
