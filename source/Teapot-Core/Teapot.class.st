@@ -132,9 +132,9 @@ Teapot >> addRouteMethod: methodSymbol pattern: pattern action: aTeaAction [
 			transformer: defaultOutput)
 ]
 
-{ #category : #'url mapping' }
+{ #category : #filters }
 Teapot >> after: patternActionAssoc [
-	compositeRouter addAfterAction:
+	compositeRouter addAfterFilter:
 		(TeaRoute
 			method: TeaMethodMatcher any
 			urlPattern: patternActionAssoc key asTeaUrlPattern
@@ -142,9 +142,9 @@ Teapot >> after: patternActionAssoc [
 			transformer: TeaOutput none)
 ]
 
-{ #category : #'url mapping' }
+{ #category : #filters }
 Teapot >> before: patternActionAssoc [
-	compositeRouter addBeforeAction:
+	compositeRouter addBeforeFilter:
 		(TeaRoute
 			method: TeaMethodMatcher any
 			urlPattern: patternActionAssoc key asTeaUrlPattern

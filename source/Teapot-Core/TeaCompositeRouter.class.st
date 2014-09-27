@@ -7,8 +7,8 @@ Class {
 	#instVars : [
 		'routers',
 		'errorhandlers',
-		'afterActions',
-		'beforeActions'
+		'beforeFilters',
+		'afterFilters'
 	],
 	#category : #'Teapot-Core'
 }
@@ -19,13 +19,13 @@ TeaCompositeRouter class >> routers: teaRouterCollection [
 ]
 
 { #category : #filters }
-TeaCompositeRouter >> addAfterAction: aRoute [
-	afterActions add: aRoute
+TeaCompositeRouter >> addAfterFilter: aRoute [
+	afterFilters add: aRoute
 ]
 
 { #category : #filters }
-TeaCompositeRouter >> addBeforeAction: aRoute [
-	beforeActions add: aRoute
+TeaCompositeRouter >> addBeforeFilter: aRoute [
+	beforeFilters add: aRoute
 ]
 
 { #category : #'error handing' }
@@ -47,12 +47,12 @@ TeaCompositeRouter >> evalRouteForRequest: aZnRequest [
 
 { #category : #private }
 TeaCompositeRouter >> evaluateAfterActions: aZnRequest [
-	afterActions do: [ :each | each handleRequest: aZnRequest ]
+	afterFilters do: [ :each | each handleRequest: aZnRequest ]
 ]
 
 { #category : #private }
 TeaCompositeRouter >> evaluateBeforeActions: aZnRequest [
-	beforeActions do: [ :each | each handleRequest: aZnRequest ]
+	beforeFilters do: [ :each | each handleRequest: aZnRequest ]
 ]
 
 { #category : #private }
@@ -77,8 +77,8 @@ TeaCompositeRouter >> handleRequest: aZnRequest [
 TeaCompositeRouter >> initialize [
 	super initialize.
 	errorhandlers := OrderedCollection new.
-	beforeActions := OrderedCollection new.
-	afterActions := OrderedCollection new.
+	beforeFilters := OrderedCollection new.
+	afterFilters := OrderedCollection new.
 ]
 
 { #category : #initialization }
