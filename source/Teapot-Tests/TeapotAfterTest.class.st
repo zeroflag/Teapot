@@ -2,19 +2,16 @@ Class {
 	#name : #TeapotAfterTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'server',
-		'log'
+		'server'
 	],
 	#category : #'Teapot-Tests'
 }
 
 { #category : #running }
 TeapotAfterTest >> setUp [
-	log := OrderedCollection new.
 	server := Teapot on
-		after: '/cleanup/<param>' -> [ :req | log add: (req at: #param) ]; 
-		GET: '/cleanup/error' -> [ self error: 'abort request' ];
-		GET: '/cleanup/*' -> 'result';
+		after: '/after/<param>' -> [ :req :resp | resp headers at: 'header-key' put: (req at: #param) ];
+		GET: '/after/*' -> 'after-return';		
 		start		
 ]
 
@@ -24,16 +21,14 @@ TeapotAfterTest >> tearDown [
 ]
 
 { #category : #tests }
-TeapotAfterTest >> testAfterHandlerIsAlwaysEvaluated [
-	TeaClient httpGet: '/cleanup/error'.		
-	self assert: log asArray equals: #(error).
-]
-
-{ #category : #tests }
-TeapotAfterTest >> testMultipleAfterHandlers [
-	self assert: (TeaClient httpGetString: '/cleanup/a') equals: 'result'.
-	TeaClient httpPost: '/cleanup/b'.		
-	TeaClient httpGet: 'c'.
-		
-	self assert: log asArray equals: #(a b).
+TeapotAfterTest >> testAfterFilterCanModifyResponse [
+	| response |
+	
+	response := TeaClient httpGet: '/after/header-value'.
+	self assert: response entity string equals: 'after-return'.
+	self assert: (response headers at: 'header-key') equals: 'header-value'.
+	
+	response := TeaClient httpPost: '/after/notfound'.
+	self assert: response code equals: 404.
+	self assert: (response headers at: 'header-key') equals: 'notfound'.
 ]
