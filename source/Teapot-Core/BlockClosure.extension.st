@@ -9,3 +9,8 @@ BlockClosure >> handleTeaException: anException request: aTeaRequest [
 BlockClosure >> handleTeaRequest: aTeaRequest [
 	^ self cull: aTeaRequest
 ]
+
+{ #category : #'*Teapot-Core' }
+BlockClosure >> handleTeaRequest: aTeaRequest response: aZnResponse [
+	^ self cull: aTeaRequest cull: aZnResponse
+]

@@ -17,3 +17,8 @@ Object >> handleTeaException: anException request: aTeaRequest [
 Object >> handleTeaRequest: aTeaRequest [
 	^ self
 ]
+
+{ #category : #'*Teapot-Core' }
+Object >> handleTeaRequest: aTeaRequest response: aZnResponse [
+	^ self
+]

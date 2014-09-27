@@ -43,6 +43,15 @@ Send >> handleTeaRequest: aTeaRequest [
 
 ]
 
+{ #category : #'tea action' }
+Send >> handleTeaRequest: aTeaRequest response: aZnResponse [
+	^ receiver 
+		perform: selector 
+		withEnoughArguments: { aTeaRequest. aZnResponse }
+	
+
+]
+
 { #category : #printing }
 Send >> printOn: aStream [
 	aStream 

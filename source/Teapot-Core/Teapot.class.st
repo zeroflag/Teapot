@@ -126,30 +126,25 @@ Teapot >> TRACE: patternActionAssoc [
 Teapot >> addRouteMethod: methodSymbol pattern: pattern action: aTeaAction [
 	currentRoute := dynamicRouter addRoute:
 		(TeaRoute
-			method: (TeaMethodMatcher exactly: methodSymbol)
-			urlPattern: pattern asTeaUrlPattern
+			matcher: (TeaRequestMatcher method: (TeaMethodMatcher exactly: methodSymbol) url: pattern asTeaUrlPattern)
 			action: aTeaAction
 			transformer: defaultOutput)
 ]
 
 { #category : #filters }
 Teapot >> after: patternActionAssoc [
-	compositeRouter addAfterFilter:
-		(TeaRoute
-			method: TeaMethodMatcher any
-			urlPattern: patternActionAssoc key asTeaUrlPattern
-			action: patternActionAssoc value
-			transformer: TeaOutput none)
+	compositeRouter addAfterFilter:		
+		(TeaAfterFilter 
+			urlPattern: patternActionAssoc key asTeaUrlPattern 
+			action: patternActionAssoc value)
 ]
 
 { #category : #filters }
 Teapot >> before: patternActionAssoc [
-	compositeRouter addBeforeFilter:
-		(TeaRoute
-			method: TeaMethodMatcher any
-			urlPattern: patternActionAssoc key asTeaUrlPattern
-			action: patternActionAssoc value
-			transformer: TeaOutput none)
+	compositeRouter addBeforeFilter:		
+		(TeaBeforeFilter 
+			urlPattern: patternActionAssoc key asTeaUrlPattern 
+			action: patternActionAssoc value)
 ]
 
 { #category : #'url mapping' }

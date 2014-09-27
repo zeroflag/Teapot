@@ -44,11 +44,6 @@ TeaOutput class >> mustacheHtml: templateString [
 	^ self mustache: templateString contentType: ZnMimeType textHtml.
 ]
 
-{ #category : #'response transformers' }
-TeaOutput class >> none [
-	^ [ nil ]
-]
-
 { #category : #private }
 TeaOutput class >> optionalClass: aSymbol [
 	[ ^ Smalltalk at: aSymbol ]

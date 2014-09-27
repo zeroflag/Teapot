@@ -10,62 +10,48 @@ Class {
 	#name : #TeaRoute,
 	#superclass : #Object,
 	#instVars : [
-		'urlPattern',
 		'responseTransformer',
-		'methodMatcher',
-		'action'
+		'action',
+		'requestMatcher'
 	],
 	#category : #'Teapot-Core'
 }
 
 { #category : #'instance creation' }
-TeaRoute class >> method: aMethodMatcher urlPattern: anUrlPattern action: aTeaAction transformer: aResponseTransformer [
+TeaRoute class >> matcher: aTeaRequestMatcher action: aTeaAction transformer: aResponseTransformer [
 	^ self new 
-		setPattern: anUrlPattern
-		method: aMethodMatcher
+		setMatcher: aTeaRequestMatcher
 		action: aTeaAction
 		transformer: aResponseTransformer
 ]
 
-{ #category : #route }
+{ #category : #'request handling' }
 TeaRoute >> handleRequest: aZnRequest [
-	| matches placeholders |
-	placeholders := Dictionary new.
-	matches := self matchesRequest: aZnRequest placeholders: placeholders.
-	^ matches
-		ifTrue: 
-			[ | request result |
-			request := TeaRequest fromZnRequest: aZnRequest pathParams: placeholders.
-			result := action handleTeaRequest: request.
-			result asTeaResponse: responseTransformer request: request ]
-		ifFalse: 
+	^ requestMatcher 
+		matchRequest: aZnRequest 
+		ifMatch: 
+			[ :aTeaRequest | | result |
+			result := action handleTeaRequest: aTeaRequest.
+			result asTeaResponse: responseTransformer request: aTeaRequest ]
+		ifNoMatch: 
 			[ ZnResponse notFound: aZnRequest uri ]
-]
-
-{ #category : #private }
-TeaRoute >> matchesRequest: aZnRequest placeholders: placeholders [
-	^  (methodMatcher matchesHttpMethod: aZnRequest method)
-		and: [ urlPattern matchesUrl: aZnRequest url placeholders: placeholders ]
 ]
 
 { #category : #printing }
 TeaRoute >> printOn: aStream [
-	methodMatcher printOn: aStream.
-	aStream space.
-	urlPattern printOn: aStream.
+	requestMatcher printOn: aStream.
 	aStream nextPutAll: ' -> '.
 	action printOn: aStream.
 ]
 
-{ #category : #route }
+{ #category : #accessing }
 TeaRoute >> responseTransformer: aBlock [
 	responseTransformer := aBlock
 ]
 
 { #category : #initialization }
-TeaRoute >> setPattern: anUrlPattern method: aMethodMatcher action: aTeaAction transformer: aResponseTransformer [
-	urlPattern := anUrlPattern.
-	methodMatcher := aMethodMatcher.
+TeaRoute >> setMatcher: aTeaRequestMatcher action: aTeaAction transformer: aResponseTransformer [
+	requestMatcher := aTeaRequestMatcher.
 	action := aTeaAction.
 	responseTransformer := aResponseTransformer.
 	^ self
