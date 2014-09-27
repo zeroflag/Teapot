@@ -35,7 +35,7 @@ TeaCompositeRouter >> addErrorHandler: aTeaErrorHandler [
 
 { #category : #private }
 TeaCompositeRouter >> evalRouteForRequest: aZnRequest [
-	[ self evaluateBeforeActions: aZnRequest.
+	[ self evaluateBeforeFilters: aZnRequest.
 	  routers do: [ :each | | response |
 		response := each handleRequest: aZnRequest.
 		response isNotFound ifFalse: [ ^ response ] ] 
@@ -46,12 +46,12 @@ TeaCompositeRouter >> evalRouteForRequest: aZnRequest [
 ]
 
 { #category : #private }
-TeaCompositeRouter >> evaluateAfterActions: aZnRequest [
+TeaCompositeRouter >> evaluateAfterFilters: aZnRequest [
 	afterFilters do: [ :each | each handleRequest: aZnRequest ]
 ]
 
 { #category : #private }
-TeaCompositeRouter >> evaluateBeforeActions: aZnRequest [
+TeaCompositeRouter >> evaluateBeforeFilters: aZnRequest [
 	beforeFilters do: [ :each | each handleRequest: aZnRequest ]
 ]
 
@@ -68,7 +68,7 @@ TeaCompositeRouter >> exceptionOccurred: anException request: aZnRequest [
 { #category : #'zn delegate' }
 TeaCompositeRouter >> handleRequest: aZnRequest [
 	^ [ self evalRouteForRequest: aZnRequest ]
-		ensure: [ self evaluateAfterActions: aZnRequest ].
+		ensure: [ self evaluateAfterFilters: aZnRequest ].
 
 		
 ]
