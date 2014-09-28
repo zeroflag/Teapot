@@ -1,3 +1,6 @@
+"
+After and Before filters
+"
 Class {
 	#name : #TeaFilter,
 	#superclass : #Object,

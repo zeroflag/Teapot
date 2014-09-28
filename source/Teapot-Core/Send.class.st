@@ -25,33 +25,6 @@ Send class >> message: aSymbol to: anObject [
 		receiver: anObject
 ]
 
-{ #category : #'tea action' }
-Send >> handleTeaException: anException request: aTeaRequest [
-	^ receiver 
-		perform: selector 
-		withEnoughArguments: { anException. aTeaRequest }
-	
-
-]
-
-{ #category : #'tea action' }
-Send >> handleTeaRequest: aTeaRequest [
-	^ receiver 
-		perform: selector 
-		withEnoughArguments: { aTeaRequest }
-	
-
-]
-
-{ #category : #'tea action' }
-Send >> handleTeaRequest: aTeaRequest response: aZnResponse [
-	^ receiver 
-		perform: selector 
-		withEnoughArguments: { aTeaRequest. aZnResponse }
-	
-
-]
-
 { #category : #printing }
 Send >> printOn: aStream [
 	aStream 
@@ -67,4 +40,31 @@ Send >> setSelector: aSymbol receiver: anObject [
 	selector := aSymbol.
 	receiver := anObject.
 	^ self	
+]
+
+{ #category : #'tea action' }
+Send >> teaActionOnException: anException request: aTeaRequest [
+	^ receiver 
+		perform: selector 
+		withEnoughArguments: { anException. aTeaRequest }
+	
+
+]
+
+{ #category : #'tea action' }
+Send >> teaActionOnRequest: aTeaRequest [
+	^ receiver 
+		perform: selector 
+		withEnoughArguments: { aTeaRequest }
+	
+
+]
+
+{ #category : #'tea action' }
+Send >> teaActionOnRequest: aTeaRequest response: aZnResponse [
+	^ receiver 
+		perform: selector 
+		withEnoughArguments: { aTeaRequest. aZnResponse }
+	
+
 ]

@@ -30,7 +30,7 @@ TeaErrorHandler >> handleError: anException request: aTeaRequest [
 	| result |
 	^ (self canHandleError: anException)
 		ifTrue:
-			[ result := action handleTeaException: anException request: aTeaRequest.
+			[ result := action teaActionOnException: anException request: aTeaRequest.
 			result asTeaResponse: responseTransformer request: aTeaRequest ]
 		ifFalse: 
 			[ self error: 'Cannot handle ', anException printString ]

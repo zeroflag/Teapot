@@ -9,16 +9,11 @@ Object >> asTeaResponse: aResponseTransformer request: aTeaRequest [
 ]
 
 { #category : #'*Teapot-Core' }
-Object >> handleTeaException: anException request: aTeaRequest [
+Object >> teaActionOnException: anException request: aTeaRequest [
 	^ self
 ]
 
 { #category : #'*Teapot-Core' }
-Object >> handleTeaRequest: aTeaRequest [
-	^ self
-]
-
-{ #category : #'*Teapot-Core' }
-Object >> handleTeaRequest: aTeaRequest response: aZnResponse [
+Object >> teaActionOnRequest: aTeaRequest [
 	^ self
 ]

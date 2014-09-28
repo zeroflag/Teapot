@@ -31,7 +31,7 @@ TeaRoute >> handleRequest: aZnRequest [
 		matchRequest: aZnRequest 
 		ifMatch: 
 			[ :aTeaRequest | | result |
-			result := action handleTeaRequest: aTeaRequest.
+			result := action teaActionOnRequest: aTeaRequest.
 			result asTeaResponse: responseTransformer request: aTeaRequest ]
 		ifNoMatch: 
 			[ ZnResponse notFound: aZnRequest uri ]
