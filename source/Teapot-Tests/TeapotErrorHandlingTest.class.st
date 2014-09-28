@@ -26,7 +26,7 @@ TeapotErrorHandlingTest >> setUp [
 		exception: SubscriptOutOfBounds, DomainError -> (Send message: #handleError:request: to: self);
 		exception: NotYetImplemented -> (ZnResponse ok: (ZnStringEntity text: 'nonbool handled'));
 		exception: KeyNotFound -> 42;
-		output: [ :n :req | ZnResponse ok: (ZnStringEntity text: n printStringRoman) ];
+		output: [ :resp :req | ZnResponse ok: (ZnStringEntity text: resp body printStringRoman) ];
 		start		
 ]
 
