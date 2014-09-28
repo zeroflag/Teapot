@@ -21,21 +21,28 @@ TeaOutput class >> html [
 
 { #category : #'response transformers' }
 TeaOutput class >> json [
-	^ [ :object | 
-		ZnResponse ok: (ZnStringEntity 
-			with: ((self optionalClass: #NeoJSONWriter) toString: object) 
-			type: ZnMimeType applicationJson) ]
+	^ [ :aTeaResponse | | entity |
+		entity := ZnStringEntity 
+			with: ((self optionalClass: #NeoJSONWriter) toString: aTeaResponse body) 
+			type: ZnMimeType applicationJson.
+		self 
+			znEntity: entity
+			code: aTeaResponse code 
+			headers: aTeaResponse headers ]
 ]
 
 { #category : #'response transformers' }
 TeaOutput class >> mustache: templateStringOrStream contentType: contentType [
-	^ [ :object | | model |
-		model := (object respondsTo: #asDictionary)
-			ifTrue: [ object asDictionary ]
-			ifFalse: [ object ].		
-		ZnResponse ok: (ZnStringEntity 
+	^ [ :aTeaResponse | | model object entity |
+		object := aTeaResponse body.
+		model := (object respondsTo: #asDictionary) ifTrue: [ object asDictionary ] ifFalse: [ object ].		
+		entity := (ZnStringEntity 
 			with: (((self optionalClass: #MustacheTemplate) on: templateStringOrStream) value: model) 
-			type: contentType) ]
+			type: contentType).
+		self 
+			znEntity: entity
+			code: aTeaResponse code 
+			headers: aTeaResponse headers ]
 
 ]
 
@@ -53,10 +60,14 @@ TeaOutput class >> optionalClass: aSymbol [
 
 { #category : #'response transformers' }
 TeaOutput class >> ston [
-	^ [ :object | 
-		ZnResponse ok: (ZnStringEntity 
-			with: ((self optionalClass: #STON) toString: object) 
-			type: ZnMimeType textPlain) ]				
+	^ [ :aTeaResponse | | entity |
+		entity := ZnStringEntity 
+			with: ((self optionalClass: #STON) toString: aTeaResponse body) 
+			type: ZnMimeType textPlain.
+		self 
+			znEntity: entity
+			code: aTeaResponse code 
+			headers: aTeaResponse headers ]
 ]
 
 { #category : #'response transformers' }
@@ -66,25 +77,44 @@ TeaOutput class >> stream [
 
 { #category : #'response transformers' }
 TeaOutput class >> stream: aZnMimeType [
-	^ [ :aStream | 	
-		ZnResponse ok: (ZnStreamingEntity 
-			readFrom: aStream
+	^ [ :aTeaResponse | | entity |
+		entity := ZnStreamingEntity 
+			readFrom: aTeaResponse body
 			usingType: aZnMimeType
-			andLength: aStream size) ]
+			andLength: aTeaResponse body size.
+		self 
+			znEntity: entity
+			code: aTeaResponse code 
+			headers: aTeaResponse headers ]
 
 ]
 
 { #category : #'response transformers' }
 TeaOutput class >> stringWithContentType: aZnMimeType [ 
-	^ [ :object | | entity |
+	^ [ :aTeaResponse | | entity |
 		entity := (ZnStringEntity type: aZnMimeType) 
-			string: object asString;
-			yourself.		
-		ZnResponse ok: entity ]
+			string: aTeaResponse body asString;
+			yourself.
+		self 
+			znEntity: entity 
+			code: aTeaResponse code 
+			headers: aTeaResponse headers ]
 ]
 
 { #category : #'response transformers' }
 TeaOutput class >> text [
 	^ self stringWithContentType: ZnMimeType textPlain
 
+]
+
+{ #category : #private }
+TeaOutput class >> znEntity: aZnEntity code: anInteger headers: aDictionary [
+	| headers |
+	headers := ZnHeaders defaultResponseHeaders.
+	headers addAll: aDictionary.
+	^ ZnResponse new
+		statusLine: (ZnStatusLine code: anInteger);
+		headers: headers;
+		entity: aZnEntity;
+		yourself
 ]

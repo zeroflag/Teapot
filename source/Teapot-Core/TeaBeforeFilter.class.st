@@ -11,6 +11,6 @@ Class {
 TeaBeforeFilter >> handleRequest: aZnRequest [
 	^ requestMatcher 
 		matchRequest: aZnRequest 
-		ifMatch: [ :aTeaRequest | action teaActionOnRequest: aTeaRequest ]
+		ifMatch: [ :aTeaRequest | action teaEvalActionOnRequest: aTeaRequest ]
 		ifNoMatch: [ ZnResponse notFound: aZnRequest uri ]
 ]

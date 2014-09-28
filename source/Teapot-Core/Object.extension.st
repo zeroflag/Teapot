@@ -1,19 +1,16 @@
 Extension { #name : #Object }
 
 { #category : #'*Teapot-Core' }
-Object >> asTeaResponse: aResponseTransformer request: aTeaRequest [
-	^ aResponseTransformer cull: self cull: aTeaRequest
-	
-	
-
-]
-
-{ #category : #'*Teapot-Core' }
-Object >> teaActionOnException: anException request: aTeaRequest [
+Object >> teaEvalActionOnException: anException request: aTeaRequest [
 	^ self
 ]
 
 { #category : #'*Teapot-Core' }
-Object >> teaActionOnRequest: aTeaRequest [
+Object >> teaEvalActionOnRequest: aTeaRequest [
 	^ self
+]
+
+{ #category : #'*Teapot-Core' }
+Object >> teaTransform: aResponseTransformer request: aTeaRequest [
+	^ aResponseTransformer cull: (TeaResponse code: 200 body: self	) cull: aTeaRequest
 ]

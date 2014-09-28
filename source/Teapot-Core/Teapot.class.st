@@ -196,7 +196,7 @@ Teapot >> server [
 
 { #category : #controlling }
 Teapot >> start [
-	^ server start
+	server start
 ]
 
 { #category : #controlling }
