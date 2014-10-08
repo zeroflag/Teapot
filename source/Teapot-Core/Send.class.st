@@ -43,15 +43,6 @@ Send >> setSelector: aSymbol receiver: anObject [
 ]
 
 { #category : #'tea action' }
-Send >> teaActionOnRequest: aTeaRequest response: aZnResponse [
-	^ receiver 
-		perform: selector 
-		withEnoughArguments: { aTeaRequest. aZnResponse }
-	
-
-]
-
-{ #category : #'tea action' }
 Send >> teaEvalActionOnException: anException request: aTeaRequest [
 	^ receiver 
 		perform: selector 
@@ -65,6 +56,15 @@ Send >> teaEvalActionOnRequest: aTeaRequest [
 	^ receiver 
 		perform: selector 
 		withEnoughArguments: { aTeaRequest }
+	
+
+]
+
+{ #category : #'tea action' }
+Send >> teaEvalActionOnRequest: aTeaRequest response: aZnResponse [
+	^ receiver 
+		perform: selector 
+		withEnoughArguments: { aTeaRequest. aZnResponse }
 	
 
 ]
