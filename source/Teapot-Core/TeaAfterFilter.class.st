@@ -9,8 +9,8 @@ Class {
 
 { #category : #'response handling' }
 TeaAfterFilter >> handleRequest: aZnRequest response: aZnResponse [
-	^ requestMatcher 
+	requestMatcher 
 		matchRequest: aZnRequest 
 		ifMatch: [ :aTeaRequest | action teaEvalActionOnRequest: aTeaRequest response: aZnResponse ]
-		ifNoMatch: [ ZnResponse notFound: aZnRequest uri ]
+		ifNoMatch: [ ]
 ]
