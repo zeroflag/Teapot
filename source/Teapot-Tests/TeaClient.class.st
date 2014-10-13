@@ -15,6 +15,16 @@ TeaClient class >> httpGet: aString [
 ]
 
 { #category : #private }
+TeaClient class >> httpGetNoRedirect: aString [
+	^ ZnClient new
+		followRedirects: false;
+		get: 'http://localhost:1701/', aString;		
+		response
+
+	
+]
+
+{ #category : #private }
 TeaClient class >> httpGetString: aString [
 	^ (self httpGet: aString) entity string
 
