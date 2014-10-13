@@ -11,7 +11,7 @@ Class {
 TeapotHttpCodesTest >> setUp [
 	server := Teapot on
 		GET: 'badrequest' -> [ :req | req abort: (ZnResponse badRequest: req) ];
-		GET: 'unauthorized' -> [ :req | req abort: (ZnResponse unauthorized) ];
+		GET: 'unauthorized' -> [ :req | req abort: (TeaResponse unauthorized) ];
 		start.
 ]
 
