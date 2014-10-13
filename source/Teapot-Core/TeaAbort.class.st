@@ -16,7 +16,7 @@ TeaAbort class >> response: aZnResponse [
 ]
 
 { #category : #converting }
-TeaAbort >> asZnResponse [
+TeaAbort >> response [
 	^ response
 ]
 
