@@ -90,7 +90,7 @@ TeaResponse class >> unauthorized [
 TeaResponse class >> unauthorized: authString [
 	^ self 
 		code: ZnStatusLine unauthorized code 
-		body: 'Unauthorized ', String crlf
+		body: 'Unauthorized', String crlf
 		headers: { 'WWW-Authenticate' -> authString}
 ]
 
