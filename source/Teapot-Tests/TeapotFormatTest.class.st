@@ -13,7 +13,7 @@ TeapotFormatTest >> setUp [
 		GET: '/a' -> [ 4 ]; output: [ :resp :req | ZnResponse ok: (ZnStringEntity text: resp body printStringRoman) ];
 		GET: 'default' -> 'any';
 		GET: '/plain' -> 'any'; output: #text;
-		GET: 'pdf' -> 'any'; output: (TeaOutput stringWithContentType: ZnMimeType applicationPdf);
+		GET: 'xml' -> 'any'; output: (TeaOutput stringWithContentType: ZnMimeType applicationXml);
 		start		
 ]
 
@@ -25,8 +25,8 @@ TeapotFormatTest >> tearDown [
 { #category : #tests }
 TeapotFormatTest >> testArbitraryContentType [
 	self 
-		assert: (TeaClient httpGet: '/pdf') contentType 
-		equals: ZnMimeType applicationPdf
+		assert: (TeaClient httpGet: '/xml') contentType 
+		equals: ZnMimeType applicationXml
 ]
 
 { #category : #tests }
