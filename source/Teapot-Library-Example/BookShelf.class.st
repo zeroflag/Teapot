@@ -1,5 +1,10 @@
+"
+A simple in-memory storage for books with basic CRUD operations. Books are stored in a Dicionary with a generated id. 
+
+Books are represented by simple Dictionaries.
+"
 Class {
-	#name : #Library,
+	#name : #BookShelf,
 	#superclass : #Object,
 	#instVars : [
 		'books',
@@ -8,8 +13,8 @@ Class {
 	#category : #'Teapot-Library-Example'
 }
 
-{ #category : #library }
-Library >> addBook: aDictionary [
+{ #category : #'book library' }
+BookShelf >> addBook: aDictionary [
 	| bookId |
 	bookId := self uniqueId.
 	books 
@@ -18,40 +23,40 @@ Library >> addBook: aDictionary [
 	^ bookId
 ]
 
-{ #category : #library }
-Library >> findAll [
+{ #category : #'book library' }
+BookShelf >> books [
 	^ books values
 ]
 
-{ #category : #library }
-Library >> findBook: bookId [ 
+{ #category : #'book library' }
+BookShelf >> findBook: bookId [ 
 	^ books 
-		at:  bookId
+		at: bookId
 		ifAbsent: [ BookNotFound signal: bookId asString ]
 ]
 
 { #category : #initialization }
-Library >> initialize [ 
+BookShelf >> initialize [ 
 	super initialize.
 	books := Dictionary new.
 	sequence := 0.
 ]
 
-{ #category : #library }
-Library >> removeBook: bookId [ 
+{ #category : #'book library' }
+BookShelf >> removeBook: bookId [ 
 	books 
 		removeKey: bookId 
 		ifAbsent: [ BookNotFound signal: bookId asString ]
 ]
 
-{ #category : #library }
-Library >> replaceBook: bookId with: aDictionary [
+{ #category : #'book library' }
+BookShelf >> replaceBook: bookId with: aDictionary [
 	books 
 		at: bookId 
 		put: (aDictionary copyWith: #id -> bookId)
 ]
 
 { #category : #private }
-Library >> uniqueId [
+BookShelf >> uniqueId [
 	^ sequence := sequence + 1
 ]

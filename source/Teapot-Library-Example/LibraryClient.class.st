@@ -1,25 +1,37 @@
+"
+A simple HTTP Client for communication with the LibraryServer
+"
 Class {
-	#name : #LibraryRestClient,
+	#name : #LibraryClient,
 	#superclass : #Object,
+	#instVars : [
+		'port'
+	],
 	#category : #'Teapot-Library-Example'
 }
 
-{ #category : #library }
-LibraryRestClient >> addBook: aDictionary [
+{ #category : #'instance creation' }
+LibraryClient class >> port: anInteger [
+	^ self new initializePort: anInteger
+]
+
+{ #category : #'book library' }
+LibraryClient >> addBook: aDictionary [
 	ZnClient new
 		url: self baseUrl, '/books';
 		formAt: 'title' put:  (aDictionary at: #title);
 		formAt: 'authors' put: (aDictionary at: #authors);
-		post
+		post.
+
 ]
 
 { #category : #private }
-LibraryRestClient >> baseUrl [
+LibraryClient >> baseUrl [
 	^ 'http://localhost:', self port asString
 ]
 
-{ #category : #library }
-LibraryRestClient >> findAll [
+{ #category : #'book library' }
+LibraryClient >> books [
 	| response |
 	response := ZnClient new
 		url: self baseUrl, '/books';
@@ -29,8 +41,8 @@ LibraryRestClient >> findAll [
 
 ]
 
-{ #category : #library }
-LibraryRestClient >> findBook: bookId [
+{ #category : #'book library' }
+LibraryClient >> findBook: bookId [
 	| response |
 	response := ZnClient new
 		url: self baseUrl, '/books/', bookId asString;
@@ -38,13 +50,19 @@ LibraryRestClient >> findBook: bookId [
 	^ NeoJSONReader fromString: response
 ]
 
-{ #category : #private }
-LibraryRestClient >> port [
-	^ 8000
+{ #category : #initialization }
+LibraryClient >> initializePort: anInteger [
+	port := anInteger.
+	^ self
 ]
 
-{ #category : #library }
-LibraryRestClient >> removeBook: bookId [
+{ #category : #private }
+LibraryClient >> port [
+	^ port
+]
+
+{ #category : #'book library' }
+LibraryClient >> removeBook: bookId [
 	^ ZnClient new
 		url: self baseUrl, '/books/', bookId asString;
 		delete
@@ -52,8 +70,8 @@ LibraryRestClient >> removeBook: bookId [
 
 ]
 
-{ #category : #library }
-LibraryRestClient >> replaceBook: bookId with: aDictionary [
+{ #category : #'book library' }
+LibraryClient >> replaceBook: bookId with: aDictionary [
 	ZnClient new
 		url: self baseUrl, '/books/', bookId asString;
 		formAt: 'title' put:  (aDictionary at: #title);

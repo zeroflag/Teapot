@@ -10,12 +10,17 @@ Class {
 	#category : #'Teapot-Library-Example'
 }
 
+{ #category : #private }
+LibraryServerTest >> port [
+	^ 17834
+]
+
 { #category : #running }
-LibraryServerTest >> setUp [ 
-	client := LibraryRestClient new.
-	server := LibraryServer serveOn: 8000.
+LibraryServerTest >> setUp [
+	client := LibraryClient port: self port.
+	server := LibraryServer serveOn: self port.
 	book1 := {#title -> 'book 1'. #authors -> 'author 1'} asDictionary.
-	book2 := {#title -> 'book 2'. #authors -> 'author 2'} asDictionary.	
+	book2 := {#title -> 'book 2'. #authors -> 'author 2'} asDictionary
 ]
 
 { #category : #running }
@@ -30,7 +35,7 @@ LibraryServerTest >> testDeletingBook [
 		addBook: book1;
 		addBook: book2;
 		removeBook: 2;
-		findAll.	
+		books.	
 	self assert: books size equals: 1.
 	
 	
@@ -42,7 +47,7 @@ LibraryServerTest >> testFindingAllBooks [
 	books := client 
 		addBook: book1;
 		addBook: book2;
-		findAll.
+		books.
 	self assert: books size equals: 2.
 	
 	
@@ -54,6 +59,13 @@ LibraryServerTest >> testFindingBookById [
 	id := client addBook: book1.
 	found := client findBook: 1.
 	self assert: found equals: (book1 copyWith: #id -> 1).
+]
+
+{ #category : #tests }
+LibraryServerTest >> testInitiallyEmpty [
+	self 
+		assert: client books size
+		equals: 0
 ]
 
 { #category : #tests }
