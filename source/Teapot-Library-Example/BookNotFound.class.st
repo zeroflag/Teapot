@@ -12,7 +12,7 @@ Class {
 
 { #category : #signaling }
 BookNotFound class >> signalWithBookId: anInteger [
-	(self new initializeBookId: anInteger) signal
+	(self new initializeBookId: anInteger) signal: 'Book not found: ', anInteger asString
 ]
 
 { #category : #acccessing }

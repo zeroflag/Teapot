@@ -47,6 +47,9 @@ LibraryServerTest >> testDoesNotFindDeletedBook [
 	client removeBook: (book1 at: #id).
 	
 	self 
+		should: [ client findBook: (book1 at: #id) ] 
+		raise: BookNotFound.	
+	self 
 		assert: client books size 
 		equals: 1.
 	self 

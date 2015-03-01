@@ -22,8 +22,9 @@ LibraryClient >> addBook: aDictionary [
 		url: self baseUrl, '/books';
 		formAt: 'title' put:  (aDictionary at: #title);
 		formAt: 'authors' put: (aDictionary at: #authors);
-		post.
-	^ NeoJSONReader fromString: response
+		post;
+		response.
+	^ self parseResponse: response
 ]
 
 { #category : #private }
@@ -36,10 +37,17 @@ LibraryClient >> books [
 	| response |
 	response := ZnClient new
 		url: self baseUrl, '/books';
-		get.		
-	^ NeoJSONReader fromString: response
+		get;
+		response.		
+	^ self parseResponse: response
 
 
+]
+
+{ #category : #private }
+LibraryClient >> checkForNotFound: aZnResponse book: bookId [
+	404 = aZnResponse code 
+		ifTrue: [ BookNotFound signalWithBookId: bookId ]
 ]
 
 { #category : #'book library' }
@@ -47,14 +55,23 @@ LibraryClient >> findBook: bookId [
 	| response |
 	response := ZnClient new
 		url: self baseUrl, '/books/', bookId asString;
-		get.
-	^ NeoJSONReader fromString: response
+		get;
+		response.
+	self checkForNotFound: response book: bookId.
+	^ self parseResponse: response
 ]
 
 { #category : #initialization }
 LibraryClient >> initializePort: anInteger [
 	port := anInteger.
 	^ self
+]
+
+{ #category : #private }
+LibraryClient >> parseResponse: aZnResponse [
+	^ aZnResponse isSuccess
+		ifTrue: [ (NeoJSONReader on: aZnResponse entity readStream) next ]
+		ifFalse: [ self error: 'Unexpected response: ', aZnResponse code asString ]
 ]
 
 { #category : #private }
@@ -69,8 +86,7 @@ LibraryClient >> removeBook: bookId [
 		url: self baseUrl, '/books/', bookId asString;
 		delete;
 		response.
-	404 = response code 
-		ifTrue: [ BookNotFound signalWithBookId: bookId ]
+	self checkForNotFound: response book: bookId.
 
 ]
 
@@ -81,6 +97,7 @@ LibraryClient >> replaceBook: bookId with: aDictionary [
 		url: self baseUrl, '/books/', bookId asString;
 		formAt: 'title' put:  (aDictionary at: #title);
 		formAt: 'authors' put: (aDictionary at: #authors);
-		put.
-	^ NeoJSONReader fromString: response
+		put;
+		response.
+	^ self parseResponse: response
 ]
