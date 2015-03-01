@@ -12,5 +12,5 @@ Object >> teaEvalActionOnRequest: aTeaRequest [
 
 { #category : #'*Teapot-Core' }
 Object >> teaTransform: aResponseTransformer request: aTeaRequest [
-	^ aResponseTransformer cull: (TeaResponse code: 200 body: self	) cull: aTeaRequest
+	^ aResponseTransformer cull: (TeaResponse ok body: self) cull: aTeaRequest
 ]

@@ -30,7 +30,7 @@ TeaRequest >> abort: aZnResponse [
 TeaRequest >> at: aSymbol [
 	^ self 
 		at: aSymbol 
-		ifAbsent: [ TeaNoSuchParam signal: 'Param ', aSymbol printString, ' not found' ]
+		ifAbsent: [ TeaNoSuchParam signalWithParam: aSymbol ]
 ]
 
 { #category : #'acccessing - params' }
