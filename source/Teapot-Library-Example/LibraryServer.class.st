@@ -39,14 +39,8 @@ LibraryServer >> createBook: request [
 ]
 
 { #category : #routes }
-LibraryServer >> deleteBook: request [
-	| bookId |
-	bookId := request at: #id.			
-	bookShelf removeBook: bookId.
-	^ TeaResponse ok body: 'Deleted /books/', bookId asString
-
-	
-	
+LibraryServer >> deleteBook: request [		
+	^ bookShelf removeBook: (request at: #id)
 	
 
 ]

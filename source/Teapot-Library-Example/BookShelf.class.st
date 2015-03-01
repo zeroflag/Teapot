@@ -43,7 +43,7 @@ BookShelf >> initialize [
 
 { #category : #'book library' }
 BookShelf >> removeBook: bookId [ 
-	books 
+	^ books 
 		removeKey: bookId 
 		ifAbsent: [ BookNotFound signalWithBookId: bookId ]
 ]
