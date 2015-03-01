@@ -178,6 +178,6 @@ ConfigurationOfTeapot >> version09: spec [
 		spec description: 'version 0.9'.
 		spec author: 'AttilaMagyar'.
 		spec timestamp: '1/3/2015 20:01'.
-		spec package: 'Teapot-Core' with: 'Teapot-Core-AttilaMagyar.68'. ].
+		spec package: 'Teapot-Core' with: 'Teapot-Core-AttilaMagyar.69'. ].
 
 ]
