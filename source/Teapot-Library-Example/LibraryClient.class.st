@@ -87,7 +87,7 @@ LibraryClient >> removeBook: bookId [
 		delete;
 		response.
 	self checkForNotFound: response book: bookId.
-
+	^ self parseResponse: response
 ]
 
 { #category : #'book library' }
