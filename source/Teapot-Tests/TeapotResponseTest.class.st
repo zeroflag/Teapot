@@ -11,9 +11,8 @@ Class {
 TeapotResponseTest >> setUp [
 	server := Teapot on
 		GET: '/test400' -> [ 
-			TeaResponse 
-				code: 400 
-				body: 'malformed input' 
+			TeaResponse badRequest
+				body: 'malformed input';
 				headers: { 'my-header' -> 'my-value' } ];
 		start
 ]
