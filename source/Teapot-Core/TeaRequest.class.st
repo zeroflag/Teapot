@@ -22,8 +22,8 @@ TeaRequest class >> fromZnRequest: aZnRequest pathParams: aDictionary [
 ]
 
 { #category : #aborting }
-TeaRequest >> abort: aZnResponse [
-	(TeaAbort response: aZnResponse) signal
+TeaRequest >> abort: response [
+	(TeaAbort response: response) signal
 ]
 
 { #category : #'acccessing - params' }
