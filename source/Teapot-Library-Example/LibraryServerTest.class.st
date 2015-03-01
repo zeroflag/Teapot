@@ -28,54 +28,83 @@ LibraryServerTest >> tearDown [
 	server stop
 ]
 
-{ #category : #tests }
-LibraryServerTest >> testDeletingBook [
-	| books |
-	books := client 
-		addBook: book1;
-		addBook: book2;
-		removeBook: 2;
-		books.	
-	self assert: books size equals: 1.
+{ #category : #'tests - an empty library' }
+LibraryServerTest >> testAllowsReplacing [
+	client 
+		replaceBook: 1 
+		with: book1.
+	self 
+		assert: client books size
+		equals: 1.
+		
+]
+
+{ #category : #'tests  - a non empty library' }
+LibraryServerTest >> testDoesNotFindDeletedBook [
+	book1 := client addBook: book1.
+	book2 := client addBook: book2.
+			
+	client removeBook: (book1 at: #id).
 	
+	self 
+		assert: client books size 
+		equals: 1.
+	self 
+		assert: client books first 
+		equals: book2.
 	
 ]
 
-{ #category : #tests }
-LibraryServerTest >> testFindingAllBooks [
-	| books |
-	books := client 
-		addBook: book1;
-		addBook: book2;
-		books.
-	self assert: books size equals: 2.
-	
-	
-]
-
-{ #category : #tests }
-LibraryServerTest >> testFindingBookById [
-	| found id |
-	id := client addBook: book1.
-	found := client findBook: 1.
-	self assert: found equals: (book1 copyWith: #id -> 1).
-]
-
-{ #category : #tests }
-LibraryServerTest >> testInitiallyEmpty [
+{ #category : #'tests - a new library' }
+LibraryServerTest >> testHasNoBooks [
 	self 
 		assert: client books size
 		equals: 0
 ]
 
-{ #category : #tests }
-LibraryServerTest >> testUpdatingBook [
-	| book |
-	book := client 
+{ #category : #'tests  - a non empty library' }
+LibraryServerTest >> testReplacesExistingBook [
+	| old new id |
+	old := client addBook: book1.
+	id := old at: #id.
+	
+	client 
+		replaceBook: id 
+		with: book2.		
+	new := client findBook: id.
+	
+	self 
+		assert: new 
+		equals: (book2 copyWith: #id -> id)
+]
+
+{ #category : #'tests  - a non empty library' }
+LibraryServerTest >> testReturnsAllBooks [
+	| books |	
+	books := client 
 		addBook: book1;
-		replaceBook: 1 with: book2;
-		findBook: 1.	
-	self assert: book equals: (book2 copyWith: #id -> 1).
+		addBook: book2;
+		books.
+		
+	self 
+		assert: books size 
+		equals: 2.
 	
 	
+]
+
+{ #category : #'tests - an empty library' }
+LibraryServerTest >> testReturnsSingleAddedBook [
+	| added found |	
+	added := client addBook: book1.
+	found := client findBook: (added at: #id).
+	
+	self assert: found equals: added.
+]
+
+{ #category : #'tests - an empty library' }
+LibraryServerTest >> testSignalsErrorWhenRemoving [
+	self 
+		should: [ client removeBook: 1 ]
+		raise: BookNotFound
 ]

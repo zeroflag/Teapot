@@ -20,24 +20,35 @@ LibraryServer class >> serveOn: portNumber [
 		start
 ]
 
-{ #category : #rest }
-LibraryServer >> createBook: request [
-	| book bookId |
-	book := self makeBook: request.
-	bookId := bookShelf addBook: book.
-	^ TeaResponse created: '/books/', bookId asString
+{ #category : #'error handlers' }
+LibraryServer >> bookNotFound: aBookNotFound request: aZnRequest [
+	^ TeaResponse notFound body:
+		{ 
+			#code -> 'NOT_FOUND'. 
+			#message -> ('No such book: ', aBookNotFound bookId asString)
+		} asDictionary
 ]
 
-{ #category : #rest }
+{ #category : #routes }
+LibraryServer >> createBook: request [
+	| book |
+	book := bookShelf addBook: (self makeBook: request).
+	^ TeaResponse created
+		body: book;
+		location: '/books/', (book at: #id) asString
+]
+
+{ #category : #routes }
 LibraryServer >> deleteBook: request [
 	| bookId |
-	bookId := request at: #id.
-	^ [ 
-		bookShelf removeBook: bookId.
-		TeaResponse ok: 'Deleted /books/' , bookId asString 
-	   ]
-		on: BookNotFound
-		do: [ TeaResponse code: 204 body: 'No content' ]
+	bookId := request at: #id.			
+	bookShelf removeBook: bookId.
+	^ TeaResponse ok body: 'Deleted /books/', bookId asString
+
+	
+	
+	
+
 ]
 
 { #category : #initialization }
@@ -48,8 +59,10 @@ LibraryServer >> initializePort: anInteger [
 		#debugMode -> true. 
 		#defaultOutput -> #json 
 	}.
-	self registerRoutes.	
-	^ self
+	^ self 
+		registerRoutes;
+		registerErrorHandlers;
+		yourself
 ]
 
 { #category : #private }
@@ -58,26 +71,41 @@ LibraryServer >> makeBook: request [
       #authors -> (request at: #authors)} asDictionary.
 ]
 
-{ #category : #rest }
+{ #category : #'error handlers' }
+LibraryServer >> missingParam: aTeaNoSuchParam request: aZnRequest [
+	^ TeaResponse badRequest body:
+		{ 
+			#code -> 'MALFORMED_INPUT'. 
+			#message -> ('Missing parameter: ', aTeaNoSuchParam param)
+		} asDictionary
+]
+
+{ #category : #routes }
 LibraryServer >> readBook: request [
 	^ bookShelf findBook: (request at: #id)
 ]
 
-{ #category : #rest }
+{ #category : #routes }
 LibraryServer >> readBooks: aTeaRequest [ 
 	^ bookShelf books
 ]
 
 { #category : #initialization }
+LibraryServer >> registerErrorHandlers [
+	teapot
+		exception: TeaNoSuchParam -> (Send message: #missingParam:request: to: self);
+		exception: BookNotFound -> (Send message: #bookNotFound:request: to: self)
+]
+
+{ #category : #initialization }
 LibraryServer >> registerRoutes [
 	teapot
+		GET: '/' -> '<h1>A simple book library server</h1>'; output: #html;
 		GET: '/books' -> (Send message: #readBooks: to: self);
 		GET: '/books/<id:IsInteger>' -> (Send message: #readBook: to: self);
 		POST: '/books' -> (Send message: #createBook: to: self);		
 		PUT: '/books/<id:IsInteger>' -> (Send message: #updateBook: to: self);
-		DELETE: '/books/<id:IsInteger>' -> (Send message: #deleteBook: to: self);
-		exception: TeaNoSuchParam -> [ :ex :req | TeaResponse badRequest: req ];
-		exception: BookNotFound -> [ :ex :req | TeaResponse notFound: '/books/', ex messageText ].
+		DELETE: '/books/<id:IsInteger>' -> (Send message: #deleteBook: to: self)
 ]
 
 { #category : #controlling }
@@ -91,16 +119,12 @@ LibraryServer >> stop [
 	teapot stop
 ]
 
-{ #category : #rest }
+{ #category : #routes }
 LibraryServer >> updateBook: request [
-	| updatedBook |
-	updatedBook := self makeBook: request.
-	^ [ 
-		bookShelf replaceBook: (request at: 'id') with: updatedBook.
-		TeaResponse ok: 'updated'
-  	   ]
-		on: BookNotFound
-		do: [ TeaResponse code: 204 body: 'No content' ]	
+	^ bookShelf 
+		replaceBook: (request at: 'id') 
+		with: (self makeBook: request)
+
 	
 
 	

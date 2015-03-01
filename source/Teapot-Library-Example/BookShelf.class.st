@@ -17,10 +17,9 @@ Class {
 BookShelf >> addBook: aDictionary [
 	| bookId |
 	bookId := self uniqueId.
-	books 
-		at: bookId 
-		put: (aDictionary copyWith: #id -> bookId).
-	^ bookId
+	^ books 
+		at: bookId
+		put: (aDictionary copyWith: #id -> bookId)
 ]
 
 { #category : #'book library' }
@@ -32,7 +31,7 @@ BookShelf >> books [
 BookShelf >> findBook: bookId [ 
 	^ books 
 		at: bookId
-		ifAbsent: [ BookNotFound signal: bookId asString ]
+		ifAbsent: [ BookNotFound signalWithBookId: bookId ]
 ]
 
 { #category : #initialization }
@@ -46,12 +45,12 @@ BookShelf >> initialize [
 BookShelf >> removeBook: bookId [ 
 	books 
 		removeKey: bookId 
-		ifAbsent: [ BookNotFound signal: bookId asString ]
+		ifAbsent: [ BookNotFound signalWithBookId: bookId ]
 ]
 
 { #category : #'book library' }
 BookShelf >> replaceBook: bookId with: aDictionary [
-	books 
+	^ books 
 		at: bookId 
 		put: (aDictionary copyWith: #id -> bookId)
 ]

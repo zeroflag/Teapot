@@ -16,13 +16,14 @@ LibraryClient class >> port: anInteger [
 ]
 
 { #category : #'book library' }
-LibraryClient >> addBook: aDictionary [
-	ZnClient new
+LibraryClient >> addBook: aDictionary [		
+	| response |
+	response := ZnClient new
 		url: self baseUrl, '/books';
 		formAt: 'title' put:  (aDictionary at: #title);
 		formAt: 'authors' put: (aDictionary at: #authors);
 		post.
-
+	^ NeoJSONReader fromString: response
 ]
 
 { #category : #private }
@@ -63,18 +64,23 @@ LibraryClient >> port [
 
 { #category : #'book library' }
 LibraryClient >> removeBook: bookId [
-	^ ZnClient new
+	| response |
+	response := ZnClient new
 		url: self baseUrl, '/books/', bookId asString;
-		delete
-
+		delete;
+		response.
+	404 = response code 
+		ifTrue: [ BookNotFound signalWithBookId: bookId ]
 
 ]
 
 { #category : #'book library' }
 LibraryClient >> replaceBook: bookId with: aDictionary [
-	ZnClient new
+	| response |
+	response := ZnClient new
 		url: self baseUrl, '/books/', bookId asString;
 		formAt: 'title' put:  (aDictionary at: #title);
 		formAt: 'authors' put: (aDictionary at: #authors);
-		put
+		put.
+	^ NeoJSONReader fromString: response
 ]
