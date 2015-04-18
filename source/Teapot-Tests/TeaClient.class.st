@@ -8,6 +8,15 @@ Class {
 }
 
 { #category : #private }
+TeaClient class >> httpDeleteString: aString [
+	^ ZnClient new
+		url: 'http://localhost:1701/', aString;
+		delete
+
+	
+]
+
+{ #category : #private }
 TeaClient class >> httpGet: aString [
 	^ ZnEasy get: 'http://localhost:1701/', aString
 
@@ -41,6 +50,20 @@ TeaClient class >> httpPost: aString [
 { #category : #private }
 TeaClient class >> httpPostString: aString [
 	^ (self httpPost: aString) entity string
+
+	
+]
+
+{ #category : #private }
+TeaClient class >> httpPut: aString [
+	^ ZnEasy put: 'http://localhost:1701/', aString data: (ZnEntity text: 'any')
+
+	
+]
+
+{ #category : #private }
+TeaClient class >> httpPutString: aString [
+	^ (self httpPut: aString) entity string
 
 	
 ]

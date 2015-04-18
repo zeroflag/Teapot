@@ -16,6 +16,7 @@ TeapotRoutingTest >> setUp [
 		GET: '/*/c' -> [ '4' ];	
 		GET: '/x/y/*' -> [ '5' ];
 		GET: '/x/*/*/z/*' -> [ '6' ];
+		any: 'any' -> 'any';
 		start.		
 ]
 
@@ -27,6 +28,14 @@ TeapotRoutingTest >> tearDown [
 { #category : #tests }
 TeapotRoutingTest >> test404 [
  	self assert: (TeaClient httpGet: '1/2/3/4') code equals: 404
+]
+
+{ #category : #tests }
+TeapotRoutingTest >> testAnyMatchesToAnyHttpMethod [
+ 	self assert: (TeaClient httpGetString: 'any') equals: 'any'.
+ 	self assert: (TeaClient httpPostString: 'any') equals: 'any'.
+ 	self assert: (TeaClient httpPutString: 'any') equals: 'any'.	
+ 	self assert: (TeaClient httpDeleteString: 'any') equals: 'any'.
 ]
 
 { #category : #tests }
