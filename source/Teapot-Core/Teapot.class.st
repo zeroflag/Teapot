@@ -50,16 +50,16 @@ Teapot class >> stopAll [
 
 { #category : #'url mapping' }
 Teapot >> CONNECT: patternActionAssoc [
-	self 
-		addRouteMethod: #CONNECT 
+	self
+		addRouteMethod: (TeaMethodMatcher exactly: #CONNECT)
 		pattern: patternActionAssoc key
 		action: patternActionAssoc value
 ]
 
 { #category : #'url mapping' }
 Teapot >> DELETE: patternActionAssoc [
-	self 
-		addRouteMethod: #DELETE
+	self
+		addRouteMethod: (TeaMethodMatcher exactly: #DELETE)
 		pattern: patternActionAssoc key
 		action: patternActionAssoc value
 ]
@@ -67,32 +67,31 @@ Teapot >> DELETE: patternActionAssoc [
 { #category : #'url mapping' }
 Teapot >> GET: patternActionAssoc [
 	self 
-		addRouteMethod: #GET
-		pattern: patternActionAssoc key
+		addRouteMethod: (TeaMethodMatcher exactly: #GET) 
+		pattern: patternActionAssoc key 
 		action: patternActionAssoc value
 ]
 
 { #category : #'url mapping' }
 Teapot >> HEAD: patternActionAssoc [
 	self 
-		addRouteMethod: #HEAD
-		pattern: patternActionAssoc key
+		addRouteMethod: (TeaMethodMatcher exactly: #HEAD) 
+		pattern: patternActionAssoc key 
 		action: patternActionAssoc value
 ]
 
 { #category : #'url mapping' }
 Teapot >> OPTIONS: patternActionAssoc [
-	self 
-		addRouteMethod: #OPTIONS
+	self
+		addRouteMethod: (TeaMethodMatcher exactly: #OPTIONS)
 		pattern: patternActionAssoc key
 		action: patternActionAssoc value
-
 ]
 
 { #category : #'url mapping' }
 Teapot >> PATCH: patternActionAssoc [
-	self 
-		addRouteMethod: #PATCH
+	self
+		addRouteMethod: (TeaMethodMatcher exactly: #PATCH)
 		pattern: patternActionAssoc key
 		action: patternActionAssoc value
 ]
@@ -100,33 +99,32 @@ Teapot >> PATCH: patternActionAssoc [
 { #category : #'url mapping' }
 Teapot >> POST: patternActionAssoc [
 	self 
-		addRouteMethod: #POST
-		pattern: patternActionAssoc key
+		addRouteMethod: (TeaMethodMatcher exactly: #POST) 
+		pattern: patternActionAssoc key 
 		action: patternActionAssoc value
 ]
 
 { #category : #'url mapping' }
 Teapot >> PUT: patternActionAssoc [
 	self 
-		addRouteMethod: #PUT
-		pattern: patternActionAssoc key
-		action: patternActionAssoc value
-
-]
-
-{ #category : #'url mapping' }
-Teapot >> TRACE: patternActionAssoc [
-	self 
-		addRouteMethod: #TRACE
+		addRouteMethod: (TeaMethodMatcher exactly: #PUT) 
 		pattern: patternActionAssoc key 
 		action: patternActionAssoc value
 ]
 
+{ #category : #'url mapping' }
+Teapot >> TRACE: patternActionAssoc [
+	self
+		addRouteMethod: (TeaMethodMatcher exactly: #TRACE)
+		pattern: patternActionAssoc key
+		action: patternActionAssoc value
+]
+
 { #category : #private }
-Teapot >> addRouteMethod: methodSymbol pattern: pattern action: aTeaAction [
+Teapot >> addRouteMethod: aTeaMethodMatcher pattern: pattern action: aTeaAction [
 	currentRoute := dynamicRouter addRoute:
 		(TeaRoute
-			matcher: (TeaRequestMatcher method: (TeaMethodMatcher exactly: methodSymbol) url: pattern asTeaUrlPattern)
+			matcher: (TeaRequestMatcher method: aTeaMethodMatcher url: pattern asTeaUrlPattern)
 			action: aTeaAction
 			transformer: defaultOutput)
 ]
@@ -137,6 +135,14 @@ Teapot >> after: patternActionAssoc [
 		(TeaAfterFilter 
 			urlPattern: patternActionAssoc key asTeaUrlPattern 
 			action: patternActionAssoc value)
+]
+
+{ #category : #'url mapping' }
+Teapot >> any: patternActionAssoc [
+	self
+		addRouteMethod: TeaMethodMatcher any
+		pattern: patternActionAssoc key
+		action: patternActionAssoc value
 ]
 
 { #category : #filters }
