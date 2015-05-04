@@ -6,7 +6,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'urlPattern',
-		'methodMatcher'
+		'methodMatcher',
+		'whenClause'
 	],
 	#category : #'Teapot-Core'
 }
@@ -30,7 +31,8 @@ TeaRequestMatcher >> matchRequest: aZnRequest ifMatch: matchBlock ifNoMatch: noM
 { #category : #private }
 TeaRequestMatcher >> matchesRequest: aZnRequest placeholders: placeholders [
 	^  (methodMatcher matchesHttpMethod: aZnRequest method)
-		and: [ urlPattern matchesUrl: aZnRequest url placeholders: placeholders ]
+		and: [ (whenClause cull: aZnRequest) 
+			and: [ urlPattern matchesUrl: aZnRequest url placeholders: placeholders ] ]
 ]
 
 { #category : #printing }
@@ -44,5 +46,11 @@ TeaRequestMatcher >> printOn: aStream [
 TeaRequestMatcher >> setPattern: anUrlPattern method: aMethodMatcher [
 	urlPattern := anUrlPattern.
 	methodMatcher := aMethodMatcher.
+	whenClause := [ :anyRequest | true ].
 	^ self
+]
+
+{ #category : #accessing }
+TeaRequestMatcher >> whenClause: aBlockClosure [ 
+	whenClause := aBlockClosure
 ]

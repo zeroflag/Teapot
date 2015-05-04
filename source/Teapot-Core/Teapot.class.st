@@ -21,7 +21,8 @@ Class {
 		'dynamicRouter',
 		'staticRouter',
 		'compositeRouter',
-		'defaultOutput'
+		'defaultOutput',
+		'currentRequestMatcher'
 	],
 	#category : #'Teapot-Core'
 }
@@ -122,9 +123,12 @@ Teapot >> TRACE: patternActionAssoc [
 
 { #category : #private }
 Teapot >> addRouteMethod: aTeaMethodMatcher pattern: pattern action: aTeaAction [
+   currentRequestMatcher := TeaRequestMatcher 
+		method: aTeaMethodMatcher 
+		url: pattern asTeaUrlPattern.
 	currentRoute := dynamicRouter addRoute:
 		(TeaRoute
-			matcher: (TeaRequestMatcher method: aTeaMethodMatcher url: pattern asTeaUrlPattern)
+			matcher: currentRequestMatcher
 			action: aTeaAction
 			transformer: defaultOutput)
 ]
@@ -206,4 +210,12 @@ Teapot >> start [
 { #category : #controlling }
 Teapot >> stop [
 	server stop
+]
+
+{ #category : #filters }
+Teapot >> when: aBlockClosure [ 
+	currentRequestMatcher
+		ifNotNil: [ currentRequestMatcher whenClause: aBlockClosure ] 
+		ifNil: [ self error: 'when clause must be used after a route definition' ]
+	
 ]
