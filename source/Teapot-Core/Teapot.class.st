@@ -17,11 +17,11 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'server',
-		'currentRoute',
 		'dynamicRouter',
 		'staticRouter',
 		'compositeRouter',
-		'defaultOutput'
+		'defaultOutput',
+		'current'
 	],
 	#category : #'Teapot-Core'
 }
@@ -122,7 +122,7 @@ Teapot >> TRACE: patternActionAssoc [
 
 { #category : #private }
 Teapot >> addRouteMethod: aTeaMethodMatcher pattern: pattern action: aTeaAction [
-	currentRoute := dynamicRouter addRoute:
+	current := dynamicRouter addRoute:
 		(TeaRoute
 			matcher: (TeaRequestMatcher method: aTeaMethodMatcher url: pattern asTeaUrlPattern)
 			action: aTeaAction
@@ -131,7 +131,7 @@ Teapot >> addRouteMethod: aTeaMethodMatcher pattern: pattern action: aTeaAction 
 
 { #category : #filters }
 Teapot >> after: patternActionAssoc [
-	currentRoute := compositeRouter addAfterFilter:		
+	current := compositeRouter addAfterFilter:		
 		(TeaAfterFilter 
 			urlPattern: patternActionAssoc key asTeaUrlPattern 
 			action: patternActionAssoc value)
@@ -147,7 +147,7 @@ Teapot >> any: patternActionAssoc [
 
 { #category : #filters }
 Teapot >> before: patternActionAssoc [
-	currentRoute := compositeRouter addBeforeFilter:		
+	current := compositeRouter addBeforeFilter:		
 		(TeaBeforeFilter 
 			urlPattern: patternActionAssoc key asTeaUrlPattern 
 			action: patternActionAssoc value)
@@ -155,7 +155,7 @@ Teapot >> before: patternActionAssoc [
 
 { #category : #'url mapping' }
 Teapot >> exception: anExceptionSetActionAssoc [
-	currentRoute := compositeRouter addErrorHandler:
+	current := compositeRouter addErrorHandler:
 		(TeaErrorHandler
 			for: anExceptionSetActionAssoc key
 			action: anExceptionSetActionAssoc value
@@ -177,7 +177,7 @@ Teapot >> initializeOptions: optionsAssociations [
 
 { #category : #'url mapping' }
 Teapot >> output: transformerBlockOrSymbol [
-	currentRoute responseTransformer: (self responseTransformer: transformerBlockOrSymbol)
+	current responseTransformer: (self responseTransformer: transformerBlockOrSymbol)
 	
 ]
 
@@ -210,8 +210,6 @@ Teapot >> stop [
 
 { #category : #filters }
 Teapot >> when: aBlockClosure [ 
-	currentRoute
-		ifNotNil: [ currentRoute whenClause: aBlockClosure ] 
-		ifNil: [ self error: 'when clause must be used after a route definition' ]
+	current whenClause: aBlockClosure
 	
 ]
