@@ -12,7 +12,7 @@ TeapotWhenClauseTest >> setUp [
 	server := Teapot on
 		any: '/when' -> 'get'; when: [:req | req method = 'GET'];
 		any: '/when' -> 'post'; when: [:req | req method = 'POST'];
-		any: '/when' -> 'put'; when: [:req | req method = 'PUT'];		
+		any: '/when/<p>' -> 'param-dispatch'; when: [:req | (req at: #p) = 'pval'];
 		any: '/when' -> 'unfiltered';
 		any: '/never' -> 'never match'; when: [ false ];
 		before: '/*' -> [:req | 
@@ -36,8 +36,8 @@ TeapotWhenClauseTest >> testDispatchesOnMethodInWhenFilter [
 		assert: (TeaClient httpGetString: '/when') 
 		equals: 'get'.	
 	self 
-		assert: (TeaClient httpPutString: '/when') 
-		equals: 'put'.
+		assert: (TeaClient httpPutString: '/when/pval') 
+		equals: 'param-dispatch'.
 	self 
 		assert: (TeaClient httpPostString: '/when') 
 		equals: 'post'.
