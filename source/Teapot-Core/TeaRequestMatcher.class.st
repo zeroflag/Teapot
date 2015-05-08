@@ -30,9 +30,11 @@ TeaRequestMatcher >> matchRequest: aZnRequest ifMatch: matchBlock ifNoMatch: noM
 
 { #category : #private }
 TeaRequestMatcher >> matchesRequest: aZnRequest placeholders: placeholders [
-	^  (methodMatcher matchesHttpMethod: aZnRequest method)
-		and: [ (whenClause cull: aZnRequest) 
-			and: [ urlPattern matchesUrl: aZnRequest url placeholders: placeholders ] ]
+	| matchesPartially |
+	matchesPartially := (methodMatcher matchesHttpMethod: aZnRequest method)
+		and: [ urlPattern matchesUrl: aZnRequest url placeholders: placeholders ].	
+	matchesPartially ifFalse: [ ^ false ].
+	^ whenClause cull: (TeaRequest fromZnRequest: aZnRequest pathParams: placeholders).
 ]
 
 { #category : #printing }
