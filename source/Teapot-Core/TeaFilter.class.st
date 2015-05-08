@@ -25,3 +25,8 @@ TeaFilter >> setMatcher: aTeaRequestMatcher action: aTeaAction [
 	action := aTeaAction.
 	^ self
 ]
+
+{ #category : #acccessing }
+TeaFilter >> whenClause: aBlockClosure [ 
+	requestMatcher whenClause: aBlockClosure 
+]

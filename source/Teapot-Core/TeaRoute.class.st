@@ -56,3 +56,8 @@ TeaRoute >> setMatcher: aTeaRequestMatcher action: aTeaAction transformer: aResp
 	responseTransformer := aResponseTransformer.
 	^ self
 ]
+
+{ #category : #acccessing }
+TeaRoute >> whenClause: aBlockClosure [ 
+	requestMatcher whenClause: aBlockClosure
+]

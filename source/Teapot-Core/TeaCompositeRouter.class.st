@@ -19,13 +19,13 @@ TeaCompositeRouter class >> routers: teaRouterCollection [
 ]
 
 { #category : #filters }
-TeaCompositeRouter >> addAfterFilter: aRoute [
-	afterFilters add: aRoute
+TeaCompositeRouter >> addAfterFilter: aTeaFilter [
+	^ afterFilters add: aTeaFilter
 ]
 
 { #category : #filters }
-TeaCompositeRouter >> addBeforeFilter: aRoute [
-	beforeFilters add: aRoute
+TeaCompositeRouter >> addBeforeFilter: aTeaFilter [
+	^ beforeFilters add: aTeaFilter
 ]
 
 { #category : #'error handing' }
