@@ -24,7 +24,7 @@ TeaOutput class >> json [
 	^ [ :aTeaResponse | | entity |
 		entity := ZnStringEntity 
 			with: ((self optionalClass: #NeoJSONWriter) toString: aTeaResponse body) 
-			type: ZnMimeType applicationJson.
+			type: (ZnMimeType applicationJson charSet: aTeaResponse charSet; yourself).
 		self 
 			znEntity: entity
 			code: aTeaResponse code 
@@ -63,7 +63,7 @@ TeaOutput class >> ston [
 	^ [ :aTeaResponse | | entity |
 		entity := ZnStringEntity 
 			with: ((self optionalClass: #STON) toString: aTeaResponse body) 
-			type: ZnMimeType textPlain.
+			type: (ZnMimeType textPlain charSet: aTeaResponse charSet; yourself).
 		self 
 			znEntity: entity
 			code: aTeaResponse code 
@@ -92,7 +92,8 @@ TeaOutput class >> stream: aZnMimeType [
 { #category : #'response transformers' }
 TeaOutput class >> stringWithContentType: aZnMimeType [ 
 	^ [ :aTeaResponse | | entity |
-		entity := (ZnStringEntity type: aZnMimeType) 
+		entity := ZnStringEntity new
+			contentType: (aZnMimeType charSet: aTeaResponse charSet; yourself);
 			string: aTeaResponse body asString;
 			yourself.
 		self 

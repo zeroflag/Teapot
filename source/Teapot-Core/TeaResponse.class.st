@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'code',
 		'body',
-		'headers'
+		'headers',
+		'charSet'
 	],
 	#category : #'Teapot-Core'
 }
@@ -76,6 +77,16 @@ TeaResponse >> body: anObject [
 ]
 
 { #category : #accessing }
+TeaResponse >> charSet [
+	^ charSet
+]
+
+{ #category : #accessing }
+TeaResponse >> charSet: aString [
+	charSet := aString
+]
+
+{ #category : #accessing }
 TeaResponse >> code [
 	^ code
 ]
@@ -109,6 +120,7 @@ TeaResponse >> initialize [
 	headers := Dictionary new.
 	body := String crlf.
 	code := ZnStatusLine ok code.
+	charSet := 'utf-8'.
 ]
 
 { #category : #accessing }
