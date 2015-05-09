@@ -26,7 +26,7 @@ TeapotFormatTest >> tearDown [
 TeapotFormatTest >> testArbitraryContentType [
 	self 
 		assert: (TeaClient httpGet: '/xml') contentType 
-		equals: ZnMimeType applicationXml
+		equals: (ZnMimeType applicationXml charSet: 'utf-8'; yourself)
 ]
 
 { #category : #tests }
