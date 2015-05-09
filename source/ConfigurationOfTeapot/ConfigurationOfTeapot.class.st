@@ -152,7 +152,7 @@ ConfigurationOfTeapot >> project [
 ConfigurationOfTeapot >> stable: spec [
 	<symbolicVersion: #'stable'>
 
-	spec for: #'common' version: '0.9'.
+	spec for: #'common' version: '0.91'.
 
 ]
 
@@ -166,6 +166,19 @@ ConfigurationOfTeapot >> version08: spec [
 		spec author: 'AttilaMagyar'.
 		spec timestamp: '8/24/2014 20:01'.
 		spec package: 'Teapot-Core' with: 'Teapot-Core-AttilaMagyar.52'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfTeapot >> version091: spec [
+	<version: '0.91' imports: #('0.1-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 0.91'.
+		spec author: 'AttilaMagyar'.
+		spec timestamp: '5/9/2015 18:18'.
+		spec package: 'Teapot-Core' with: 'Teapot-Core-AttilaMagyar.76'. ].
 
 ]
 
