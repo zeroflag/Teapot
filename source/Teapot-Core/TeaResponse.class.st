@@ -83,7 +83,8 @@ TeaResponse >> charSet [
 
 { #category : #accessing }
 TeaResponse >> charSet: aString [
-	charSet := aString
+	charSet := aString.
+	^ self
 ]
 
 { #category : #accessing }
