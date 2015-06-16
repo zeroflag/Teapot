@@ -28,6 +28,15 @@ TeaUrlPatternSet >> matchesUrl: anUrl placeholders: aDictionary [
 	^ patterns anySatisfy: [ :each | each matchesUrl: anUrl placeholders: aDictionary ]
 ]
 
+{ #category : #'as yet unclassified' }
+TeaUrlPatternSet >> printOn: aStream [
+	aStream nextPut: ${.
+	patterns 
+		do: [ :each | each printOn: aStream ]
+		separatedBy: [ aStream nextPut: $. ].
+	aStream nextPut: $}.
+]
+
 { #category : #initialization }
 TeaUrlPatternSet >> setPatterns: aCollection [ 
 	patterns := aCollection.
