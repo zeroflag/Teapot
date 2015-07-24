@@ -28,7 +28,7 @@ TeaUrlPatternSet >> matchesUrl: anUrl placeholders: aDictionary [
 	^ patterns anySatisfy: [ :each | each matchesUrl: anUrl placeholders: aDictionary ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #printing }
 TeaUrlPatternSet >> printOn: aStream [
 	aStream nextPut: ${.
 	patterns 
