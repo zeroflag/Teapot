@@ -1,3 +1,8 @@
+"
+Configuration for Teapot micro web framework.
+
+See http://smalltalkhub.com/#!/~zeroflag/Teapot
+"
 Class {
 	#name : #ConfigurationOfTeapot,
 	#superclass : #Object,
@@ -27,6 +32,36 @@ ConfigurationOfTeapot class >> baseConfigurationClassIfAbsent: aBlock [
 			self ensureMetacelloBaseConfiguration.
 			Smalltalk at: #MetacelloBaseConfiguration ifAbsent: aBlock ].
 
+]
+
+{ #category : #catalog }
+ConfigurationOfTeapot class >> catalogChangeLog [
+	"Returns a paragraph describing the most important changes in the configuration class."
+	^ ' '
+]
+
+{ #category : #catalog }
+ConfigurationOfTeapot class >> catalogContactInfo [
+	"Returns a paragraph describing contact information such as email, mailing lists and website."
+	^ 'Contact the authors on the Pharo developer list (http://lists.pharo.org)'
+]
+
+{ #category : #catalog }
+ConfigurationOfTeapot class >> catalogDescription [
+	"Returns a paragraph describing the project"
+	^ 'Teapot is micro web framework on top of the Zinc HTTP components, that focuses on simplicity and ease of use.'
+]
+
+{ #category : #catalog }
+ConfigurationOfTeapot class >> catalogKeyClassesAndExample [
+	"Returns a paragraph or more describing the key classes of your project. You can use Pillar/Pier syntax to layout out the text i.e., ==Code== and - for bullet."
+	^ 'Checkout the class ==Teapot=='
+]
+
+{ #category : #catalog }
+ConfigurationOfTeapot class >> catalogKeywords [
+	"Returns an array of symbols"
+	^ #(micro web framework http sinatra) 
 ]
 
 { #category : #private }
