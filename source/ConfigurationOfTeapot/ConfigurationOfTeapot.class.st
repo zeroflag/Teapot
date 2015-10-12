@@ -161,8 +161,15 @@ ConfigurationOfTeapot >> baseline20: spec [
 	spec for: #'common' do: [
 		spec blessing: #'baseline'.
 		spec repository: 'http://smalltalkhub.com/mc/zeroflag/Teapot/main/'.
+		spec project: 'NeoJSON' with: [
+				spec
+					className: #ConfigurationOfNeoJSON;
+					versionString: #'stable';
+					repository: 'http://mc.stfx.eu/Neo' ].
+				
 		spec 
-			package: 'Teapot-Core';
+			package: 'Teapot-Core' with: [
+				spec requires: #('NeoJSON' ). ];
 			package: 'Teapot-Tools' with: [
 				spec requires: #('Teapot-Core' ). ];
 			package: 'Teapot-Tests' with: [
@@ -182,8 +189,15 @@ ConfigurationOfTeapot >> baseline21: spec [
 	spec for: #'common' do: [
 		spec blessing: #'baseline'.
 		spec repository: 'http://smalltalkhub.com/mc/zeroflag/Teapot/main/'.
+		spec project: 'NeoJSON' with: [
+				spec
+					className: #ConfigurationOfNeoJSON;
+					versionString: #'stable';
+					repository: 'http://mc.stfx.eu/Neo' ].
+				
 		spec 
-			package: 'Teapot-Core';
+			package: 'Teapot-Core' with: [
+				spec requires: #('NeoJSON' ). ];
 			package: 'Teapot-Tools' with: [
 				spec requires: #('Teapot-Core' ). ];
 			package: 'Teapot-Tests' with: [
@@ -281,6 +295,7 @@ ConfigurationOfTeapot >> version20: spec [
 		spec description: 'version 2.0'.
 		spec author: 'TorstenBergmann'.
 		spec timestamp: '10/12/2015 13:11'.
+		spec project: 'NeoJSON' with: #'stable'.
 		spec 
 			package: 'Teapot-Core' with: 'Teapot-Core-AttilaMagyar.76';
 			package: 'Teapot-Tools' with: 'Teapot-Tools-TorstenBergmann.3';
