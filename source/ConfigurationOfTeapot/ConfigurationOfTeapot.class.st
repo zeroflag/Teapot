@@ -154,6 +154,48 @@ ConfigurationOfTeapot >> baseline01: spec [
 
 ]
 
+{ #category : #baselines }
+ConfigurationOfTeapot >> baseline20: spec [
+	<version: '2.0-baseline'>
+
+	spec for: #'common' do: [
+		spec blessing: #'baseline'.
+		spec repository: 'http://smalltalkhub.com/mc/zeroflag/Teapot/main/'.
+		spec 
+			package: 'Teapot-Core';
+			package: 'Teapot-Tools' with: [
+				spec requires: #('Teapot-Core' ). ];
+			package: 'Teapot-Tests' with: [
+				spec requires: #('Teapot-Core' ). ].
+		spec 
+			group: 'Core' with: #('Teapot-Core' );
+			group: 'Tools' with: #('Teapot-Tools' );
+			group: 'Tests' with: #('Teapot-Tests' );
+			group: 'default' with: #('Tools' 'Tests' ). ].
+
+]
+
+{ #category : #baselines }
+ConfigurationOfTeapot >> baseline21: spec [
+	<version: '2.1-baseline'>
+
+	spec for: #'common' do: [
+		spec blessing: #'baseline'.
+		spec repository: 'http://smalltalkhub.com/mc/zeroflag/Teapot/main/'.
+		spec 
+			package: 'Teapot-Core';
+			package: 'Teapot-Tools' with: [
+				spec requires: #('Teapot-Core' ). ];
+			package: 'Teapot-Tests' with: [
+				spec requires: #('Teapot-Core' ). ].
+		spec 
+			group: 'Core' with: #('Teapot-Core' );
+			group: 'Tools' with: #('Teapot-Tools' );
+			group: 'Tests' with: #('Teapot-Tests' );
+			group: 'default' with: #('Tools' 'Tests' ). ].
+
+]
+
 { #category : #accessing }
 ConfigurationOfTeapot >> customProjectAttributes [
 	 "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
@@ -166,7 +208,7 @@ ConfigurationOfTeapot >> customProjectAttributes [
 ConfigurationOfTeapot >> development: spec [
 	<symbolicVersion: #'development'>
 
-	spec for: #'common' version: '0.1-baseline'.
+	spec for: #'common' version: '2.1-baseline'.
 
 ]
 
@@ -187,7 +229,7 @@ ConfigurationOfTeapot >> project [
 ConfigurationOfTeapot >> stable: spec [
 	<symbolicVersion: #'stable'>
 
-	spec for: #'common' version: '0.91'.
+	spec for: #'common' version: '2.0'.
 
 ]
 
@@ -227,5 +269,21 @@ ConfigurationOfTeapot >> version09: spec [
 		spec author: 'AttilaMagyar'.
 		spec timestamp: '1/3/2015 20:01'.
 		spec package: 'Teapot-Core' with: 'Teapot-Core-AttilaMagyar.69'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfTeapot >> version20: spec [
+	<version: '2.0' imports: #('2.0-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'development'.
+		spec description: 'version 2.0'.
+		spec author: 'TorstenBergmann'.
+		spec timestamp: '10/12/2015 13:11'.
+		spec 
+			package: 'Teapot-Core' with: 'Teapot-Core-AttilaMagyar.76';
+			package: 'Teapot-Tools' with: 'Teapot-Tools-TorstenBergmann.3';
+			package: 'Teapot-Tests' with: 'Teapot-Tests-AttilaMagyar.53'. ].
 
 ]
