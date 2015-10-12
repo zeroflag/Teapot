@@ -24,6 +24,7 @@ Cupboard class >> menuCommandOn: aBuilder [
 	
 	(aBuilder item: #'Teapot')	 
 		help: 'Teatime'; 
+		parent: #'Tools' translated;
 		icon: self teapotIcon;
 		action: [ self soleInstance inspect ].
 	 aBuilder withSeparatorAfter 
