@@ -171,7 +171,7 @@ Cupboard >> gtInspectorTeapotsIn: composite [
 		format: [:each | self nameForTeapot: each ];
 		selectionAct:  [:each | each selection ifNotNil: [ each selection start ]. each update ] icon: self class teapotServerStartIcon entitled: 'Start';
 		selectionAct: [:each | each selection ifNotNil: [ each selection stop ]. each update ] icon: self class teapotServerStopIcon entitled: 'Stop';
-		act: [:each | each inspect ] icon: self class teapotServerIcon entitled: 'New Teapot'
+		act: [:each | self onNewServer. each update ] icon: self class teapotServerIcon entitled: 'New Teapot'
 		
 ]
 
@@ -181,6 +181,23 @@ Cupboard >> nameForTeapot: aTeapot [
 		stream nextPutAll: aTeapot server port asString.
 		stream nextPutAll: ' - '.
 		stream nextPutAll: (aTeapot server isRunning ifTrue: [ 'running' ] ifFalse: [ 'stopped' ]) ].
+
+]
+
+{ #category : #actions }
+Cupboard >> onNewServer [
+	|port directory pot |
+	port := UIManager default request: 'New server' initialAnswer: '80'.
+	port ifNil: [ ^self ].
+	directory := UIManager default chooseDirectory: 'Serve directory'.
+	directory ifNil: [ ^self ].
+	pot := Teapot configure: { 
+		#port -> port asNumber
+	}.
+	pot serveStatic: '/' from: directory.
+	pot start
+	
+		
 
 ]
 
