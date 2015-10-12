@@ -29,3 +29,9 @@ TeaDynamicRouter >> initialize [
 	super initialize.
 	routes := OrderedCollection new.
 ]
+
+{ #category : #accessing }
+TeaDynamicRouter >> routes [
+
+	^routes
+]
