@@ -167,13 +167,20 @@ Cupboard >> gtInspectorTeapotsIn: composite [
 	
 	^(composite list)
 		title: 'Teapots';
-		icon: [:each | self class teapotServerIcon ];
+		icon: [:each | self iconForTeapot: each ];
 		display: [ self teapots ]; 
 		format: [:each | self nameForTeapot: each ];
 		selectionAct:  [:each | each selection ifNotNil: [ each selection start ]. each update ] icon: self class teapotServerStartIcon entitled: 'Start';
 		selectionAct: [:each | each selection ifNotNil: [ each selection stop ]. each update ] icon: self class teapotServerStopIcon entitled: 'Stop';
 		act: [:each | self onNewServer. each update ] icon: self class teapotServerIcon entitled: 'New Teapot'
 		
+]
+
+{ #category : #private }
+Cupboard >> iconForTeapot: aTeapot [
+	^aTeapot server isRunning 
+			ifTrue: [ self class teapotServerStartIcon ] 
+			ifFalse: [ self class teapotServerStopIcon ]
 ]
 
 { #category : #private }
