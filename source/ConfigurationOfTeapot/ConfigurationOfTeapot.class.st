@@ -297,8 +297,8 @@ ConfigurationOfTeapot >> version20: spec [
 		spec timestamp: '10/12/2015 13:11'.
 		spec project: 'NeoJSON' with: #'stable'.
 		spec 
-			package: 'Teapot-Core' with: 'Teapot-Core-AttilaMagyar.76';
-			package: 'Teapot-Tools' with: 'Teapot-Tools-TorstenBergmann.3';
+			package: 'Teapot-Core' with: 'Teapot-Core-TorstenBergmann.80';
+			package: 'Teapot-Tools' with: 'Teapot-Tools-TorstenBergmann.4';
 			package: 'Teapot-Tests' with: 'Teapot-Tests-AttilaMagyar.53'. ].
 
 ]
