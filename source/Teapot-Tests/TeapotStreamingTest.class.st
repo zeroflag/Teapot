@@ -45,7 +45,7 @@ TeapotStreamingTest >> tearDown [
 { #category : #tests }
 TeapotStreamingTest >> testStreamingContent [
 	self 
-		assert: (TeaClient httpGet: '/stream') contents asString 
+		assert: (TeaTestClient httpGet: '/stream') contents asString 
 		equals: self content
 	
 ]

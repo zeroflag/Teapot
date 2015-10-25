@@ -24,11 +24,11 @@ TeapotAfterTest >> tearDown [
 TeapotAfterTest >> testAfterFilterCanModifyResponse [
 	| response |
 	
-	response := TeaClient httpGet: '/after/header-value'.
+	response := TeaTestClient httpGet: '/after/header-value'.
 	self assert: response entity string equals: 'after-return'.
 	self assert: (response headers at: 'header-key') equals: 'header-value'.
 	
-	response := TeaClient httpPost: '/after/notfound'.
+	response := TeaTestClient httpPost: '/after/notfound'.
 	self assert: response code equals: 404.
 	self assert: (response headers at: 'header-key') equals: 'notfound'.
 ]

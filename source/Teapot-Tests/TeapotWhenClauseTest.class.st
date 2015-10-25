@@ -33,27 +33,27 @@ TeapotWhenClauseTest >> tearDown [
 { #category : #tests }
 TeapotWhenClauseTest >> testDispatchesOnMethodInWhenFilter [
 	self 
-		assert: (TeaClient httpGetString: '/when') 
+		assert: (TeaTestClient httpGetString: '/when') 
 		equals: 'get'.	
 	self 
-		assert: (TeaClient httpPutString: '/when/pval') 
+		assert: (TeaTestClient httpPutString: '/when/pval') 
 		equals: 'param-dispatch'.
 	self 
-		assert: (TeaClient httpPostString: '/when') 
+		assert: (TeaTestClient httpPostString: '/when') 
 		equals: 'post'.
 	self 
-		assert: (TeaClient httpDeleteString: '/when') 
+		assert: (TeaTestClient httpDeleteString: '/when') 
 		equals: 'unfiltered'.
 		
-	self assert: (TeaClient httpGet: '/never') isNotFound.
+	self assert: (TeaTestClient httpGet: '/never') isNotFound.
 ]
 
 { #category : #tests }
 TeapotWhenClauseTest >> testWhenClauseWithBeforeAfterFilter [
 	self 
-		assert: (TeaClient httpGetString: 'beforeurl') 
+		assert: (TeaTestClient httpGetString: 'beforeurl') 
 		equals: 'before'.
 	self 
-		assert: (TeaClient httpGetString: 'afterurl') 
+		assert: (TeaTestClient httpGetString: 'afterurl') 
 		equals: 'after'.
 ]

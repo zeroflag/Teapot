@@ -23,11 +23,11 @@ TeapotAbortTest >> tearDown [
 
 { #category : #tests }
 TeapotAbortTest >> testAbortSupportsAnyObject [
-	self assert: (TeaClient httpGetString: '/abortstring') equals: 'abort test'.
+	self assert: (TeaTestClient httpGetString: '/abortstring') equals: 'abort test'.
 ]
 
 { #category : #tests }
 TeapotAbortTest >> testErrorCodes [
-	self assert: (TeaClient httpGet: '/badrequest') code equals: 400.
-	self assert: (TeaClient httpGet: '/unauthorized') code equals: 401.
+	self assert: (TeaTestClient httpGet: '/badrequest') code equals: 400.
+	self assert: (TeaTestClient httpGet: '/unauthorized') code equals: 401.
 ]

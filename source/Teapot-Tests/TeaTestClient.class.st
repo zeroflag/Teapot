@@ -2,13 +2,13 @@
 Http client for testing.
 "
 Class {
-	#name : #TeaClient,
+	#name : #TeaTestClient,
 	#superclass : #Object,
 	#category : #'Teapot-Tests'
 }
 
 { #category : #private }
-TeaClient class >> httpDeleteString: aString [
+TeaTestClient class >> httpDeleteString: aString [
 	^ ZnClient new
 		url: 'http://localhost:1701/', aString;
 		delete
@@ -17,14 +17,14 @@ TeaClient class >> httpDeleteString: aString [
 ]
 
 { #category : #private }
-TeaClient class >> httpGet: aString [
+TeaTestClient class >> httpGet: aString [
 	^ ZnEasy get: 'http://localhost:1701/', aString
 
 	
 ]
 
 { #category : #private }
-TeaClient class >> httpGetNoRedirect: aString [
+TeaTestClient class >> httpGetNoRedirect: aString [
 	^ ZnClient new
 		followRedirects: false;
 		get: 'http://localhost:1701/', aString;		
@@ -34,35 +34,35 @@ TeaClient class >> httpGetNoRedirect: aString [
 ]
 
 { #category : #private }
-TeaClient class >> httpGetString: aString [
+TeaTestClient class >> httpGetString: aString [
 	^ (self httpGet: aString) entity string
 
 	
 ]
 
 { #category : #private }
-TeaClient class >> httpPost: aString [
+TeaTestClient class >> httpPost: aString [
 	^ ZnEasy post: 'http://localhost:1701/', aString data: (ZnEntity text: 'any')
 
 	
 ]
 
 { #category : #private }
-TeaClient class >> httpPostString: aString [
+TeaTestClient class >> httpPostString: aString [
 	^ (self httpPost: aString) entity string
 
 	
 ]
 
 { #category : #private }
-TeaClient class >> httpPut: aString [
+TeaTestClient class >> httpPut: aString [
 	^ ZnEasy put: 'http://localhost:1701/', aString data: (ZnEntity text: 'any')
 
 	
 ]
 
 { #category : #private }
-TeaClient class >> httpPutString: aString [
+TeaTestClient class >> httpPutString: aString [
 	^ (self httpPut: aString) entity string
 
 	

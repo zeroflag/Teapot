@@ -30,7 +30,7 @@ TeapotTeaResponseTest >> tearDown [
 { #category : #tests }
 TeapotTeaResponseTest >> testBadRequest [
 	| response |
-	response := TeaClient httpGet: '/badrequest'.
+	response := TeaTestClient httpGet: '/badrequest'.
 	self assert: response code equals: 400.
 	self assert: response entity string equals: 'Bad Request'
 ]
@@ -38,7 +38,7 @@ TeapotTeaResponseTest >> testBadRequest [
 { #category : #tests }
 TeapotTeaResponseTest >> testCreated [
 	| response |
-	response := TeaClient httpGet: '/created'.
+	response := TeaTestClient httpGet: '/created'.
 	self assert: response code equals: 201.
 	self assert: response entity string equals: 'Created'.
 	self assert: (response headers at: 'Location') equals: '/created'.
@@ -47,28 +47,28 @@ TeapotTeaResponseTest >> testCreated [
 { #category : #tests }
 TeapotTeaResponseTest >> testMethodNotAllowed [
 	| response |
-	response := TeaClient httpGet: '/notallowed'.
+	response := TeaTestClient httpGet: '/notallowed'.
 	self assert: response code equals: 405.
 ]
 
 { #category : #tests }
 TeapotTeaResponseTest >> testNotFound [
 	| response |
-	response := TeaClient httpGet: '/notfound'.
+	response := TeaTestClient httpGet: '/notfound'.
 	self assert: response code equals: 404.
 ]
 
 { #category : #tests }
 TeapotTeaResponseTest >> testNotModified [
 	| response |
-	response := TeaClient httpGet: '/notmodified'.
+	response := TeaTestClient httpGet: '/notmodified'.
 	self assert: response code equals: 304.
 ]
 
 { #category : #tests }
 TeapotTeaResponseTest >> testOk [
 	| response |
-	response := TeaClient httpGet: '/ok'.
+	response := TeaTestClient httpGet: '/ok'.
 	self assert: response code equals: 200.
 	self assert: response entity string equals: 'tested ok'.
 ]
@@ -76,7 +76,7 @@ TeapotTeaResponseTest >> testOk [
 { #category : #tests }
 TeapotTeaResponseTest >> testRedirect [
 	| response |
-	response := TeaClient httpGetNoRedirect: '/redirect'.
+	response := TeaTestClient httpGetNoRedirect: '/redirect'.
 	self assert: response code equals: 302.
 	self assert: (response headers at: 'Location') equals: '/target'.
 ]
@@ -84,7 +84,7 @@ TeapotTeaResponseTest >> testRedirect [
 { #category : #tests }
 TeapotTeaResponseTest >> testServerError [
 	| response |
-	response := TeaClient httpGet: '/servererror'.
+	response := TeaTestClient httpGet: '/servererror'.
 	self assert: response code equals: 500.
 	self assert: response entity string equals: 'tested server error'
 ]
@@ -92,7 +92,7 @@ TeapotTeaResponseTest >> testServerError [
 { #category : #tests }
 TeapotTeaResponseTest >> testUnauthorized [
 	| response |
-	response := TeaClient httpGet: '/unauthorized'.
+	response := TeaTestClient httpGet: '/unauthorized'.
 	self assert: response code equals: 401.
 	self assert: response entity string equals: 'Unauthorized'.
 	self assert: (response headers at: 'WWW-Authenticate') equals: 'tested unauthorized'.

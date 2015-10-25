@@ -23,13 +23,13 @@ TeapotDefaultFormatTest >> tearDown [
 { #category : #tests }
 TeapotDefaultFormatTest >> testDefault [
 	self 
-		assert: (TeaClient httpGet: '/default') contentType 
+		assert: (TeaTestClient httpGet: '/default') contentType 
 		equals: ZnMimeType textPlain
 ]
 
 { #category : #tests }
 TeapotDefaultFormatTest >> testOverride [
 	self 
-		assert: (TeaClient httpGet: '/html') contentType 
+		assert: (TeaTestClient httpGet: '/html') contentType 
 		equals: ZnMimeType textHtml
 ]

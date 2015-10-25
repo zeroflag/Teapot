@@ -30,16 +30,16 @@ TeapotReturnResponseTest >> tearDown [
 
 { #category : #tests }
 TeapotReturnResponseTest >> testDirectStreamResponse [
-	self assert: (TeaClient httpGetString: '/resp2') equals: 'direct stream'.	
+	self assert: (TeaTestClient httpGetString: '/resp2') equals: 'direct stream'.	
 ]
 
 { #category : #tests }
 TeapotReturnResponseTest >> testDirectStringResponse [
-	self assert: (TeaClient httpGetString: '/resp1') equals: 'direct response'.	
+	self assert: (TeaTestClient httpGetString: '/resp1') equals: 'direct response'.	
 ]
 
 { #category : #tests }
 TeapotReturnResponseTest >> testRedirect [
-	self assert: (TeaClient httpGetString: '/redirect') equals: 'redirected here'.
+	self assert: (TeaTestClient httpGetString: '/redirect') equals: 'redirected here'.
 	
 ]

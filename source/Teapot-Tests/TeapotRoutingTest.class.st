@@ -27,45 +27,45 @@ TeapotRoutingTest >> tearDown [
 
 { #category : #tests }
 TeapotRoutingTest >> test404 [
- 	self assert: (TeaClient httpGet: '1/2/3/4') code equals: 404
+ 	self assert: (TeaTestClient httpGet: '1/2/3/4') code equals: 404
 ]
 
 { #category : #tests }
 TeapotRoutingTest >> testAnyMatchesToAnyHttpMethod [
- 	self assert: (TeaClient httpGetString: 'any') equals: 'any'.
- 	self assert: (TeaClient httpPostString: 'any') equals: 'any'.
- 	self assert: (TeaClient httpPutString: 'any') equals: 'any'.	
- 	self assert: (TeaClient httpDeleteString: 'any') equals: 'any'.
+ 	self assert: (TeaTestClient httpGetString: 'any') equals: 'any'.
+ 	self assert: (TeaTestClient httpPostString: 'any') equals: 'any'.
+ 	self assert: (TeaTestClient httpPutString: 'any') equals: 'any'.	
+ 	self assert: (TeaTestClient httpDeleteString: 'any') equals: 'any'.
 ]
 
 { #category : #tests }
 TeapotRoutingTest >> testMultipleWildcard [
-	self assert: (TeaClient httpGetString: 'x/foo/bar/z/baz') equals: '6'.
-	self assert: (TeaClient httpGetString: 'x/foo/bar/z/baz/123') equals: '6'.
+	self assert: (TeaTestClient httpGetString: 'x/foo/bar/z/baz') equals: '6'.
+	self assert: (TeaTestClient httpGetString: 'x/foo/bar/z/baz/123') equals: '6'.
 	
 ]
 
 { #category : #tests }
 TeapotRoutingTest >> testNoWildcard [
-	self assert: (TeaClient httpGetString: '') equals: '1'.
-	self assert: (TeaClient httpGetString: '/a') equals: '2'.	
+	self assert: (TeaTestClient httpGetString: '') equals: '1'.
+	self assert: (TeaTestClient httpGetString: '/a') equals: '2'.	
 	
 ]
 
 { #category : #tests }
 TeapotRoutingTest >> testWildcardEnd [
-	self assert: (TeaClient httpGetString: '/x/y/foo') equals: '5'.	
+	self assert: (TeaTestClient httpGetString: '/x/y/foo') equals: '5'.	
 	
 ]
 
 { #category : #tests }
 TeapotRoutingTest >> testWildcardFirst [
-	self assert: (TeaClient httpGetString: 'foo/c') equals: '4'
+	self assert: (TeaTestClient httpGetString: 'foo/c') equals: '4'
 	
 ]
 
 { #category : #tests }
 TeapotRoutingTest >> testWildcardInside [
-	self assert: (TeaClient httpGetString: 'a/bar/b') equals: '3'
+	self assert: (TeaTestClient httpGetString: 'a/bar/b') equals: '3'
 	
 ]

@@ -37,21 +37,21 @@ TeapotErrorHandlingTest >> tearDown [
 
 { #category : #tests }
 TeapotErrorHandlingTest >> testHandlesExceptionSet [
-	self assert: (TeaClient httpGetString: '/sub') equals: 'outofbounds/domainerror handled'.	
-	self assert: (TeaClient httpGetString: '/domain') equals: 'outofbounds/domainerror handled'.		
+	self assert: (TeaTestClient httpGetString: '/sub') equals: 'outofbounds/domainerror handled'.	
+	self assert: (TeaTestClient httpGetString: '/domain') equals: 'outofbounds/domainerror handled'.		
 ]
 
 { #category : #tests }
 TeapotErrorHandlingTest >> testHandlesOneException [
-	self assert: (TeaClient httpGetString: '/zerodiv') equals: 'zerodiv handled'.	
+	self assert: (TeaTestClient httpGetString: '/zerodiv') equals: 'zerodiv handled'.	
 ]
 
 { #category : #tests }
 TeapotErrorHandlingTest >> testTransformingErroHandlerResponse [
-	self assert: (TeaClient httpGetString: '/keynotfound') equals: 'XLII'.
+	self assert: (TeaTestClient httpGetString: '/keynotfound') equals: 'XLII'.
 ]
 
 { #category : #tests }
 TeapotErrorHandlingTest >> testValueAsExceptionHandler [
-	self assert: (TeaClient httpGetString: '/nonbool') equals: 'nonbool handled'.	
+	self assert: (TeaTestClient httpGetString: '/nonbool') equals: 'nonbool handled'.	
 ]

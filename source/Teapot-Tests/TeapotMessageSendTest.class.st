@@ -39,15 +39,15 @@ TeapotMessageSendTest >> tearDown [
 
 { #category : #tests }
 TeapotMessageSendTest >> testReceivingOneArgKeywordMessage [
-	self assert: (TeaClient httpGetString: '/msg3/bar') equals: 'msg3 bar'.
+	self assert: (TeaTestClient httpGetString: '/msg3/bar') equals: 'msg3 bar'.
 ]
 
 { #category : #tests }
 TeapotMessageSendTest >> testReceivingTwoArgsKeywordMessage [
-	self assert: (TeaClient httpGetString: '/msg2/foo') equals: 'msg2 foo'.
+	self assert: (TeaTestClient httpGetString: '/msg2/foo') equals: 'msg2 foo'.
 ]
 
 { #category : #tests }
 TeapotMessageSendTest >> testReceivingUnaryMessage [
-	self assert: (TeaClient httpGetString: '/msg1') equals: 'msg1 result'.
+	self assert: (TeaTestClient httpGetString: '/msg1') equals: 'msg1 result'.
 ]

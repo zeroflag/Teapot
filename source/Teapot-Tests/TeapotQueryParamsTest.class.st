@@ -22,11 +22,11 @@ TeapotQueryParamsTest >> tearDown [
 
 { #category : #tests }
 TeapotQueryParamsTest >> testDefaultQueryParam [
-	self assert: (TeaClient httpGetString: '/queryopt') equals: 'default'.	
+	self assert: (TeaTestClient httpGetString: '/queryopt') equals: 'default'.	
 ]
 
 { #category : #tests }
 TeapotQueryParamsTest >> testQueryParam [
-	self assert: (TeaClient httpGetString: '/query?foo=bar') equals: 'bar'.
-	self assert: (TeaClient httpGetString: '/queryopt?foo=baz') equals: 'baz'.
+	self assert: (TeaTestClient httpGetString: '/query?foo=bar') equals: 'bar'.
+	self assert: (TeaTestClient httpGetString: '/queryopt?foo=baz') equals: 'baz'.
 ]

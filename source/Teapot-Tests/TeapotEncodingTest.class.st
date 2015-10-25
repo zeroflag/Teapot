@@ -24,7 +24,7 @@ TeapotEncodingTest >> tearDown [
 { #category : #tests }
 TeapotEncodingTest >> testUserSpecifiedEncoding [
 	| response |
-	response := TeaClient httpGet: '/enc'.
+	response := TeaTestClient httpGet: '/enc'.
 	self 
 		assert: response entity string
 		equals: 'árvíztűrő tükörfúrógép'.		

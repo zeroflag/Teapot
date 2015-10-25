@@ -25,25 +25,25 @@ TeapotFormatTest >> tearDown [
 { #category : #tests }
 TeapotFormatTest >> testArbitraryContentType [
 	self 
-		assert: (TeaClient httpGet: '/xml') contentType 
+		assert: (TeaTestClient httpGet: '/xml') contentType 
 		equals: (ZnMimeType applicationXml charSet: 'utf-8'; yourself)
 ]
 
 { #category : #tests }
 TeapotFormatTest >> testConverting [
-	self assert: (TeaClient httpGetString: '/a') equals: 'IV'.	
+	self assert: (TeaTestClient httpGetString: '/a') equals: 'IV'.	
 ]
 
 { #category : #tests }
 TeapotFormatTest >> testDefaultContentTypeIsHtml [
 	self 
-		assert: (TeaClient httpGet: '/default') contentType 
+		assert: (TeaTestClient httpGet: '/default') contentType 
 		equals: ZnMimeType textHtml
 ]
 
 { #category : #tests }
 TeapotFormatTest >> testSetsContentType [
 	self 
-		assert: (TeaClient httpGet: '/plain') contentType 
+		assert: (TeaTestClient httpGet: '/plain') contentType 
 		equals: ZnMimeType textPlain
 ]

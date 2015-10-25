@@ -25,13 +25,13 @@ TeapotRouteSetTest >> tearDown [
 { #category : #tests }
 TeapotRouteSetTest >> testMatchesAnyRouteInAfterFilter [
 	| response |
-	response := TeaClient httpGet: '/a'.
+	response := TeaTestClient httpGet: '/a'.
 	self assert: (response headers at: 'test') equals: 'ab'.
 	
-	response := TeaClient httpGet: '/b'.
+	response := TeaTestClient httpGet: '/b'.
 	self assert: (response headers at: 'test') equals: 'ab'.
 		
-	response := TeaClient httpGet: '/c'.
+	response := TeaTestClient httpGet: '/c'.
 	self assert: (response headers at: 'test' ifAbsent: nil) equals: nil.
 
 ]
@@ -39,23 +39,23 @@ TeapotRouteSetTest >> testMatchesAnyRouteInAfterFilter [
 { #category : #tests }
 TeapotRouteSetTest >> testMatchesAnyRouteInBeforeFilter [
 	| response |
-	response := TeaClient httpGet: '/secure/123'.
+	response := TeaTestClient httpGet: '/secure/123'.
 	self assert: response code equals: 401.
 	
-	response := TeaClient httpGet: '/protected/123'.
+	response := TeaTestClient httpGet: '/protected/123'.
 	self assert: response code equals: 401.
 
 ]
 
 { #category : #tests }
 TeapotRouteSetTest >> testMatchesAnyRouteInSet [
-	self assert: (TeaClient httpGetString: '/a') equals: 'abc'.
-	self assert: (TeaClient httpGetString: '/b') equals: 'abc'.
-	self assert: (TeaClient httpGetString: '/c') equals: 'abc'.
+	self assert: (TeaTestClient httpGetString: '/a') equals: 'abc'.
+	self assert: (TeaTestClient httpGetString: '/b') equals: 'abc'.
+	self assert: (TeaTestClient httpGetString: '/c') equals: 'abc'.
 ]
 
 { #category : #tests }
 TeapotRouteSetTest >> testMatchesAnyRouteInSetWithParams [
-	self assert: (TeaClient httpPostString: '/x/value1') equals: 'value1'.
-	self assert: (TeaClient httpPostString: '/y/value2') equals: 'value2'.	
+	self assert: (TeaTestClient httpPostString: '/x/value1') equals: 'value1'.
+	self assert: (TeaTestClient httpPostString: '/y/value2') equals: 'value2'.	
 ]

@@ -23,16 +23,16 @@ TeapotRegexpTest >> tearDown [
 
 { #category : #tests }
 TeapotRegexpTest >> testCollectingSubexpressions [
-	self assert: (TeaClient httpGetString: '/abc3/4/xxx') equals: '3'.	
-	self assert: (TeaClient httpGetString: '/1/aabbcc/2/foobar') equals: '1aabbccfoobar'.
+	self assert: (TeaTestClient httpGetString: '/abc3/4/xxx') equals: '3'.	
+	self assert: (TeaTestClient httpGetString: '/1/aabbcc/2/foobar') equals: '1aabbccfoobar'.
 ]
 
 { #category : #tests }
 TeapotRegexpTest >> testIgnoresQueryParam [
-	self assert: (TeaClient httpGetString: '/k/?param=value') equals: 'regexp'.	
+	self assert: (TeaTestClient httpGetString: '/k/?param=value') equals: 'regexp'.	
 ]
 
 { #category : #tests }
 TeapotRegexpTest >> testRegexpMatch [
-	self assert: (TeaClient httpGetString: 'k/') equals: 'regexp'.	
+	self assert: (TeaTestClient httpGetString: 'k/') equals: 'regexp'.	
 ]
