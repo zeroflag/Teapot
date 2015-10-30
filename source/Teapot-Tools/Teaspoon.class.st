@@ -46,7 +46,10 @@ Teaspoon >> client [
 	^ ZnClient new
 		url: self urlInput text;
 		method: self methodDropList selectedItem;
-		entity: (ZnEntity with: requestBody urlEncoded type: self contentTypeDropList selectedItem);
+		entity: (ZnStreamingEntity 
+			readFrom: (ReadStream on: requestBody urlEncoded)
+			usingType: self contentTypeDropList selectedItem
+			andLength: requestBody urlEncoded size)
 		yourself
 ]
 
@@ -78,7 +81,7 @@ Teaspoon >> initializePresenter [
 { #category : #initialization }
 Teaspoon >> initializeWidgets [
 	methodDropList := self newMethodDropList.
-	urlInput := self newTextInput.
+	urlInput := self newTextInput autoAccept: true; yourself.
 	requestBody := TeaRequestBodyTabs new.
 	contentTypeLabel := self newLabel label: 'Content Type'; yourself.
 	contentTypeDropList := self newContentTypeDropList.
