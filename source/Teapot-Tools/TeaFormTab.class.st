@@ -43,6 +43,9 @@ TeaFormTab >> initializeWidgets [
 		displayBlock: [ :item | item ];
 		allowToSelect: false;
 		yourself.
+	self focusOrder 
+		add: form;
+		add: addButton.
 ]
 
 { #category : #private }
