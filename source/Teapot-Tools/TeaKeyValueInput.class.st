@@ -51,6 +51,12 @@ TeaKeyValueInput >> initializeWidgets [
 	keyInput := self newTextInput autoAccept: true; yourself.
 	valueInput := self newTextInput autoAccept: true; yourself.
 	removeButton := self newButton label: 'Remove'; yourself.
+	self focusOrder
+		add: keyInput;
+		add: valueInput;
+		add: removeButton.
+		
+
 ]
 
 { #category : #accessing }
