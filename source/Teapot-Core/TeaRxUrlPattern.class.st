@@ -39,3 +39,8 @@ TeaRxUrlPattern >> matchesUrl: aZnUrl placeholders: aDictionary [
 	^ match
 
 ]
+
+{ #category : #printing }
+TeaRxUrlPattern >> printOn: aStream [
+	aStream nextPutAll: '<regexp>'.
+]
