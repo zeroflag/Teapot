@@ -48,8 +48,8 @@ TeaKeyValueInput >> initialExtent [
 
 { #category : #initialization }
 TeaKeyValueInput >> initializeWidgets [	
-	keyInput := self newTextInput autoAccept: true; yourself.
-	valueInput := self newTextInput autoAccept: true; yourself.
+	keyInput := self newTextInput autoAccept: true; ghostText: 'key'; yourself.
+	valueInput := self newTextInput autoAccept: true; ghostText: 'value'; yourself.
 	removeButton := self newButton label: 'Remove'; yourself.
 	self focusOrder
 		add: keyInput;

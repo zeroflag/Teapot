@@ -33,7 +33,7 @@ TeaFormTab >> form [
 { #category : #initialization }
 TeaFormTab >> initializePresenter [
 	addButton whenActionPerformedDo: [ 
-		form items: (form listItems copyWith: (self newKey: 'key' value: 'value')) ]
+		form items: (form listItems copyWith: (self newKey: '' value: '')) ]
 ]
 
 { #category : #initialization }
