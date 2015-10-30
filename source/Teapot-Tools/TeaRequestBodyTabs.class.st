@@ -22,6 +22,11 @@ TeaRequestBodyTabs class >> defaultSpec [
 				add: #requestBody ]
 ]
 
+{ #category : #private }
+TeaRequestBodyTabs >> formTabTitle [
+	^ 'Form'
+]
+
 { #category : #initialization }
 TeaRequestBodyTabs >> initializeWidgets [
 	label := self newLabel label: 'Request body'; yourself.
@@ -39,17 +44,22 @@ TeaRequestBodyTabs >> newRequestBody [
 	form := TeaFormTab new.
 	^ self newTabManager
 			addTab: (self newTab
-				label: 'Raw';
+				label: self rawTabTitle;
 				closeable: false;
 				model: raw);
 			addTab: (self newTab
-				label: 'Form';
+				label: self formTabTitle;
 				closeable: false;				
 				model: form);
 			whenTabSelected: [:selected |
-				selected label = 'Form'
+				selected label = self formTabTitle
 					ifTrue: [ form updateKeyValus: ('?', raw text) asUrl query associations ] 
 					ifFalse: [ raw text: form urlEncoded ] ]
+]
+
+{ #category : #private }
+TeaRequestBodyTabs >> rawTabTitle [
+	^ 'Raw'
 ]
 
 { #category : #accessing }
@@ -59,5 +69,7 @@ TeaRequestBodyTabs >> requestBody [
 
 { #category : #protocol }
 TeaRequestBodyTabs >> urlEncoded [
+	requestBody selectedTab label = self formTabTitle
+		ifTrue: [ raw text: form urlEncoded ].
 	^ raw text
 ]
