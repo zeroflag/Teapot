@@ -98,10 +98,10 @@ Teaspoon >> newContentTypeDropList [
 	| dropList |
 	dropList := self newDropList.
 	#(
+		applicationFormUrlEncoded 
 		applicationJson 
 		applicationXml 
 		applicationSton 
-		applicationFormUrlEncoded 
 		applicationOctetStream 
 		text 
 		textHtml 
