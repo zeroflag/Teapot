@@ -56,6 +56,13 @@ TeaFormTab >> newKey: keyString value: valueString [
 		removeAction: [ :me | form items: (form listItems copyWithout: me) ]
 ]
 
+{ #category : #private }
+TeaFormTab >> uniqueNonEmptyKeyValues [	
+	^ (form listItems collect: #asAssociation) asSet reject: 
+		[ :each | 
+		each key isEmptyOrNil or: [ each value isEmptyOrNil ] ]
+]
+
 { #category : #protocol }
 TeaFormTab >> updateKeyValus: keyValueCollection [
 	| newItems |
@@ -67,12 +74,11 @@ TeaFormTab >> updateKeyValus: keyValueCollection [
 
 { #category : #protocol }
 TeaFormTab >> urlEncoded [
-	| url |
-	form listItems ifEmpty: [ ^ '' ].
+	| url formParams |
 	url := '/' asZnUrl.
-	(form listItems collect: #asAssociation) asSet do: 
-		[ :association | 
-		url := url withQuery: association ].
+	formParams := self uniqueNonEmptyKeyValues.
+	formParams ifEmpty: [ ^ '' ].
+	formParams do: [ :association | url := url withQuery: association ].
 	^ url asString allButFirst: 2
 	
 ]
