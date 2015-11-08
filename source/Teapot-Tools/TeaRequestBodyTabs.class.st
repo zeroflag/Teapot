@@ -53,8 +53,8 @@ TeaRequestBodyTabs >> newRequestBody [
 				model: form);
 			whenTabSelected: [:selected |
 				selected label = self formTabTitle
-					ifTrue: [ form updateKeyValus: ('?', raw text) asUrl query associations ] 
-					ifFalse: [ raw text: form urlEncoded ] ]
+					ifTrue: [ form updateKeyValus: ('?', raw text) asUrl query ] 
+					ifFalse: [ form writeUrlEncodedTo: raw ] ]
 ]
 
 { #category : #private }

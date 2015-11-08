@@ -32,53 +32,36 @@ TeaFormTab >> form [
 
 { #category : #initialization }
 TeaFormTab >> initializePresenter [
-	addButton whenActionPerformedDo: [ 
-		form items: (form listItems copyWith: (self newKey: '' value: '')) ]
+	addButton whenActionPerformedDo: [ form addKey: '' value: '' ]
 ]
 
 { #category : #initialization }
 TeaFormTab >> initializeWidgets [
 	addButton := self newButton label: 'Add parameter'; yourself.
-	form := self newList
-		displayBlock: [ :item | item ];
-		allowToSelect: false;
-		yourself.
+	form := self instantiate: TeaKeyValueList.
 	self focusOrder 
 		add: form;
 		add: addButton.
 ]
 
-{ #category : #private }
-TeaFormTab >> newKey: keyString value: valueString [
-	^ TeaKeyValueInput 
-		key: keyString 
-		value: valueString
-		removeAction: [ :me | form items: (form listItems copyWithout: me) ]
-]
-
-{ #category : #private }
-TeaFormTab >> uniqueNonEmptyKeyValues [	
-	^ (form listItems collect: #asAssociation) asSet reject: 
-		[ :each | 
-		each key isEmptyOrNil or: [ each value isEmptyOrNil ] ]
-]
-
 { #category : #protocol }
 TeaFormTab >> updateKeyValus: keyValueCollection [
-	| newItems |
-	newItems := keyValueCollection collect: 
-		[ :each | 
-		self newKey: each key value: each value ].
-	form items: newItems
+	form items: keyValueCollection
 ]
 
-{ #category : #protocol }
+{ #category : #private }
 TeaFormTab >> urlEncoded [
 	| url formParams |
 	url := '/' asZnUrl.
-	formParams := self uniqueNonEmptyKeyValues.
+	formParams := form items.
 	formParams ifEmpty: [ ^ '' ].
 	formParams do: [ :association | url := url withQuery: association ].
 	^ url asString allButFirst: 2
 	
+]
+
+{ #category : #protocol }
+TeaFormTab >> writeUrlEncodedTo: aTextModel [
+	self urlEncoded 
+		ifNotEmpty: [ aTextModel text: self urlEncoded ]
 ]

@@ -1,7 +1,7 @@
 Extension { #name : #TeaGlobUrlPattern }
 
 { #category : #'*Teapot-Tools' }
-TeaGlobUrlPattern >> asRequestBuilderPath [
+TeaGlobUrlPattern >> asTeaspoonPath [
 	^ String streamContents: [ :aStream |
 			segments 
 				do: [ :each | each printOn: aStream ]

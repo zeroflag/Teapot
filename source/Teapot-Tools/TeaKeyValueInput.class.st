@@ -41,11 +41,6 @@ TeaKeyValueInput >> asAssociation [
 	^ keyInput text -> valueInput text
 ]
 
-{ #category : #api }
-TeaKeyValueInput >> initialExtent [
-	^ 520 @ (self class height + 1)
-]
-
 { #category : #initialization }
 TeaKeyValueInput >> initializeWidgets [	
 	keyInput := self newTextInput autoAccept: true; ghostText: 'key'; yourself.

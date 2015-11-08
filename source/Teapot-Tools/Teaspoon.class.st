@@ -88,6 +88,12 @@ Teaspoon >> initializeWidgets [
 	execButton := self newButton label: 'Execute request'; yourself.
 ]
 
+{ #category : #'tea spoon' }
+Teaspoon >> method: methodString url: urlString port: portNumber [
+	self populateMethod: methodString.
+	self populateUrl: urlString port: portNumber.
+]
+
 { #category : #accessing }
 Teaspoon >> methodDropList [
 	^ methodDropList
@@ -120,18 +126,18 @@ Teaspoon >> newMethodDropList [
 ]
 
 { #category : #private }
-Teaspoon >> populateMethod: aTeaRoute [
+Teaspoon >> populateMethod: methodString [
 	| selected |
 	selected := methodDropList listItems
-		detect: [ :each | each = aTeaRoute methodMatcher asString ]
+		detect: [ :each | each = methodString ]
 		ifNone: [ methodDropList listItems first ].
 	methodDropList setSelectedItem: selected
 ]
 
 { #category : #private }
-Teaspoon >> populateUrl: aTeaRoute port: portNumber [
+Teaspoon >> populateUrl: urlString port: portNumber [
 	| pathSegment |
-	pathSegment := aTeaRoute urlPattern asRequestBuilderPath.
+	pathSegment := urlString.
 	(pathSegment beginsWith: '/') 
 		ifFalse: [ pathSegment := '/', pathSegment ].	
 	urlInput text: ('http://localhost:', portNumber asString, pathSegment)
@@ -140,12 +146,6 @@ Teaspoon >> populateUrl: aTeaRoute port: portNumber [
 { #category : #accessing }
 Teaspoon >> requestBody [
 	^ requestBody
-]
-
-{ #category : #'tea spoon' }
-Teaspoon >> route: aTeaRoute port: portNumber [
-	self populateMethod: aTeaRoute.
-	self populateUrl: aTeaRoute port: portNumber.
 ]
 
 { #category : #accessing }
