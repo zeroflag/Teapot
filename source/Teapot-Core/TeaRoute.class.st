@@ -12,17 +12,19 @@ Class {
 	#instVars : [
 		'responseTransformer',
 		'action',
-		'requestMatcher'
+		'requestMatcher',
+		'port'
 	],
 	#category : #'Teapot-Core'
 }
 
 { #category : #'instance creation' }
-TeaRoute class >> matcher: aTeaRequestMatcher action: aTeaAction transformer: aResponseTransformer [
+TeaRoute class >> matcher: aTeaRequestMatcher action: aTeaAction transformer: aResponseTransformer port: portNumber [
 	^ self new 
 		setMatcher: aTeaRequestMatcher
 		action: aTeaAction
 		transformer: aResponseTransformer
+		port: portNumber "XXX only used by teapsoon inspector"
 ]
 
 { #category : #'request handling' }
@@ -50,10 +52,11 @@ TeaRoute >> responseTransformer: aBlock [
 ]
 
 { #category : #initialization }
-TeaRoute >> setMatcher: aTeaRequestMatcher action: aTeaAction transformer: aResponseTransformer [
+TeaRoute >> setMatcher: aTeaRequestMatcher action: aTeaAction transformer: aResponseTransformer port: portNumber [
 	requestMatcher := aTeaRequestMatcher.
 	action := aTeaAction.
 	responseTransformer := aResponseTransformer.
+	port := portNumber.
 	^ self
 ]
 

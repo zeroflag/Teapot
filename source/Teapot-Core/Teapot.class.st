@@ -126,7 +126,8 @@ Teapot >> addRouteMethod: aTeaMethodMatcher pattern: pattern action: aTeaAction 
 		(TeaRoute
 			matcher: (TeaRequestMatcher method: aTeaMethodMatcher url: pattern asTeaUrlPattern)
 			action: aTeaAction
-			transformer: defaultOutput)
+			transformer: defaultOutput
+			port: server port)
 ]
 
 { #category : #filters }
