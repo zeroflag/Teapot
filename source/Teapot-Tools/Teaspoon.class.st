@@ -10,7 +10,8 @@ Class {
 		'contentTypeLabel',
 		'methodDropList',
 		'execButton',
-		'requestBody'
+		'requestBody',
+		'consumer'
 	],
 	#category : #'Teapot-Tools-UI'
 }
@@ -53,6 +54,11 @@ Teaspoon >> client [
 		yourself
 ]
 
+{ #category : #private }
+Teaspoon >> consumer [
+	^ consumer ifNil: [ consumer := [ :any | ] ]
+]
+
 { #category : #accessing }
 Teaspoon >> contentTypeDropList [
 	^ contentTypeDropList
@@ -75,7 +81,8 @@ Teaspoon >> initialExtent [
 
 { #category : #initialization }
 Teaspoon >> initializePresenter [
-	execButton whenActionPerformedDo: [ self client execute inspect ].
+	execButton whenActionPerformedDo: 
+		[ self consumer value: self client execute ].
 ]
 
 { #category : #initialization }
@@ -123,6 +130,11 @@ Teaspoon >> newMethodDropList [
 	ZnConstants knownHTTPMethods do: [ :each | 
 		dropList addItemLabeled: each do: [] ].
 	^ dropList
+]
+
+{ #category : #'tea spoon' }
+Teaspoon >> onHttpResultDo: aBlock [
+	consumer := aBlock
 ]
 
 { #category : #private }
