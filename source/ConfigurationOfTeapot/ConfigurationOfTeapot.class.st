@@ -189,17 +189,55 @@ ConfigurationOfTeapot >> baseline21: spec [
 	spec for: #'common' do: [
 		spec blessing: #'baseline'.
 		spec repository: 'http://smalltalkhub.com/mc/zeroflag/Teapot/main/'.
-		spec project: 'NeoJSON' with: [
+		spec 
+			project: 'NeoJSON' with: [
 				spec
 					className: #ConfigurationOfNeoJSON;
 					versionString: #'stable';
-					repository: 'http://mc.stfx.eu/Neo' ].
-				
+					repository: 'http://mc.stfx.eu/Neo' ];
+			project: 'WebBrowser' with: [
+				spec
+					className: #ConfigurationOfWebBrowser;
+					versionString: #'stable';
+					repository: 'http://smalltalkhub.com/mc/TorstenBergmann/WebBrowser/main/' ].
 		spec 
 			package: 'Teapot-Core' with: [
 				spec requires: #('NeoJSON' ). ];
 			package: 'Teapot-Tools' with: [
-				spec requires: #('Teapot-Core' ). ];
+				spec requires: #('Teapot-Core' 'WebBrowser' ). ];
+			package: 'Teapot-Tests' with: [
+				spec requires: #('Teapot-Core' ). ].
+		spec 
+			group: 'Core' with: #('Teapot-Core' );
+			group: 'Tools' with: #('Teapot-Tools' );
+			group: 'Tests' with: #('Teapot-Tests' );
+			group: 'default' with: #('Tools' 'Tests' ). ].
+
+]
+
+{ #category : #baselines }
+ConfigurationOfTeapot >> baseline22: spec [
+	<version: '2.2-baseline'>
+
+	spec for: #'common' do: [
+		spec blessing: #'baseline'.
+		spec repository: 'http://smalltalkhub.com/mc/zeroflag/Teapot/main/'.
+		spec 
+			project: 'NeoJSON' with: [
+				spec
+					className: #ConfigurationOfNeoJSON;
+					versionString: #'stable';
+					repository: 'http://mc.stfx.eu/Neo' ];
+			project: 'WebBrowser' with: [
+				spec
+					className: #ConfigurationOfWebBrowser;
+					versionString: #'stable';
+					repository: 'http://smalltalkhub.com/mc/TorstenBergmann/WebBrowser/main/' ].
+		spec 
+			package: 'Teapot-Core' with: [
+				spec requires: #('NeoJSON' ). ];
+			package: 'Teapot-Tools' with: [
+				spec requires: #('Teapot-Core' 'WebBrowser' ). ];
 			package: 'Teapot-Tests' with: [
 				spec requires: #('Teapot-Core' ). ].
 		spec 
@@ -222,7 +260,7 @@ ConfigurationOfTeapot >> customProjectAttributes [
 ConfigurationOfTeapot >> development: spec [
 	<symbolicVersion: #'development'>
 
-	spec for: #'common' version: '2.1-baseline'.
+	spec for: #'common' version: '2.2-baseline'.
 
 ]
 
@@ -243,7 +281,7 @@ ConfigurationOfTeapot >> project [
 ConfigurationOfTeapot >> stable: spec [
 	<symbolicVersion: #'stable'>
 
-	spec for: #'common' version: '2.0'.
+	spec for: #'common' version: '2.1'.
 
 ]
 
@@ -299,6 +337,25 @@ ConfigurationOfTeapot >> version20: spec [
 		spec 
 			package: 'Teapot-Core' with: 'Teapot-Core-TorstenBergmann.80';
 			package: 'Teapot-Tools' with: 'Teapot-Tools-TorstenBergmann.4';
+			package: 'Teapot-Tests' with: 'Teapot-Tests-AttilaMagyar.53'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfTeapot >> version21: spec [
+	<version: '2.1' imports: #('2.1-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 2.1'.
+		spec author: 'TorstenBergmann'.
+		spec timestamp: '4/13/2016 22:09'.
+		spec 
+			project: 'NeoJSON' with: #'stable';
+			project: 'WebBrowser' with: #'stable'.
+		spec 
+			package: 'Teapot-Core' with: 'Teapot-Core-TorstenBergmann.80';
+			package: 'Teapot-Tools' with: 'Teapot-Tools-TorstenBergmann.5';
 			package: 'Teapot-Tests' with: 'Teapot-Tests-AttilaMagyar.53'. ].
 
 ]
