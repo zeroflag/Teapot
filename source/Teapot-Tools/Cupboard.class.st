@@ -172,6 +172,7 @@ Cupboard >> gtInspectorTeapotsIn: composite [
 		format: [:each | self nameForTeapot: each ];
 		selectionAct:  [:each | each selection ifNotNil: [ each selection start ]. each update ] icon: self class teapotServerStartIcon entitled: 'Start';
 		selectionAct: [:each | each selection ifNotNil: [ each selection stop ]. each update ] icon: self class teapotServerStopIcon entitled: 'Stop';
+		selectionAct: [:each | each selection ifNotNil: [ each selection browse ]. each update ] icon: self class teapotIcon entitled: 'Browse';
 		act: [:each | self onNewServer. each update ] icon: self class teapotServerIcon entitled: 'New Teapot'
 		
 ]
