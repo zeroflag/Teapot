@@ -35,7 +35,7 @@ Teapot class >> configure: optionsAssociations [
 	 - ZnServer properties: See options protocol of ZnServer for specific usages.	
 	Example: Teapot configure: { 
 		#defaultOutput -> #json. 
-		#bindingAddress -> '192.168.1.100'.
+		#bindAddress -> #[192 168 0 3].
 		#port -> 8080. 
 		#debugMode -> true 
 	}."
