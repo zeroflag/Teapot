@@ -11,6 +11,8 @@ Teapot on
         books at: (req at: #id) put: book ]; 
 	  output: #ston;
       start.
+
+For more configuration option see the Teapot class>>configure method.
 "
 Class {
 	#name : #Teapot,
@@ -31,7 +33,12 @@ Teapot class >> configure: optionsAssociations [
 	"Create a new Teapot instance with optional properties.
  	 - Teapot properties: #defaultOutput
 	 - ZnServer properties: See options protocol of ZnServer for specific usages.	
-	Example: Teapot configure: { #defaultOutput -> #json. #port -> 8080. #debugMode -> true }."
+	Example: Teapot configure: { 
+		#defaultOutput -> #json. 
+		#bindingAddress -> '192.168.1.100'.
+		#port -> 8080. 
+		#debugMode -> true 
+	}."
 	
 	^ self new initializeOptions: optionsAssociations
 ]
