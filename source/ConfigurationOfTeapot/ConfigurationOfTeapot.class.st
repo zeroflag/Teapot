@@ -281,7 +281,7 @@ ConfigurationOfTeapot >> project [
 ConfigurationOfTeapot >> stable: spec [
 	<symbolicVersion: #'stable'>
 
-	spec for: #'common' version: '2.1'.
+	spec for: #'common' version: '2.2'.
 
 ]
 
@@ -357,5 +357,24 @@ ConfigurationOfTeapot >> version21: spec [
 			package: 'Teapot-Core' with: 'Teapot-Core-TorstenBergmann.80';
 			package: 'Teapot-Tools' with: 'Teapot-Tools-TorstenBergmann.5';
 			package: 'Teapot-Tests' with: 'Teapot-Tests-AttilaMagyar.53'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfTeapot >> version22: spec [
+	<version: '2.2' imports: #('2.2-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 2.2'.
+		spec author: 'AttilaMagyar'.
+		spec timestamp: '11/7/2016 21:45'.
+		spec 
+			project: 'NeoJSON' with: #'stable';
+			project: 'WebBrowser' with: #'stable'.
+		spec 
+			package: 'Teapot-Core' with: 'Teapot-Core-AttilaMagyar.84';
+			package: 'Teapot-Tools' with: 'Teapot-Tools-AttilaMagyar.14';
+			package: 'Teapot-Tests' with: 'Teapot-Tests-AttilaMagyar.54'. ].
 
 ]
