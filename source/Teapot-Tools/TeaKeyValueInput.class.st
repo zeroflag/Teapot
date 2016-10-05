@@ -9,7 +9,7 @@ Class {
 		'valueInput',
 		'removeButton'
 	],
-	#category : #'Teapot-Tools-UI'
+	#category : #'Teapot-Tools-UI-Components'
 }
 
 { #category : #specs }

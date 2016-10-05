@@ -37,6 +37,32 @@ Teaspoon class >> defaultSpec [
 		]
 ]
 
+{ #category : #'private - accessing' }
+Teaspoon class >> iconProvider [
+
+	^TeaIconProvider 
+]
+
+{ #category : #'world menu' }
+Teaspoon class >> menuCommandOn: aBuilder [ 
+	<worldMenu> 
+	
+	(aBuilder item: #'Teaspoon')	 
+		help: 'Teaspoon'; 
+		parent: #'Tools' translated;
+		icon: self iconProvider teaspoonIcon;
+		action: [ self open ].
+]
+
+{ #category : #interface }
+Teaspoon class >> open [
+	<script>
+	
+	(self new)
+		openWithSpec;
+		yourself
+]
+
 { #category : #specs }
 Teaspoon class >> title [
 	^ 'Teaspoon client'

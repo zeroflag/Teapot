@@ -10,7 +10,7 @@ Class {
 		'raw',
 		'form'
 	],
-	#category : #'Teapot-Tools-UI'
+	#category : #'Teapot-Tools-UI-Components'
 }
 
 { #category : #specs }
