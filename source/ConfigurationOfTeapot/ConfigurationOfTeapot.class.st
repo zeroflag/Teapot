@@ -347,7 +347,7 @@ ConfigurationOfTeapot >> project [
 ConfigurationOfTeapot >> stable: spec [
 	<symbolicVersion: #'stable'>
 
-	spec for: #'common' version: '2.2.1'.
+	spec for: #'common' version: '2.3'.
 
 ]
 
