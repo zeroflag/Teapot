@@ -82,7 +82,7 @@ Teaspoon >> client [
 
 { #category : #private }
 Teaspoon >> consumer [
-	^ consumer ifNil: [ consumer := [ :any | ] ]
+	^ consumer ifNil: [ consumer := [ :any | any inspect ] ]
 ]
 
 { #category : #accessing }
@@ -107,8 +107,10 @@ Teaspoon >> initialExtent [
 
 { #category : #initialization }
 Teaspoon >> initializePresenter [
-	execButton whenActionPerformedDo: 
-		[ self consumer value: self client execute ].
+	execButton
+		whenActionPerformedDo: [ 
+			self urlInput text notEmpty
+				ifTrue: [ self consumer value: self client execute ]]
 ]
 
 { #category : #initialization }
