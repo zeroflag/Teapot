@@ -9,7 +9,14 @@ Teapot >> gtInspectorDynamicRoutesIn: composite [
 		display: [ dynamicRouter routes ]; 
 		format: [:each | each printString ];
 		selectionAct: [:p | p entity removeDynamicRoute: p selection. 
-			p pane browser update ] entitled: 'Remove route' translated
+			p pane browser update ] entitled: 'Remove route' translated;
+		selectionAct: [:p | p entity removeAllDynamicRoutes. 
+			p pane browser update ] entitled: 'Remove all' translated
+]
+
+{ #category : #'*Teapot-Tools' }
+Teapot >> removeAllDynamicRoutes [ 
+	dynamicRouter routes removeAll
 ]
 
 { #category : #'*Teapot-Tools' }
