@@ -2,28 +2,35 @@ Class {
 	#name : #TeapotSslTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'server'
+		'teapot'
 	],
 	#category : #'Teapot-Tests'
 }
 
 { #category : #initialization }
 TeapotSslTest >> setUp [
-	server := Teapot configure: { #znServerClass -> ZnSecureServer . #port -> 1443 }.
-	server
+	teapot := Teapot configure: { 
+		#znServerClass -> (
+			(ZnSecureServer on: 1443) 
+				certificate: '~/key.pem'; "TODO"
+				logToTranscript; 
+				yourself).
+		#port -> 1443.
+	}.
+	teapot
 		GET: '/ssl' -> 'secure';
 		start.
 ]
 
 { #category : #running }
 TeapotSslTest >> tearDown [
-	server stop
+	teapot stop
 ]
 
 { #category : #tests }
 TeapotSslTest >> testHttpsGet [
-	| result |
-	self flag: 'peding'; skip.
-	"result := ZnEasy get: 'http://localhost:1443/ssl'.
+	self skip.
+	"| result |
+	result := ZnEasy get: 'https://localhost:1443/ssl'.
 	self assert: result equals: 'secure'."
 ]
