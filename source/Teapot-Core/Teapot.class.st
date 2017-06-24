@@ -31,7 +31,7 @@ Class {
 { #category : #'instance creation' }
 Teapot class >> configure: optionsAssociations [
 	"Create a new Teapot instance with optional properties.
- 	 - Teapot properties: #defaultOutput, #znServerClass
+ 	 - Teapot properties: #defaultOutput, #znServer
 	 - ZnServer properties: See options protocol of ZnServer for specific usages.	
 	Example: Teapot configure: { 
 		#defaultOutput -> #json. 
@@ -177,9 +177,9 @@ Teapot >> initializeOptions: optionsAssociations [
 	compositeRouter := TeaCompositeRouter routers: {dynamicRouter. staticRouter}.	
 	defaultOutput := self responseTransformer: (optionsAssociations asDictionary at: #defaultOutput ifAbsent: #html).									
 	self exception: TeaAbort -> [ :abort :req | abort response teaTransform: [ :same | same ] request: req].
-	server := (optionsAssociations asDictionary 
-		at: #znServerClass 
-		ifAbsent: [ ZnServer defaultServerClass ]) new.
+	server := optionsAssociations asDictionary 
+		at: #znServer
+		ifAbsent: [ ZnServer defaultServerClass new ].
 	server delegate: compositeRouter.	
 	optionsAssociations do: [ :each | server optionAt: each key put:  each value ].	
 	^ self
