@@ -1,6 +1,11 @@
 Extension { #name : #Teapot }
 
 { #category : #'*Teapot-Tools' }
+Teapot >> browse [
+	WebBrowser openOn: 'http://localhost:', self server port asString
+]
+
+{ #category : #'*Teapot-Tools' }
 Teapot >> gtInspectorDynamicRoutesIn: composite [
 	<gtInspectorPresentationOrder: 0>  
 	
