@@ -459,7 +459,7 @@ ConfigurationOfTeapot >> version23: spec [
 			project: 'WebBrowser' with: #'stable'.
 		spec 
 			package: 'Teapot-Core' with: 'Teapot-Core-AttilaMagyar.84';
-			package: 'Teapot-Tools' with: 'Teapot-Tools-TorstenBergmann.19';
+			package: 'Teapot-Tools' with: 'Teapot-Tools-TorstenBergmann.20';
 			package: 'Teapot-Tests' with: 'Teapot-Tests-AttilaMagyar.54'. ].
 
 ]
