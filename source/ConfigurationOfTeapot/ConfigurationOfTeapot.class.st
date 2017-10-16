@@ -314,6 +314,39 @@ ConfigurationOfTeapot >> baseline24: spec [
 
 ]
 
+{ #category : #baselines }
+ConfigurationOfTeapot >> baseline25: spec [
+	<version: '2.5-baseline'>
+
+	spec for: #'common' do: [
+		spec blessing: #'baseline'.
+		spec repository: 'http://smalltalkhub.com/mc/zeroflag/Teapot/main/'.
+		spec 
+			project: 'NeoJSON' with: [
+				spec
+					className: #ConfigurationOfNeoJSON;
+					versionString: #'stable';
+					repository: 'http://mc.stfx.eu/Neo' ];
+			project: 'WebBrowser' with: [
+				spec
+					className: #ConfigurationOfWebBrowser;
+					versionString: #'stable';
+					repository: 'http://smalltalkhub.com/mc/TorstenBergmann/WebBrowser/main/' ].
+		spec 
+			package: 'Teapot-Core' with: [
+				spec requires: #('NeoJSON' ). ];
+			package: 'Teapot-Tools' with: [
+				spec requires: #('Teapot-Core' 'WebBrowser' ). ];
+			package: 'Teapot-Tests' with: [
+				spec requires: #('Teapot-Core' ). ].
+		spec 
+			group: 'Core' with: #('Teapot-Core' );
+			group: 'Tools' with: #('Teapot-Tools' );
+			group: 'Tests' with: #('Teapot-Tests' );
+			group: 'default' with: #('Tools' 'Tests' ). ].
+
+]
+
 { #category : #accessing }
 ConfigurationOfTeapot >> customProjectAttributes [
 	 "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
@@ -326,7 +359,7 @@ ConfigurationOfTeapot >> customProjectAttributes [
 ConfigurationOfTeapot >> development: spec [
 	<symbolicVersion: #'development'>
 
-	spec for: #'common' version: '2.4-baseline'.
+	spec for: #'common' version: '2.5-baseline'.
 
 ]
 
@@ -347,7 +380,7 @@ ConfigurationOfTeapot >> project [
 ConfigurationOfTeapot >> stable: spec [
 	<symbolicVersion: #'stable'>
 
-	spec for: #'common' version: '2.3'.
+	spec for: #'common' version: '2.4'.
 
 ]
 
@@ -461,5 +494,24 @@ ConfigurationOfTeapot >> version23: spec [
 			package: 'Teapot-Core' with: 'Teapot-Core-AttilaMagyar.84';
 			package: 'Teapot-Tools' with: 'Teapot-Tools-TorstenBergmann.20';
 			package: 'Teapot-Tests' with: 'Teapot-Tests-AttilaMagyar.54'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfTeapot >> version24: spec [
+	<version: '2.4' imports: #('2.4-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 2.4'.
+		spec author: 'TorstenBergmann'.
+		spec timestamp: '10/16/2017 21:45'.
+		spec 
+			project: 'NeoJSON' with: #'stable';
+			project: 'WebBrowser' with: #'stable'.
+		spec 
+			package: 'Teapot-Core' with: 'Teapot-Core-TorstenBergmann.87';
+			package: 'Teapot-Tools' with: 'Teapot-Tools-TorstenBergmann.21';
+			package: 'Teapot-Tests' with: 'Teapot-Tests-AttilaMagyar.57'. ].
 
 ]
