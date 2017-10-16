@@ -19,6 +19,18 @@ TeaFilter class >> urlPattern: anUrlPattern action: aTeaAction [
 
 ]
 
+{ #category : #acccessing }
+TeaFilter >> action [
+
+	^action
+]
+
+{ #category : #acccessing }
+TeaFilter >> requestMatcher [
+
+	^requestMatcher
+]
+
 { #category : #initialization }
 TeaFilter >> setMatcher: aTeaRequestMatcher action: aTeaAction [
 	requestMatcher := aTeaRequestMatcher.

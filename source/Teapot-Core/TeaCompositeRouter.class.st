@@ -33,6 +33,18 @@ TeaCompositeRouter >> addErrorHandler: aTeaErrorHandler [
 	^ errorhandlers add: aTeaErrorHandler
 ]
 
+{ #category : #accessing }
+TeaCompositeRouter >> afterFilters [
+
+	^afterFilters 
+]
+
+{ #category : #accessing }
+TeaCompositeRouter >> beforeFilters [
+
+	^beforeFilters 
+]
+
 { #category : #private }
 TeaCompositeRouter >> evaluateAfterFilters: aZnRequest response: aZnResponse [
 	afterFilters do: [ :each | each handleRequest: aZnRequest response: aZnResponse ]
