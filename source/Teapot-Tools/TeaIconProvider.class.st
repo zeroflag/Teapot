@@ -10,6 +10,11 @@ Class {
 	#category : #'Teapot-Tools-Utilities'
 }
 
+{ #category : #'private - icons' }
+TeaIconProvider class >> form: base64String [
+	^ Form fromBinaryStream: (base64String base64Decoded asByteArray readStream)
+]
+
 { #category : #accessing }
 TeaIconProvider class >> icons [
 
@@ -22,7 +27,7 @@ TeaIconProvider class >> teapotIcon [
 
 	^ self icons
 			at: #'teapotIcon'
-			ifAbsentPut: [ Form fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self teapotIconContents readStream) ].
+			ifAbsentPut: [ self form: self teapotIconContents ]
 ]
 
 { #category : #'private - icons' }
@@ -44,7 +49,7 @@ TeaIconProvider class >> teapotServerIcon [
 
 	^ self icons
 			at: #'teapotServerIcon'
-			ifAbsentPut: [ Form fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self teapotServerIconContents readStream) ].
+			ifAbsentPut: [ self form: self teapotServerIconContents ]
 ]
 
 { #category : #'private - icons' }
@@ -72,7 +77,7 @@ TeaIconProvider class >> teapotServerStartIcon [
 
 	^ self icons
 			at: #'teapotServerStartIcon'
-			ifAbsentPut: [ Form fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self teapotServerStartIconContents readStream) ].
+			ifAbsentPut: [ self form: self teapotServerStartIconContents ]
 ]
 
 { #category : #'private - icons' }
@@ -102,7 +107,7 @@ TeaIconProvider class >> teapotServerStaticIcon [
 
 	^ self icons
 			at: #'teapotServerStaticIcon'
-			ifAbsentPut: [ Form fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self teapotServerStaticIconContents readStream) ].
+			ifAbsentPut: [ self form: self teapotServerStaticIconContents ]
 ]
 
 { #category : #'private - icons' }
@@ -131,7 +136,7 @@ TeaIconProvider class >> teapotServerStopIcon [
 
 	^ self icons
 			at: #'teapotServerStopIcon'
-			ifAbsentPut: [ Form fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self teapotServerStopIconContents readStream) ].
+			ifAbsentPut: [ self form: self teapotServerStopIconContents ]
 ]
 
 { #category : #'private - icons' }
@@ -161,7 +166,7 @@ TeaIconProvider class >> teaspoonIcon [
 
 	^ self icons
 			at: #'teaspoonIcon'
-			ifAbsentPut: [ Form fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self teaspoonIconContents readStream) ].
+			ifAbsentPut: [ self form: (self teaspoonIconContents) ]
 ]
 
 { #category : #'private - icons' }
