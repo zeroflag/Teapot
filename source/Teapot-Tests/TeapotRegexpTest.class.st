@@ -34,5 +34,5 @@ TeapotRegexpTest >> testIgnoresQueryParam [
 
 { #category : #tests }
 TeapotRegexpTest >> testRegexpMatch [
-	self assert: (TeaTestClient httpGetString: 'k/') equals: 'regexp'.	
+	self assert: (TeaTestClient httpGetString: '/k/') equals: 'regexp'.	
 ]

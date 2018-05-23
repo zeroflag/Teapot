@@ -10,7 +10,7 @@ Class {
 { #category : #private }
 TeaTestClient class >> httpDeleteString: aString [
 	^ ZnClient new
-		url: 'http://localhost:1701/', aString;
+		url: 'http://localhost:1701', aString;
 		delete
 
 	
@@ -18,7 +18,7 @@ TeaTestClient class >> httpDeleteString: aString [
 
 { #category : #private }
 TeaTestClient class >> httpGet: aString [
-	^ ZnEasy get: 'http://localhost:1701/', aString
+	^ ZnEasy get: 'http://localhost:1701', aString
 
 	
 ]
@@ -27,7 +27,7 @@ TeaTestClient class >> httpGet: aString [
 TeaTestClient class >> httpGetNoRedirect: aString [
 	^ ZnClient new
 		followRedirects: false;
-		get: 'http://localhost:1701/', aString;		
+		get: 'http://localhost:1701', aString;		
 		response
 
 	
@@ -42,7 +42,7 @@ TeaTestClient class >> httpGetString: aString [
 
 { #category : #private }
 TeaTestClient class >> httpPost: aString [
-	^ ZnEasy post: 'http://localhost:1701/', aString data: (ZnEntity text: 'any')
+	^ ZnEasy post: 'http://localhost:1701', aString data: (ZnEntity text: 'any')
 
 	
 ]
@@ -56,7 +56,7 @@ TeaTestClient class >> httpPostString: aString [
 
 { #category : #private }
 TeaTestClient class >> httpPut: aString [
-	^ ZnEasy put: 'http://localhost:1701/', aString data: (ZnEntity text: 'any')
+	^ ZnEasy put: 'http://localhost:1701', aString data: (ZnEntity text: 'any')
 
 	
 ]

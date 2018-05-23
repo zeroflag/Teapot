@@ -51,9 +51,9 @@ TeapotWhenClauseTest >> testDispatchesOnMethodInWhenFilter [
 { #category : #tests }
 TeapotWhenClauseTest >> testWhenClauseWithBeforeAfterFilter [
 	self 
-		assert: (TeaTestClient httpGetString: 'beforeurl') 
+		assert: (TeaTestClient httpGetString: '/beforeurl') 
 		equals: 'before'.
 	self 
-		assert: (TeaTestClient httpGetString: 'afterurl') 
+		assert: (TeaTestClient httpGetString: '/afterurl') 
 		equals: 'after'.
 ]
