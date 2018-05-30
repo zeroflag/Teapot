@@ -359,7 +359,7 @@ ConfigurationOfTeapot >> customProjectAttributes [
 ConfigurationOfTeapot >> development: spec [
 	<symbolicVersion: #'development'>
 
-	spec for: #'common' version: '2.5-baseline'.
+	spec for: #'common' version: '2.6-baseline'.
 
 ]
 
@@ -381,7 +381,7 @@ ConfigurationOfTeapot >> stable: spec [
 	<symbolicVersion: #'stable'>
 
 	spec for: #'common' version: '2.4'.
-
+	spec for: #'pharo7.x' version: '2.5'.	
 ]
 
 { #category : #versions }
@@ -512,6 +512,24 @@ ConfigurationOfTeapot >> version24: spec [
 		spec 
 			package: 'Teapot-Core' with: 'Teapot-Core-TorstenBergmann.87';
 			package: 'Teapot-Tools' with: 'Teapot-Tools-TorstenBergmann.21';
+			package: 'Teapot-Tests' with: 'Teapot-Tests-AttilaMagyar.57'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfTeapot >> version25: spec [
+	<version: '2.5' imports: #('2.5-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 2.5 Pharo 7 onwards'.
+		spec author: 'TorstenBergmann'.
+		spec timestamp: '10/16/2018 21:45'.
+		spec 
+			project: 'NeoJSON' with: #'stable'.
+		spec 
+			package: 'Teapot-Core' with: 'Teapot-Core-TorstenBergmann.87';
+			package: 'Teapot-Tools' with: 'Teapot-Tools-AttilaMagyar.22';
 			package: 'Teapot-Tests' with: 'Teapot-Tests-AttilaMagyar.57'. ].
 
 ]
