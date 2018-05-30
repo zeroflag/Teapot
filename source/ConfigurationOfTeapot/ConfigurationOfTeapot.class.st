@@ -326,17 +326,40 @@ ConfigurationOfTeapot >> baseline25: spec [
 				spec
 					className: #ConfigurationOfNeoJSON;
 					versionString: #'stable';
-					repository: 'http://mc.stfx.eu/Neo' ];
-			project: 'WebBrowser' with: [
-				spec
-					className: #ConfigurationOfWebBrowser;
-					versionString: #'stable';
-					repository: 'http://smalltalkhub.com/mc/TorstenBergmann/WebBrowser/main/' ].
+					repository: 'http://mc.stfx.eu/Neo' ].
 		spec 
 			package: 'Teapot-Core' with: [
 				spec requires: #('NeoJSON' ). ];
 			package: 'Teapot-Tools' with: [
-				spec requires: #('Teapot-Core' 'WebBrowser' ). ];
+				spec requires: #('Teapot-Core'). ];
+			package: 'Teapot-Tests' with: [
+				spec requires: #('Teapot-Core' ). ].
+		spec 
+			group: 'Core' with: #('Teapot-Core' );
+			group: 'Tools' with: #('Teapot-Tools' );
+			group: 'Tests' with: #('Teapot-Tests' );
+			group: 'default' with: #('Tools' 'Tests' ). ].
+
+]
+
+{ #category : #baselines }
+ConfigurationOfTeapot >> baseline26: spec [
+	<version: '2.6-baseline'>
+
+	spec for: #'common' do: [
+		spec blessing: #'baseline'.
+		spec repository: 'http://smalltalkhub.com/mc/zeroflag/Teapot/main/'.
+		spec 
+			project: 'NeoJSON' with: [
+				spec
+					className: #ConfigurationOfNeoJSON;
+					versionString: #'stable';
+					repository: 'http://mc.stfx.eu/Neo' ].
+		spec 
+			package: 'Teapot-Core' with: [
+				spec requires: #('NeoJSON' ). ];
+			package: 'Teapot-Tools' with: [
+				spec requires: #('Teapot-Core'). ];
 			package: 'Teapot-Tests' with: [
 				spec requires: #('Teapot-Core' ). ].
 		spec 
@@ -524,7 +547,7 @@ ConfigurationOfTeapot >> version25: spec [
 		spec blessing: #'stable'.
 		spec description: 'version 2.5 Pharo 7 onwards'.
 		spec author: 'TorstenBergmann'.
-		spec timestamp: '10/16/2018 21:45'.
+		spec timestamp: '05/30/2018 21:45'.
 		spec 
 			project: 'NeoJSON' with: #'stable'.
 		spec 
