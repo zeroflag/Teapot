@@ -553,6 +553,6 @@ ConfigurationOfTeapot >> version25: spec [
 		spec 
 			package: 'Teapot-Core' with: 'Teapot-Core-TorstenBergmann.87';
 			package: 'Teapot-Tools' with: 'Teapot-Tools-AttilaMagyar.22';
-			package: 'Teapot-Tests' with: 'Teapot-Tests-AttilaMagyar.57'. ].
+			package: 'Teapot-Tests' with: 'Teapot-Tests-AttilaMagyar.58'. ].
 
 ]
