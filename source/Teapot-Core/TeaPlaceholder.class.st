@@ -43,8 +43,8 @@ TeaPlaceholder class >> mustBeValidPlaceholder: aString [
 
 { #category : #'url pattern segment' }
 TeaPlaceholder >> matches: urlSegments rest: adjacentPatterns placeholders: aDictionary [
-	(typeConstraint matchesTo: urlSegments first) 
-		ifFalse: [ ^ false ].			
+	(urlSegments first = TeaPadding or: [ (typeConstraint matchesTo: urlSegments first) not]) 
+		ifTrue: [ ^ false ].		
 	aDictionary 
 		at: placeholderName 
 		put: (typeConstraint parseString: urlSegments first).				
