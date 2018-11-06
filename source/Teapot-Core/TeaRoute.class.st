@@ -28,15 +28,25 @@ TeaRoute class >> matcher: aTeaRequestMatcher action: aTeaAction transformer: aR
 ]
 
 { #category : #'request handling' }
-TeaRoute >> handleRequest: aZnRequest [
-	^ requestMatcher 
-		matchRequest: aZnRequest 
-		ifMatch: 
-			[ :aTeaRequest | | result |
-			result := action teaEvalActionOnRequest: aTeaRequest.
-			result teaTransform: responseTransformer request: aTeaRequest ]
-		ifNoMatch: 
-			[ ZnResponse notFound: aZnRequest uri ]
+TeaRoute >> canHandleUrl: aZnUrl [
+	"only check the URL not without checking HTTP Method or when clause"
+	^ requestMatcher matchesUrl: aZnUrl
+]
+
+{ #category : #'request handling' }
+TeaRoute >> handleRequest: aZnRequest ifUnhandled: aBlock [
+	^ requestMatcher
+		matchRequest: aZnRequest
+		ifMatch: [ :aTeaRequest |
+			(action teaEvalActionOnRequest: aTeaRequest)
+				teaTransform: responseTransformer
+				request: aTeaRequest ]
+		ifNoMatch: aBlock
+]
+
+{ #category : #accessing }
+TeaRoute >> methodMatcher [ 
+	^ requestMatcher methodMatcher 
 ]
 
 { #category : #printing }
@@ -60,7 +70,7 @@ TeaRoute >> setMatcher: aTeaRequestMatcher action: aTeaAction transformer: aResp
 	^ self
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 TeaRoute >> whenClause: aBlockClosure [ 
 	requestMatcher whenClause: aBlockClosure
 ]

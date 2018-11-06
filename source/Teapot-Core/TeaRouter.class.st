@@ -7,7 +7,7 @@ Class {
 	#category : #'Teapot-Core'
 }
 
-{ #category : #'zn delegate' }
-TeaRouter >> handleRequest: aZnRequest [
+{ #category : #router }
+TeaRouter >> handleRequest: aZnRequest ifUnhandled: aBlock [
 	self subclassResponsibility 
 ]

@@ -20,21 +20,19 @@ TeaRequestMatcher class >> method: aMethodMatcher url: anUrlPattern [
 
 { #category : #'request matcher' }
 TeaRequestMatcher >> matchRequest: aZnRequest ifMatch: matchBlock ifNoMatch: noMatchBlock [
-	| matches placeholders |
+	| placeholders matches |
+	(methodMatcher matchesHttpMethod: aZnRequest method) ifFalse: [ ^ noMatchBlock value ].
 	placeholders := Dictionary new.
-	matches := self matchesRequest: aZnRequest placeholders: placeholders.
-	^ matches
+	matches := (urlPattern matchesUrl: aZnRequest url placeholders: placeholders) 
+		and: [ whenClause cull: (TeaRequest fromZnRequest: aZnRequest pathParams: placeholders) ].
+	^ matches 
 		ifTrue: [ matchBlock value: (TeaRequest fromZnRequest: aZnRequest pathParams: placeholders) ]
-		ifFalse: [ noMatchBlock value ]
+		ifFalse: noMatchBlock
 ]
 
-{ #category : #private }
-TeaRequestMatcher >> matchesRequest: aZnRequest placeholders: placeholders [
-	| matchesPartially |
-	matchesPartially := (methodMatcher matchesHttpMethod: aZnRequest method)
-		and: [ urlPattern matchesUrl: aZnRequest url placeholders: placeholders ].	
-	matchesPartially ifFalse: [ ^ false ].
-	^ whenClause cull: (TeaRequest fromZnRequest: aZnRequest pathParams: placeholders).
+{ #category : #'request matcher' }
+TeaRequestMatcher >> matchesUrl: aZnUrl [
+	^ urlPattern matchesUrl: aZnUrl placeholders: Dictionary new
 ]
 
 { #category : #printing }

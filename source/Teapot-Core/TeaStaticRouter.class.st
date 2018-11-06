@@ -11,10 +11,11 @@ Class {
 }
 
 { #category : #'zn delegate' }
-TeaStaticRouter >> handleRequest: aZnRequest [
-	^ delegate 
-		ifNil: [ ZnResponse notFound: aZnRequest uri  ] 
-		ifNotNil: [ delegate handleRequest: aZnRequest ]
+TeaStaticRouter >> handleRequest: aZnRequest ifUnhandled: aBlock [
+	| response |
+	delegate ifNil: [ ^ aBlock value ].
+	response := delegate handleRequest: aZnRequest.
+	^ response isNotFound ifTrue: aBlock ifFalse: [ response ]
 ]
 
 { #category : #acccessing }

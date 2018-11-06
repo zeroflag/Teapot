@@ -37,10 +37,11 @@ Teapot class >> configure: optionsAssociations [
 		#defaultOutput -> #json. 
 		#bindAddress -> #[192 168 0 3].
 		#port -> 8080. 
-		#debugMode -> true 
+		#debugMode -> true.
+		#notFoundHandlerClass -> Tea405AwareNotFoundHandler.
 	}."
 	
-	^ self new initializeOptions: optionsAssociations
+	^ self new initializeOptions: optionsAssociations asDictionary
 ]
 
 { #category : #'instance creation' }
@@ -171,17 +172,20 @@ Teapot >> exception: anExceptionSetActionAssoc [
 ]
 
 { #category : #initialization }
-Teapot >> initializeOptions: optionsAssociations [		
+Teapot >> initializeOptions: optionsDictionary [
 	dynamicRouter := TeaDynamicRouter new.
 	staticRouter := TeaStaticRouter new.
 	compositeRouter := TeaCompositeRouter routers: {dynamicRouter. staticRouter}.	
-	defaultOutput := self responseTransformer: (optionsAssociations asDictionary at: #defaultOutput ifAbsent: #html).									
+	defaultOutput := self responseTransformer: (optionsDictionary at: #defaultOutput ifAbsent: #html).									
 	self exception: TeaAbort -> [ :abort :req | abort response teaTransform: [ :same | same ] request: req].
-	server := optionsAssociations asDictionary 
+	server := optionsDictionary 
 		at: #znServer
 		ifAbsent: [ ZnServer defaultServerClass new ].
+	optionsDictionary 
+		at: #notFoundHandlerClass 
+		ifPresent: [:class | compositeRouter notFoundHandler: (class new initializeRoutes: dynamicRouter routes)].
 	server delegate: compositeRouter.	
-	optionsAssociations do: [ :each | server optionAt: each key put:  each value ].	
+	optionsDictionary keysAndValuesDo: [ :key :value | server optionAt: key put: value ].
 	^ self
 ]
 

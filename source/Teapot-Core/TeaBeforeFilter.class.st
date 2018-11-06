@@ -9,8 +9,8 @@ Class {
 
 { #category : #'request handling' }
 TeaBeforeFilter >> handleRequest: aZnRequest [
-	requestMatcher 
-		matchRequest: aZnRequest 
+	requestMatcher
+		matchRequest: aZnRequest
 		ifMatch: [ :aTeaRequest | action teaEvalActionOnRequest: aTeaRequest ]
 		ifNoMatch: [ ]
 ]

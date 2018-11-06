@@ -12,16 +12,15 @@ Class {
 
 { #category : #'route dispatcher' }
 TeaDynamicRouter >> addRoute: aRoute [
-	^ routes add: aRoute.
-	
+	^ routes add: aRoute
 ]
 
 { #category : #'zn delegate' }
-TeaDynamicRouter >> handleRequest: aZnRequest [
-	routes do: [ :each | | aZnResponse |
-		aZnResponse := each handleRequest: aZnRequest.
-		aZnResponse isNotFound ifFalse: [ ^ aZnResponse ] ].	
-	^ ZnResponse notFound: aZnRequest uri
+TeaDynamicRouter >> handleRequest: aZnRequest ifUnhandled: aBlock [
+	routes do: [ :each | | response |
+		response := each handleRequest: aZnRequest ifUnhandled: nil.
+		response ifNotNil: [ ^ response ] ].
+	^ aBlock value
 ]
 
 { #category : #initialization }

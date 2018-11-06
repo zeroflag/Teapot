@@ -8,7 +8,8 @@ Class {
 		'routers',
 		'errorhandlers',
 		'beforeFilters',
-		'afterFilters'
+		'afterFilters',
+		'notFoundHandler'
 	],
 	#category : #'Teapot-Core'
 }
@@ -56,11 +57,11 @@ TeaCompositeRouter >> evaluateBeforeFilters: aZnRequest [
 ]
 
 { #category : #private }
-TeaCompositeRouter >> evaluateRouters: aZnRequest [
+TeaCompositeRouter >> evaluateRouters: aZnRequest ifUnhandled: aBlock [
 	routers do: [ :each | | response |
-		response := each handleRequest: aZnRequest.
-		response isNotFound ifFalse: [ ^ response ] ].
-	^ ZnResponse notFound: aZnRequest uri
+		response := each handleRequest: aZnRequest ifUnhandled: nil.
+		response ifNotNil: [ ^ response ] ].
+	^ aBlock value
 ]
 
 { #category : #private }
@@ -75,9 +76,16 @@ TeaCompositeRouter >> exceptionOccurred: anException request: aZnRequest [
 
 { #category : #'zn delegate' }
 TeaCompositeRouter >> handleRequest: aZnRequest [
+	^ self 
+		handleRequest: aZnRequest 
+		ifUnhandled: [ notFoundHandler requestNotFound: aZnRequest ] 
+]
+
+{ #category : #'zn delegate' }
+TeaCompositeRouter >> handleRequest: aZnRequest ifUnhandled: aBlock [
 	| response |
 	^ [ self evaluateBeforeFilters: aZnRequest.
-	     response := self evaluateRouters: aZnRequest.
+	     response := self evaluateRouters: aZnRequest ifUnhandled: aBlock.
 	     self evaluateAfterFilters: aZnRequest response: response.
 	     response	
 	   ] on: Exception 
@@ -90,6 +98,12 @@ TeaCompositeRouter >> initialize [
 	errorhandlers := OrderedCollection new.
 	beforeFilters := OrderedCollection new.
 	afterFilters := OrderedCollection new.
+	notFoundHandler := TeaNotFoundHandler new.
+]
+
+{ #category : #'error handing' }
+TeaCompositeRouter >> notFoundHandler: aTeaNotFoundHandler [
+	notFoundHandler := aTeaNotFoundHandler
 ]
 
 { #category : #initialization }

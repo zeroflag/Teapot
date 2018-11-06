@@ -27,7 +27,7 @@ TeaMethodMatcher class >> exactly: aSymbol [
 
 { #category : #'http method matcher' }
 TeaMethodMatcher >> matchesHttpMethod: aSymbol [
-	^ matcherBlock value: aSymbol	
+	^ matcherBlock value: aSymbol
 ]
 
 { #category : #printing }
