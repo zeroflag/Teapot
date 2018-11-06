@@ -8,6 +8,13 @@ Class {
 }
 
 { #category : #private }
+TeaTestClient class >> httpDelete: aString [
+	^ ZnEasy delete: 'http://localhost:1701', aString
+
+	
+]
+
+{ #category : #private }
 TeaTestClient class >> httpDeleteString: aString [
 	^ ZnClient new
 		url: 'http://localhost:1701', aString;

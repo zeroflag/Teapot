@@ -9,13 +9,17 @@ Class {
 
 { #category : #running }
 TeapotRoutingTest >> setUp [
-	server := Teapot on
+	| teapot |
+	teapot := Teapot configure: { #notFoundHandlerClass -> Tea405AwareNotFoundHandler }.
+	server := teapot
 		GET: '/' -> '1';
 		GET: '/a' -> '2';
+		POST: '/a' -> 'post';
 		GET: '/a/*/b' -> [ '3' ];
 		GET: '/*/c' -> [ '4' ];	
 		GET: '/x/y/*' -> [ '5' ];
 		GET: '/x/*/*/z/*' -> [ '6' ];
+		GET: '/404' -> (ZnResponse notFound: '/custom');
 		any: 'any' -> 'any';
 		start.		
 ]
@@ -31,11 +35,26 @@ TeapotRoutingTest >> test404 [
 ]
 
 { #category : #tests }
+TeapotRoutingTest >> test405 [
+	| response |
+	response := TeaTestClient httpDelete: '/a'.
+	self assert: response code equals: 405.
+	self 
+		assert: (', ' split: (response headers at: 'Allow')) asSet
+		equals: #(GET POST) asSet.
+]
+
+{ #category : #tests }
 TeapotRoutingTest >> testAnyMatchesToAnyHttpMethod [
  	self assert: (TeaTestClient httpGetString: '/any') equals: 'any'.
  	self assert: (TeaTestClient httpPostString: '/any') equals: 'any'.
  	self assert: (TeaTestClient httpPutString: '/any') equals: 'any'.	
  	self assert: (TeaTestClient httpDeleteString: '/any') equals: 'any'.
+]
+
+{ #category : #tests }
+TeapotRoutingTest >> testCustom404 [
+ 	self assert: (TeaTestClient httpGetString: '/404') equals: 'Not Found /custom', String crlf
 ]
 
 { #category : #tests }
