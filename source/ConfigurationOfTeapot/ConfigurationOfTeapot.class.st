@@ -370,6 +370,34 @@ ConfigurationOfTeapot >> baseline26: spec [
 
 ]
 
+{ #category : #baselines }
+ConfigurationOfTeapot >> baseline27: spec [
+	<version: '2.7-baseline'>
+
+	spec for: #'common' do: [
+		spec blessing: #'baseline'.
+		spec repository: 'http://smalltalkhub.com/mc/zeroflag/Teapot/main/'.
+		spec 
+			project: 'NeoJSON' with: [
+				spec
+					className: #ConfigurationOfNeoJSON;
+					versionString: #'stable';
+					repository: 'http://mc.stfx.eu/Neo' ].
+		spec 
+			package: 'Teapot-Core' with: [
+				spec requires: #('NeoJSON' ). ];
+			package: 'Teapot-Tools' with: [
+				spec requires: #('Teapot-Core'). ];
+			package: 'Teapot-Tests' with: [
+				spec requires: #('Teapot-Core' ). ].
+		spec 
+			group: 'Core' with: #('Teapot-Core' );
+			group: 'Tools' with: #('Teapot-Tools' );
+			group: 'Tests' with: #('Teapot-Tests' );
+			group: 'default' with: #('Tools' 'Tests' ). ].
+
+]
+
 { #category : #accessing }
 ConfigurationOfTeapot >> customProjectAttributes [
 	 "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
@@ -382,7 +410,7 @@ ConfigurationOfTeapot >> customProjectAttributes [
 ConfigurationOfTeapot >> development: spec [
 	<symbolicVersion: #'development'>
 
-	spec for: #'common' version: '2.6-baseline'.
+	spec for: #'common' version: '2.7-baseline'.
 
 ]
 
@@ -403,8 +431,8 @@ ConfigurationOfTeapot >> project [
 ConfigurationOfTeapot >> stable: spec [
 	<symbolicVersion: #'stable'>
 
-	spec for: #'common' version: '2.4'.
-	spec for: #'pharo7.x' version: '2.5'.	
+	spec for: #'common' version: '2.6'.
+	spec for: #'pharo7.x' version: '2.6'.	
 ]
 
 { #category : #versions }
@@ -554,5 +582,23 @@ ConfigurationOfTeapot >> version25: spec [
 			package: 'Teapot-Core' with: 'Teapot-Core-TorstenBergmann.87';
 			package: 'Teapot-Tools' with: 'Teapot-Tools-AttilaMagyar.22';
 			package: 'Teapot-Tests' with: 'Teapot-Tests-AttilaMagyar.58'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfTeapot >> version26: spec [
+	<version: '2.6' imports: #('2.6-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 2.6 Pharo 7 onwards'.
+		spec author: 'AttilaMagyar'.
+		spec timestamp: '17/11/2018 19:54'.
+		spec 
+			project: 'NeoJSON' with: #'stable'.
+		spec 
+			package: 'Teapot-Core' with: 'Teapot-Core-AttilaMagyar.89';
+			package: 'Teapot-Tools' with: 'Teapot-Tools-AttilaMagyar.22';
+			package: 'Teapot-Tests' with: 'Teapot-Tests-AttilaMagyar.60'. ].
 
 ]
