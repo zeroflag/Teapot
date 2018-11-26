@@ -2,7 +2,7 @@
 
 After installing you're ready to go
 
-```smalltalk 
+```Smalltalk 
 Teapot on
     GET: '/welcome' -> 'Hello World!';
     start.
@@ -24,7 +24,7 @@ A route has three parts:
  - URL pattern (/hi, /users/<name>, /foo/*/bar/*, or a regexp)
  - Action (block, message send or any object)
 
-```smalltalk
+```Smalltalk
 Teapot on
     GET: '/hi' -> 'Bonjour!';
     GET: '/hi/<user>' -> [:req | 'Hello ', (req at: #user)];
@@ -48,7 +48,7 @@ The response returned by the Action can be:
 
 The following 3 Routes produce the same output.
 
-```
+```Smalltalk
 GET: '/greet' -> [:req | 'Hello World!' ]
 GET: '/greet' -> [:req | TeaResponse ok body: 'Hello World!' ]
 GET: '/greet' -> [:req | 
@@ -68,7 +68,7 @@ Query parameters and Form parameters can be accessed the same way as path parame
 
 ## Parameter constraints
 
-```smalltalk
+```Smalltalk
 Teapot on 
     GET: '/user/<id:IsInteger>' -> [:req | users findById: (req at: #id)];
     output: #ston;
@@ -84,6 +84,7 @@ See IsObject, IsInteger and IsNumber classes for information about introducing u
 
 The responsibility of a response transformer is to convert the output of the action block and set the content-type of the response.
 
+```Smalltalk
 Teapot on 
     GET: '/jsonlist' -> #(1 2 3 4); output: #json;
     GET: '/sometext' -> 'this is text plain'; output: #text;
@@ -95,28 +96,37 @@ Teapot on
 
 ZnEasy get: 'http://localhost:1701/download' 
 "a ZnResponse(200 OK application/octet-stream 35B)"
+```
+
 The default output is TeaOutput html that interprets the output as string, and sets the content-type to text/html.
 
 Some response transformers require external packages (e.g. NeoJSON, STON, Mustache) . See TeaOutput class for more information.
 
 TODO explain how to write custom resp.transformer
 
-Templates
+## Templates
 
+```Smalltalk
 Teapot on 
     GET: '/greet' -> {'phrase' -> 'Hello'. 'name' -> 'World'};
     output: (TeaOutput mustacheHtml: '<b>{{phrase}}</b> <i>{{name}}</i>!');
     start.
-Aborts
+```
+
+## Aborts
 
 An abort: message sent to the request object immediately stops a request (by signaling an exception) within a before filter or route. The same rules apply to the argument to the abort: message as the return value of a Route.
 
+```Smalltalk
 Teapot on 
     GET: '/secure/*' -> [:req | req abort: TeaResponse unauthorized];
     GET: '/unauthorized' -> [:req | req abort: 'go away' ];
     start.
-Before filters
+```
 
+## Before filters
+
+```Smalltalk 
 Teapot on 
     before: '/secure/*' -> [:req | 
         req session 
@@ -125,34 +135,46 @@ Teapot on
     before: '*' -> (Send message: #logRequest: to: auditor);
     GET: '/secure' -> 'protected';
     start.
+```
+
 Before filters are evaluated before each request that matches the given URL pattern.
 
-After filters
+## After filters
 
 After filters are evaluated after each request and can read the request and modify the response.
 
+```Smalltalk 
 Teapot on 
     after: '/*' -> [:req :resp | resp headers at: 'X-Foo' put: 'set by after filter'];
     start.
-Serving static content
+```
 
+## Serving static content
+
+```Smalltalk 
 Teapot on 
     serveStatic: '/statics' from: '/var/www/htdocs';
     start.
-Regex patterns
+```
 
+## Regex patterns
+
+```Smalltalk 
 Teapot on 
     GET: '/hi/([a-z]+\d\d)' asRegex -> [:req | 'Hello ', (req at: 1)];
     start.
 
 (ZnEasy get: 'http://localhost:1701/hi/user01') entity string. "Hello user01"
 ZnEasy get: 'http://localhost:1701/hi/user'. "not found"
+```
+
 Instead of < and > surrounded named parameters, the regexp pattern may contain subexpressions between parentheses whose values are accessible via the request object.
 
-Error handlers
+### Error handlers
 
 To handle exceptions of a configured type(s) for all routes and before filters.
 
+```Smalltalk 
 Teapot on 
     GET: '/divide/<a>/<b>' -> [:req | (req at: #a) / (req at: #b)];
     GET: '/at/<key>' -> [:req | dict at: (req at: #key)];
@@ -162,14 +184,17 @@ Teapot on
 
 (ZnEasy get: 'http://localhost:1701/div/6/3') entity string. "2"
 (ZnEasy get: 'http://localhost:1701/div/6/0'). "bad request"
+```
+
 You can use a comma-separated exception set to handle multiple exceptions. E.g. exception: ZeroDivide, DomainError -> handler.
 
 The same rules apply for the return values of the exception handler as were used for the Routes.
 
-Query parameters
+## Query parameters
 
 Routes may also use query parameters:
 
+```Smalltalk
 Teapot on 
     GET: '/books' -> [:req | 
        books 
@@ -177,13 +202,17 @@ Teapot on
           limit: (req at: #limit) ];
     start.
 
+
 "matches: http://localhost:1701/books?title=smalltalk&limit=12"
+```
+
 This matches to GET http://localhost:1701/books?title=smalltalk&limit=12. Query parameters are optional to the /books route. You can use at:ifAbsent: to handle unset parameters.
 
-Conditions
+## Conditions
 
 Routes and Before/After filters may include conditions. A condition can be any expression that returns a Boolean.
 
+```Smalltalk 
 Teapot on 
     GET: 'test1' -> result; when: [:req | req accept = 'application/json'];
     any: 'test2' -> result; when: [:req | #(GET POST) includes: req method];
@@ -191,21 +220,27 @@ Teapot on
 
 "first one matches only if the accept header is set to application/json"
 "second one matches if the request method is either GET or POST"
-Multiple url patterns
+```
+
+## Multiple url patterns
 
 Teapot supports multiple url patterns per routes.
 
+```Smalltalk 
 Teapot on 
     before: { '/secure/*' . '/protected/*' } -> 
         [ :req | req abort: TeaResponse unauthorized ];    
     GET: { '/path1/*'. '/path2/\d+' asRegex } -> 'path1 or path2';
     start.
-Handling POST and other methods
+```
+
+## Handling POST and other methods
 
 Using POST/PUT and other HTTP methods is no different than using GET. In case of a POST the request represents the url encoded form data or whatever was posted. The request object has a generic at: method that can be used to access the path, query or form parameters in a uniform way.
 
 For example:
 
+```Smalltalk 
 Teapot on
     GET: '/login' -> 
         '<html>
@@ -217,8 +252,11 @@ Teapot on
         </html>';
     POST: '/login'-> [ :req | 'Welcome ', (req at: #user) ];
     start.
+```
+
 REST example, showing some CRUD operations
 
+```Smalltalk 
 books := Dictionary new.
 teapot := Teapot configure: {
     #defaultOutput -> #json. 
@@ -236,20 +274,26 @@ teapot
     DELETE: '/books/<id>' -> [:req | books removeKey: (req at: #id)];
     exception: KeyNotFound -> (TeaResponse notFound body: 'No such book');
     start.
+```
+
 Creating a book with the client.
 
+```Smalltalk
 ZnClient new
     url: 'http://localhost:8080/books/1';
     formAt: 'author' put: 'SquareBracketAssociates';
     formAt: 'title'  put: 'Pharo For The Enterprise';
     put
-More examples
+```
 
-For a more complete example, study the Teapot-Library-Example package.
-FlowerStore demo by Yanni Chiu
-Differences between Teapot and other web frameworks
+## More examples
 
-Teapot is not a singleton and doesn't hold any global state. You can run multiple Teapot servers inside the same image with isolated state.
-There are no thread locals or dynamic scoped variables in Teapot. Everything is explicit.
-It doesn't rely on annotations or pragmas, you can define the routes programmatically.
-It doesn't instantiate objects (e.g. "web controllers") for you. You can hook http events to existing objects, and manage their dependencies the way you want.
+- For a more complete example, study the Teapot-Library-Example package.
+- [FlowerStore demo by Yanni Chiu](https://github.com/yannij/TMM)
+
+## Differences between Teapot and other web frameworks
+
+- Teapot is not a singleton and doesn't hold any global state. You can run multiple Teapot servers inside the same image with isolated state.
+- There are no thread locals or dynamic scoped variables in Teapot. Everything is explicit.
+- It doesn't rely on annotations or pragmas, you can define the routes programmatically.
+- It doesn't instantiate objects (e.g. "web controllers") for you. You can hook http events to existing objects, and manage their dependencies the way you want.
