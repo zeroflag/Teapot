@@ -1,12 +1,3 @@
-# Teapot
-
-
-![alt tag](http://jshot.info/teapot/tea_small.png)
-
-
-Wiki, Code: <a href="http://smalltalkhub.com/#!/~zeroflag/Teapot">smalltalkhub</a>
-<p align="center"><img src="assets/logos/128.png">
-
 # Teapot  
 
 Teapot is micro web framework for [Pharo Smalltalk](https://pharo.org) on top of the [Zinc HTTP components](https://github.com/svenvc/zinc), that focuses on simplicity and ease of use. It's around 600 lines of code, not counting the tests.
