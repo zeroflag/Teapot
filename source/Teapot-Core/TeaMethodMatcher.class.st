@@ -25,6 +25,11 @@ TeaMethodMatcher class >> exactly: aSymbol [
 		name: aSymbol asString
 ]
 
+{ #category : #converting }
+TeaMethodMatcher >> asString [
+	^ name
+]
+
 { #category : #'http method matcher' }
 TeaMethodMatcher >> matchesHttpMethod: aSymbol [
 	^ matcherBlock value: aSymbol

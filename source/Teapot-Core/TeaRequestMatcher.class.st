@@ -35,6 +35,11 @@ TeaRequestMatcher >> matchesUrl: aZnUrl [
 	^ urlPattern matchesUrl: aZnUrl placeholders: Dictionary new
 ]
 
+{ #category : #accessing }
+TeaRequestMatcher >> methodMatcher [
+	^ methodMatcher
+]
+
 { #category : #printing }
 TeaRequestMatcher >> printOn: aStream [
 	methodMatcher printOn: aStream.
