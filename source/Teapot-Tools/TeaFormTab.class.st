@@ -3,7 +3,7 @@ I'm built up from a dynamically extensible key value pair list (TeaKeyValueInput
 "
 Class {
 	#name : #TeaFormTab,
-	#superclass : #ComposablePresenter,
+	#superclass : #ComposableModel,
 	#instVars : [
 		'form',
 		'addButton'

@@ -3,7 +3,7 @@ I provide a graphical interface for quickly testing and excesising routes. Right
 "
 Class {
 	#name : #Teaspoon,
-	#superclass : #ComposablePresenter,
+	#superclass : #ComposableModel,
 	#instVars : [
 		'urlInput',
 		'contentTypeDropList',
