@@ -23,7 +23,7 @@ setUpDependencies: spec
 			with: [ spec
 				repository: 'github://zeroflag/Teapot:v{XX}/source';
 				loads: #('Deployment') ];
-		import: 'Stargate'.
+		import: 'Teapot'.
 ```
 > Replace `{XX}` with the version you want to depend on
 

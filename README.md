@@ -18,7 +18,7 @@ This code was defined in 1998 as one of the traditional IETF April Fools' jokes,
 ## Quick Start
 
 - Download the latest [Pharo 32](https://get.pharo.org/) or [64 bits VM](https://get.pharo.org/64/).
-- Download a ready to use image from the [release page](http://github.com/iot-uca/back-end/releases/latest)
+- Download a ready to use image from the [release page](http://github.com/zeroflag/Teapot/releases/latest)
 - Explore the [documentation](docs/).
 
 ## Installation
