@@ -3,7 +3,7 @@ Two inputs and a remove button.
 "
 Class {
 	#name : #TeaKeyValueInput,
-	#superclass : #ComposablePresenter,
+	#superclass : #ComposableModel,
 	#instVars : [
 		'keyInput',
 		'valueInput',

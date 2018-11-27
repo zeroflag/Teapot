@@ -3,7 +3,7 @@ I'm built up from a dynamically extensible list of other components.
 "
 Class {
 	#name : #TeaKeyValueList,
-	#superclass : #DynamicComposablePresenter,
+	#superclass : #DynamicComposableModel,
 	#instVars : [
 		'models'
 	],
