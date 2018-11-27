@@ -5,7 +5,7 @@ Teapot is micro web framework for [Pharo Smalltalk](https://pharo.org) on top of
 **[Explore the docs](/docs)**
 
 [![Build Status](https://travis-ci.com/zeroflag/Teapot.svg?branch=master)](https://travis-ci.com/zeroflag/Teapot)
-[![Coverage Status](https://coveralls.io/repos/github/zeroflag/Teapot/badge.svg?branch=master)](https://coveralls.io/github/zeroflag/Teapot?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/zeroflag/Teapot/badge.svg?branch=master)](https://coveralls.io/github/fortizpenaloza/zeroflag?branch=master)
 
 > *Name origin*: [418 I'm a teapot](http://en.wikipedia.org/wiki/List_of_HTTP_status_codes) (RFC 2324) is an HTTP status code.
 
