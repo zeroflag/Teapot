@@ -28,3 +28,7 @@ To load the project in a Pharo image, or declare it as a dependency of your own 
 ## Contributing
 
 Check the [Contribution Guidelines](CONTRIBUTING.md)
+
+## Other
+
+If you want to lively work with Teapot or quickly implement REST services with it we recommend to have a look at the [Tealight project](https://github.com/astares/Tealight) - a thin layer on top of Teapot to quickly experiment and deliver
