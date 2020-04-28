@@ -21,6 +21,14 @@ This code was defined in 1998 as one of the traditional IETF April Fools' jokes,
 - Download a ready to use image from the [release page](http://github.com/zeroflag/Teapot/releases/latest)
 - Explore the [documentation](docs/).
 
+```
+Metacello new
+	baseline: 'Teapot';
+	repository: 'github://zeroflag/Teapot/source';
+	load.
+```
+
+
 ## Installation
 
 To load the project in a Pharo image, or declare it as a dependency of your own project follow this [instructions](docs/Installation.md)
