@@ -50,8 +50,11 @@ Cupboard class >> soleInstance [
 	^ soleInstance ifNil: [ soleInstance := self basicNew initialize ]
 ]
 
-{ #category : #inspecting }
+{ #category : #accessing }
 Cupboard >> gtInspectorTeapotsIn: composite [
+	"
+	need rewrite
+	
 	<gtInspectorPresentationOrder: 0>  
 	
 	^(composite list)
@@ -64,7 +67,7 @@ Cupboard >> gtInspectorTeapotsIn: composite [
 		selectionAct: [:each | each selection ifNotNil: [ each selection browse ]. each update ] icon: self iconProvider teapotServerIcon entitled: 'Browse';
 		act: [:each | self onNewServer. each update ] icon: self iconProvider teapotServerIcon entitled: 'New Teapot';
 		act: [:each | self onNewStaticServer. each update ] icon: self iconProvider teapotServerStaticIcon entitled: 'New Teapot (serving static)'
-		
+		"
 ]
 
 { #category : #private }

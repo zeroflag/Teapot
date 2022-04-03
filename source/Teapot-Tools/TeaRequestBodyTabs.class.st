@@ -3,7 +3,7 @@ I graphically represent a request body that can be viewed in multiple ways.
 "
 Class {
 	#name : #TeaRequestBodyTabs,
-	#superclass : #ComposableModel,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'requestBody',
 		'label',
@@ -28,7 +28,7 @@ TeaRequestBodyTabs >> formTabTitle [
 ]
 
 { #category : #initialization }
-TeaRequestBodyTabs >> initializeWidgets [
+TeaRequestBodyTabs >> initializePresenters [
 	label := self newLabel label: 'Request body'; yourself.
 	requestBody := self newRequestBody.
 ]
@@ -40,10 +40,9 @@ TeaRequestBodyTabs >> label [
 
 { #category : #initialization }
 TeaRequestBodyTabs >> newRequestBody [
-
-	raw := self newText
-		autoAccept: true;
-		yourself.
+	"
+	needs rewrite
+	raw := self newText.
 	form := TeaFormTab new.
 	^ self newTabManager
 		addTab:
@@ -60,6 +59,7 @@ TeaRequestBodyTabs >> newRequestBody [
 			selected label = self formTabTitle
 				ifTrue: [ form updateKeyValus: ('?' , raw text) asUrl query ]
 				ifFalse: [ form writeUrlEncodedTo: raw ] ]
+	"
 ]
 
 { #category : #private }

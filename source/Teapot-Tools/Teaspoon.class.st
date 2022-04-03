@@ -3,7 +3,7 @@ I provide a graphical interface for quickly testing and excesising routes. Right
 "
 Class {
 	#name : #Teaspoon,
-	#superclass : #ComposableModel,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'urlInput',
 		'contentTypeDropList',
@@ -80,6 +80,15 @@ Teaspoon >> client [
 		yourself
 ]
 
+{ #category : #initialization }
+Teaspoon >> connectPresenters [ 
+
+	execButton
+		whenActionPerformedDo: [ 
+			self urlInput text notEmpty
+				ifTrue: [ self consumer value: self client execute ]]
+]
+
 { #category : #private }
 Teaspoon >> consumer [
 	^ consumer ifNil: [ consumer := [ :any | any inspect ] ]
@@ -106,15 +115,9 @@ Teaspoon >> initialExtent [
 ]
 
 { #category : #initialization }
-Teaspoon >> initializePresenter [
-	execButton
-		whenActionPerformedDo: [ 
-			self urlInput text notEmpty
-				ifTrue: [ self consumer value: self client execute ]]
-]
+Teaspoon >> initializePresenters [
 
-{ #category : #initialization }
-Teaspoon >> initializeWidgets [
+	super initializePresenters.
 	methodDropList := self newMethodDropList.
 	urlInput := self newTextInput autoAccept: true; yourself.
 	requestBody := TeaRequestBodyTabs new.
@@ -171,7 +174,12 @@ Teaspoon >> populateMethod: methodString [
 	selected := methodDropList listItems
 		detect: [ :each | each = methodString ]
 		ifNone: [ methodDropList listItems first ].
+	
+	"
+	needs rewrite
+	
 	methodDropList setSelectedItem: selected
+	"
 ]
 
 { #category : #private }
