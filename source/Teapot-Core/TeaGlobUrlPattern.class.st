@@ -80,7 +80,7 @@ TeaGlobUrlPattern >> setSegments: anArray [
 
 { #category : #private }
 TeaGlobUrlPattern >> trimTrailingSlash: urlSegments [ 
-	^ (urlSegments isNotEmpty and: [ urlSegments last = '/' ])
+	^ (urlSegments isNotEmpty and: [ urlSegments last asString = '/' ])
 		ifTrue: [ urlSegments allButLast ]
 		ifFalse: [ urlSegments ]
 ]
