@@ -3,7 +3,7 @@ Two inputs and a remove button.
 "
 Class {
 	#name : #TeaKeyValueInput,
-	#superclass : #ComposableModel,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'keyInput',
 		'valueInput',
@@ -42,9 +42,10 @@ TeaKeyValueInput >> asAssociation [
 ]
 
 { #category : #initialization }
-TeaKeyValueInput >> initializeWidgets [	
-	keyInput := self newTextInput autoAccept: true; ghostText: 'key'; yourself.
-	valueInput := self newTextInput autoAccept: true; ghostText: 'value'; yourself.
+TeaKeyValueInput >> initializePresenters [
+
+	keyInput := self newTextInput placeholder: 'key'; yourself.
+	valueInput := self newTextInput placeholder: 'value'; yourself.
 	removeButton := self newButton label: 'Remove'; yourself.
 	self focusOrder
 		add: keyInput;

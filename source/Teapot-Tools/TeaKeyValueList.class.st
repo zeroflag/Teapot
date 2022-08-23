@@ -3,7 +3,7 @@ I'm built up from a dynamically extensible list of other components.
 "
 Class {
 	#name : #TeaKeyValueList,
-	#superclass : #DynamicComposableModel,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'models'
 	],
@@ -17,10 +17,12 @@ TeaKeyValueList class >> defaultSpec [
 
 { #category : #protocol }
 TeaKeyValueList >> addKey: keyString value: valueString [
+	"
 	self needFullRebuild: false.	
 	self buildWithSpecLayout: 
 		(self dynamicLayout: 
 			(self asAssociations copyWith: keyString -> valueString))
+	"
 ]
 
 { #category : #private }
@@ -30,6 +32,9 @@ TeaKeyValueList >> asAssociations [
 
 { #category : #private }
 TeaKeyValueList >> dynamicLayout: associations [
+	"
+	need rewrites
+	
 	self focusOrder removeAll.
 	models removeAll.
 	self widgets removeAll.
@@ -47,7 +52,7 @@ TeaKeyValueList >> dynamicLayout: associations [
 				self focusOrder add: widget.
 				col 
 					newRow: [ :row | row add: inputName ] ] ].
-		
+		"
 ]
 
 { #category : #initialization }
@@ -63,10 +68,13 @@ TeaKeyValueList >> items [
 
 { #category : #protocol }
 TeaKeyValueList >> items: keyedCollection [
+	"
+	needs rewrite
 	self needFullRebuild: false.
 	self buildWithSpecLayout: 
 		(self dynamicLayout: 
 			(self withoutDuplicatesAndBlanks: keyedCollection))
+			"
 ]
 
 { #category : #private }
