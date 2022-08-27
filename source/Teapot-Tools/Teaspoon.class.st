@@ -16,25 +16,16 @@ Class {
 	#category : #'Teapot-Tools-UI'
 }
 
-{ #category : #specs }
-Teaspoon class >> defaultSpec [
-	^ SpecLayout composed
-		newColumn: [ :col | 									
-			col 
-				newRow: [ :row | 
-					row 
-						add: #methodDropList width: 90;
-						add: #urlInput ]
-				height: self inputTextHeight.
-			col
-				add: #requestBody;
-				add: #contentTypeLabel height: self inputTextHeight;
-				add: #contentTypeDropList height: self inputTextHeight.
-			col 
-				newRow: 
-					[ :row | row add: #execButton ] 
-				height: self buttonHeight				
-		]
+{ #category : #layout }
+Teaspoon class >> defaultLayout [
+	^ SpGridLayout new 
+		add: #methodDropList at: 1 @ 1;
+		add: #urlInput at: 1 @ 2;
+		add: #requestBody at: 1 @ 3;
+		add: #contentTypeLabel at: 2 @ 1;
+		add: #contentTypeDropList at: 2 @ 2;
+		add: #execButton at: 2 @ 3;
+		yourself
 ]
 
 { #category : #'private - accessing' }
@@ -56,10 +47,10 @@ Teaspoon class >> menuCommandOn: aBuilder [
 
 { #category : #interface }
 Teaspoon class >> open [
+
 	<script>
-	
-	(self new)
-		openWithSpec;
+	self new
+		open;
 		yourself
 ]
 

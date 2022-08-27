@@ -13,14 +13,12 @@ Class {
 }
 
 { #category : #specs }
-TeaKeyValueInput class >> defaultSpec [
-	^ SpecLayout composed
-		newRow: [ :row |
-			row
-				add: #keyInput;
-				add: #valueInput;
-				add: #removeButton ]
-		 height: self height
+TeaKeyValueInput class >> defaultLayout [
+	^ SpBoxLayout newVertical 
+		add: #keyInput;
+		add: #valueInput;
+		add: #removeButton;
+		yourself
 ]
 
 { #category : #accessing }

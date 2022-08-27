@@ -12,12 +12,11 @@ Class {
 }
 
 { #category : #specs }
-TeaFormTab class >> defaultSpec [
-	^ SpecLayout composed
-		newColumn: [ :col |
-			col 
-				add: #form;
-				add: #addButton height: self buttonHeight ]
+TeaFormTab class >> defaultLayout [
+	^ SpBoxLayout newVertical 
+		add: #form;
+		add: #addButton;
+		yourself
 ]
 
 { #category : #accessing }

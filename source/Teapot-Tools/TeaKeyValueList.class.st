@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #specs }
-TeaKeyValueList class >> defaultSpec [
-	^ SpecLayout composed
+TeaKeyValueList class >> defaultLayout [
+	^ SpBoxLayout newVertical 
 ]
 
 { #category : #protocol }
