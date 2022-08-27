@@ -6,47 +6,43 @@ Teapot >> browse [
 ]
 
 { #category : #'*Teapot-Tools' }
-Teapot >> gtInspectorAfterFilterIn: composite [
-	<gtInspectorPresentationOrder: 2>  
-	
-	^(composite table)
-		title: ['After Filter' translated];		 
-		display: [ compositeRouter afterFilters ]; 
-		column: 'Request matcher' evaluated: [:filter| filter requestMatcher ];
-		column: 'Action' evaluated: [:filter| filter action ];
-		selectionAct: [:p | p entity removeAfterFilter: p selection. 
-			p pane browser update ] entitled: 'Remove filter' translated;
-		selectionAct: [:p | p entity removeAllAfterFilters. 
-			p pane browser update ] entitled: 'Remove all' translated
+Teapot >> inspectAfterFilter: aBuilder [
+	<inspectorPresentationOrder: 0 title: 'After Filters'>
+	^ aBuilder newTable
+		addColumn: (SpStringTableColumn new  
+			title: 'Request matcher'; 
+			evaluated: [ :filter | StObjectPrinter asTruncatedTextFrom: filter requestMatcher ];
+			sortFunction: #printString ascending;
+			yourself);
+		items: compositeRouter afterFilters 
+		yourself
+
 ]
 
 { #category : #'*Teapot-Tools' }
-Teapot >> gtInspectorBeforeFilterIn: composite [
-	<gtInspectorPresentationOrder: 1>  
-	
-	^(composite table)
-		title: ['Before Filter' translated];		 
-		display: [ compositeRouter beforeFilters ];
-		column: 'Request matcher' evaluated: [:filter| filter requestMatcher ];
-		column: 'Action' evaluated: [:filter| filter action ];
-		selectionAct: [:p | p entity removeBeforeFilter: p selection. 
-			p pane browser update ] entitled: 'Remove filter' translated;
-		selectionAct: [:p | p entity removeAllBeforeFilters. 
-			p pane browser update ] entitled: 'Remove all' translated
+Teapot >> inspectBeforeFilter: aBuilder [
+	<inspectorPresentationOrder: 0 title: 'Before Filters'>
+	^ aBuilder newTable
+		addColumn: (SpStringTableColumn new  
+			title: 'Request matcher'; 
+			evaluated: [ :filter | StObjectPrinter asTruncatedTextFrom: filter requestMatcher ];
+			sortFunction: #printString ascending;
+			yourself);
+		items: compositeRouter beforeFilters
+		yourself
 ]
 
 { #category : #'*Teapot-Tools' }
-Teapot >> gtInspectorDynamicRoutesIn: composite [
-	<gtInspectorPresentationOrder: 0>  
-	
-	^(composite list)
-		title: ['Dynamic routes' translated];		 
-		display: [ dynamicRouter routes ]; 
-		format: [:each | each printString ];
-		selectionAct: [:p | p entity removeDynamicRoute: p selection. 
-			p pane browser update ] entitled: 'Remove route' translated;
-		selectionAct: [:p | p entity removeAllDynamicRoutes. 
-			p pane browser update ] entitled: 'Remove all' translated
+Teapot >> inspectDynamicRoutes: aBuilder [
+	<inspectorPresentationOrder: 0 title: 'Dynamic routes'>
+	^ aBuilder newTable
+		addColumn: (SpStringTableColumn new  
+			title: 'Route'; 
+			evaluated: [ :each | StObjectPrinter asTruncatedTextFrom: each printString ];
+			sortFunction: #printString ascending;
+			yourself);
+		items: dynamicRouter routes;
+		yourself    
 ]
 
 { #category : #'*Teapot-Tools' }
