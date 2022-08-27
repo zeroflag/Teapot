@@ -20,6 +20,7 @@ BaselineOfTeapot >> baseline: spec [
 
 			spec
 				group: 'Tests' with: #('Teapot-Tests');
+				group: 'Tools' with: #('Teapot-Tools');
 				group: 'Deployment' with: #('Teapot-Core');
 				group: 'Development' with: #('Tests' 'Tools');
 				group: 'default' with: 'Development' ]
