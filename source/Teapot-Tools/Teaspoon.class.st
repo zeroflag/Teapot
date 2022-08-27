@@ -18,13 +18,15 @@ Class {
 
 { #category : #layout }
 Teaspoon class >> defaultLayout [
-	^ SpGridLayout new 
-		add: #methodDropList at: 1 @ 1;
-		add: #urlInput at: 1 @ 2;
-		add: #requestBody at: 1 @ 3;
-		add: #contentTypeLabel at: 2 @ 1;
-		add: #contentTypeDropList at: 2 @ 2;
-		add: #execButton at: 2 @ 3;
+	^ SpBoxLayout newVertical 
+		add: 
+			(SpGridLayout new 
+				add: #methodDropList at: 1 @ 1;
+				add: #urlInput at: 2 @ 1;
+				add: #contentTypeLabel at: 1 @ 2;
+				add: #contentTypeDropList at: 2 @ 2);
+		add: #requestBody expand: true fill: true;
+		add: #execButton expand: false fill: false;
 		yourself
 ]
 

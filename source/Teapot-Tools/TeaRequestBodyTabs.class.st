@@ -16,8 +16,8 @@ Class {
 { #category : #layout }
 TeaRequestBodyTabs class >> defaultLayout [
 	^ SpBoxLayout newVertical 
-		add: #label;
-		add: #requestBody;
+		add: #label expand: false fill: false;
+		add: #requestBody expand: true fill: true;
 		yourself
 ]
 
@@ -42,14 +42,8 @@ TeaRequestBodyTabs >> newRequestBody [
 	raw := self newText.
 	form := TeaFormTab new.
 	^ self newNotebook 
-		addPage:
-			(self newNotebookPage 
-				title: self rawTabTitle;
-				presenterProvider: [ raw ]);
-		addPage:
-			(self newNotebookPage 
-				title: self formTabTitle;
-				presenterProvider: [ form ]);
+		addPageTitle: self rawTabTitle provider: raw; 
+		addPageTitle: self formTabTitle provider: form;
 		whenSelectedPageChangedDo: [ :selected | 
 			selected title = self formTabTitle
 				ifTrue: [ form updateKeyValus: ('?' , raw text) asUrl query ]
@@ -69,7 +63,7 @@ TeaRequestBodyTabs >> requestBody [
 
 { #category : #protocol }
 TeaRequestBodyTabs >> urlEncoded [
-	requestBody selectedTab label = self formTabTitle
+	requestBody selectedPage title = self formTabTitle
 		ifTrue: [ raw text: form urlEncoded ].
 	^ raw text
 ]
