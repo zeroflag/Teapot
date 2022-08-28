@@ -88,7 +88,6 @@ Teaspoon >> client [
 
 { #category : #initialization }
 Teaspoon >> connectPresenters [ 
-
 	execButton
 		whenActionPerformedDo: [ 
 			self urlInput text notEmpty

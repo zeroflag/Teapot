@@ -14,16 +14,12 @@ Class {
 
 { #category : #specs }
 TeaKeyValueInput class >> defaultLayout [
-	^ SpBoxLayout newVertical 
-		add: #keyInput;
-		add: #valueInput;
-		add: #removeButton;
+	^ SpBoxLayout newHorizontal  
+		add: #keyInput expand: true fill: true padding: 5;
+		add: #valueInput expand: true fill: true padding: 5;
+		add: #removeButton expand: false fill: false padding: 5;
+		vAlignStart;
 		yourself
-]
-
-{ #category : #accessing }
-TeaKeyValueInput class >> height [
-	^ self inputTextHeight max: self buttonHeight
 ]
 
 { #category : #'instance creation' }
@@ -41,7 +37,6 @@ TeaKeyValueInput >> asAssociation [
 
 { #category : #initialization }
 TeaKeyValueInput >> initializePresenters [
-
 	keyInput := self newTextInput placeholder: 'key'; yourself.
 	valueInput := self newTextInput placeholder: 'value'; yourself.
 	removeButton := self newButton label: 'Remove'; yourself.

@@ -8,13 +8,17 @@ Teapot >> browse [
 { #category : #'*Teapot-Tools' }
 Teapot >> inspectAfterFilter: aBuilder [
 	<inspectorPresentationOrder: 0 title: 'After Filters'>
-	^ aBuilder newTable
-		addColumn: (SpStringTableColumn new  
-			title: 'Request matcher'; 
-			evaluated: [ :filter | StObjectPrinter asTruncatedTextFrom: filter requestMatcher ];
-			sortFunction: #printString ascending;
-			yourself);
-		items: compositeRouter afterFilters 
+	| list |
+	^ (list := SpListPresenter new)
+		items: compositeRouter afterFilters;
+		display: [ :filter | filter requestMatcher ];
+		contextMenu: (SpMenuPresenter new 
+			addItem: [ :item | 
+				item
+					name: 'Remove filter';
+					action: [ 
+						self removeAfterFilter: list selectedItem.
+						list refresh ] ]);		
 		yourself
 
 ]
@@ -22,27 +26,37 @@ Teapot >> inspectAfterFilter: aBuilder [
 { #category : #'*Teapot-Tools' }
 Teapot >> inspectBeforeFilter: aBuilder [
 	<inspectorPresentationOrder: 0 title: 'Before Filters'>
-	^ aBuilder newTable
-		addColumn: (SpStringTableColumn new  
-			title: 'Request matcher'; 
-			evaluated: [ :filter | StObjectPrinter asTruncatedTextFrom: filter requestMatcher ];
-			sortFunction: #printString ascending;
-			yourself);
-		items: compositeRouter beforeFilters
+	| list |
+	^ (list := SpListPresenter new)
+		items: compositeRouter beforeFilters;
+		display: [ :filter | filter requestMatcher ];
+		contextMenu: (SpMenuPresenter new 
+			addItem: [ :item | 
+				item
+					name: 'Remove filter';
+					action: [ 
+						self removeBeforeFilter: list selectedItem.
+						list refresh ] ];
+			yourself);  
 		yourself
 ]
 
 { #category : #'*Teapot-Tools' }
 Teapot >> inspectDynamicRoutes: aBuilder [
-	<inspectorPresentationOrder: 0 title: 'Dynamic routes'>
-	^ aBuilder newTable
-		addColumn: (SpStringTableColumn new  
-			title: 'Route'; 
-			evaluated: [ :each | StObjectPrinter asTruncatedTextFrom: each printString ];
-			sortFunction: #printString ascending;
-			yourself);
+	<inspectorPresentationOrder: 0 title: 'Dynamic routes'>      
+	| list |
+	^ (list := SpListPresenter new)
 		items: dynamicRouter routes;
-		yourself    
+		display: [ :route | route printString ];
+		contextMenu: (SpMenuPresenter new 
+			addItem: [ :item | 
+				item
+					name: 'Remove route';
+					action: [ 
+						self removeDynamicRoute: list selectedItem.
+						list refresh ] ];
+			yourself);   		
+		yourself.
 ]
 
 { #category : #'*Teapot-Tools' }

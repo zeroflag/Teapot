@@ -8,6 +8,6 @@ TeaRoute >> inspectRoute: aBuilder [
 		            method: requestMatcher methodMatcher asString
 		            url: requestMatcher urlPattern asTeaspoonPath
 		            port: port.
-	"	teaspoon onHttpResultDo: [ :result | presentation selection: result ]."
+	 teaspoon onHttpResultDo: [ :result | result inspect ]. "TODO do not open new inspector window"
 	^ teaspoon
 ]

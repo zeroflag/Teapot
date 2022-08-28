@@ -26,8 +26,7 @@ TeaFormTab >> addButton [
 
 { #category : #initialization }
 TeaFormTab >> connectPresenters [ 
-
-	addButton whenActionPerformedDo: [ form addKey: '' value: '' ]
+	addButton whenActionPerformedDo: [ form addKey: 'key' value: 'value' ]
 ]
 
 { #category : #accessing }
