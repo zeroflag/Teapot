@@ -17,6 +17,7 @@ Class {
 TeaRequestBodyTabs class >> defaultLayout [
 	^ SpBoxLayout newVertical 
 		add: #label expand: false fill: false;
+		spacing: 5;
 		add: #requestBody expand: true fill: true;
 		yourself
 ]

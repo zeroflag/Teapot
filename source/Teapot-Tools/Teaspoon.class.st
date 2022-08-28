@@ -19,14 +19,27 @@ Class {
 { #category : #layout }
 Teaspoon class >> defaultLayout [
 	^ SpBoxLayout newVertical 
-		add: 
-			(SpGridLayout new 
-				add: #methodDropList at: 1 @ 1;
-				add: #urlInput at: 2 @ 1;
-				add: #contentTypeLabel at: 1 @ 2;
-				add: #contentTypeDropList at: 2 @ 2);
+		add: (SpBoxLayout newHorizontal
+					vAlignCenter;
+					add: #methodDropList expand: false fill: false;
+					spacing: 5;
+					add: #urlInput expand: true fill: true;
+					yourself) 
+			expand: false fill: false padding: 10;
 		add: #requestBody expand: true fill: true;
-		add: #execButton expand: false fill: false;
+		add: (SpBoxLayout newHorizontal
+				vAlignCenter;
+				add: #contentTypeLabel expand: false fill: false;
+				spacing: 5;
+				add: #contentTypeDropList expand: true fill: true;
+				yourself)
+			expand: false fill: false;
+		spacing: 10;
+		add: (SpBoxLayout newHorizontal 
+				add: #execButton expand: false fill: false;
+				hAlignCenter;
+				yourself)
+			expand: false fill: false
 		yourself
 ]
 
@@ -102,14 +115,8 @@ Teaspoon >> execButton [
 	^ execButton
 ]
 
-{ #category : #api }
-Teaspoon >> initialExtent [
-	^  580@420
-]
-
 { #category : #initialization }
 Teaspoon >> initializePresenters [
-
 	super initializePresenters.
 	methodDropList := self newMethodDropList.
 	urlInput := self newTextInput autoAccept: true; yourself.
@@ -167,12 +174,7 @@ Teaspoon >> populateMethod: methodString [
 	selected := methodDropList listItems
 		detect: [ :each | each = methodString ]
 		ifNone: [ methodDropList listItems first ].
-	
-	"
-	needs rewrite
-	
-	methodDropList setSelectedItem: selected
-	"
+	methodDropList selectItem: selected.
 ]
 
 { #category : #private }

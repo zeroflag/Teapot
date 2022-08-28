@@ -14,8 +14,8 @@ Class {
 { #category : #specs }
 TeaFormTab class >> defaultLayout [
 	^ SpBoxLayout newVertical 
-		add: #form;
-		add: #addButton;
+		add: #form expand: false fill: false;
+		add: #addButton expand: false fill: false;
 		yourself
 ]
 
