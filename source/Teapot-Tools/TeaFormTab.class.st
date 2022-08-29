@@ -15,7 +15,10 @@ Class {
 TeaFormTab class >> defaultLayout [
 	^ SpBoxLayout newVertical 
 		add: #form expand: false fill: false;
-		add: #addButton expand: false fill: false;
+      add: (SpBoxLayout newHorizontal 
+		   add: #addButton expand: false fill: false;
+         hAlignCenter;
+         yourself) expand: false fill: false;		
 		yourself
 ]
 
@@ -36,7 +39,6 @@ TeaFormTab >> form [
 
 { #category : #initialization }
 TeaFormTab >> initializePresenters [
-
 	addButton := self newButton label: 'Add parameter'; yourself.
 	form := self instantiate: TeaKeyValueList.
 	self focusOrder 

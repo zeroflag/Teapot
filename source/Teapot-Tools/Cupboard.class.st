@@ -83,6 +83,68 @@ Cupboard >> iconProvider [
 	^self class iconProvider
 ]
 
+{ #category : #accessing }
+Cupboard >> inspectTeapot: aBuilder [
+	<inspectorPresentationOrder: 0 title: 'Teapots'>      
+	| list newTeapotButton newStaticTeapotButton buttonBar pane |
+	list := aBuilder newList.
+	buttonBar := aBuilder newBoxLayoutLeftToRight.
+	pane := aBuilder newPresenter.
+	
+	list
+		items: self teapots;
+		displayIcon: [:each | self iconForTeapot: each ];
+		display: [ :each | self nameForTeapot: each  ];
+		contextMenu: (SpMenuPresenter new
+			addItem: [ :item | 
+				item 
+					name: 'Start';
+					icon: self iconProvider teapotServerStartIcon;
+					action: [
+						list selectedItem start.
+						list refresh ] ];
+			addItem: [ :item | 
+				item 
+					name: 'Stop';
+					icon: self iconProvider teapotServerStopIcon;
+					action: [
+						list selectedItem stop.
+						list refresh ] ];
+			addItem: [ :item | 
+				item 
+					name: 'Browse';
+					icon: self iconProvider teapotServerIcon;
+					action: [
+						list selectedItem browse. 
+						list refresh ] ];
+			yourself).
+			
+	newTeapotButton := aBuilder newButton
+			icon: (self iconProvider teapotServerIcon);
+			label: 'New Teapot';
+			action: [ self onNewServer. list owner refresh ];
+			yourself.
+	newStaticTeapotButton := aBuilder newButton
+			icon: (self iconProvider teapotServerStaticIcon);
+			label: 'New Teapot (serving static)';
+			action: [ self onNewStaticServer. list owner refresh ];
+			yourself.
+	^ list		
+"	buttonBar TODO
+		hAlignCenter;
+		vAlignCenter;
+		add: newTeapotButton expand: true fill: true;
+		spacing: 10;
+		add: newStaticTeapotButton expand: true fill: true."
+"	^ pane
+		layout: (aBuilder newBoxLayoutTopToBottom
+			add: list expand: true fill: true;
+			spacing: 10;
+			add: buttonBar expand: false fill: false;
+			yourself);
+		yourself"
+]
+
 { #category : #private }
 Cupboard >> nameForTeapot: aTeapot [
 	^String streamContents: [:stream |

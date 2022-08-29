@@ -12,7 +12,12 @@ Class {
 
 { #category : #protocol }
 TeaKeyValueList >> addKey: keyString value: valueString [
-	items add: (TeaKeyValueInput key: keyString value: valueString removeAction: [ "TODO" ]).
+	| item |
+	item := TeaKeyValueInput 
+		key: keyString 
+		value: valueString 
+		removeAction: [ :teaKeyValueInput | self remove: teaKeyValueInput ].
+	items add: item.
 	self rebuildLayout.
 ]
 
@@ -23,7 +28,7 @@ TeaKeyValueList >> asAssociations [
 
 { #category : #initialization }
 TeaKeyValueList >> defaultLayout [
-	^ SpGridLayout new
+	^ SpBoxLayout new
 ]
 
 { #category : #initialization }
@@ -39,15 +44,21 @@ TeaKeyValueList >> items [
 
 { #category : #protocol }
 TeaKeyValueList >> items: keyedCollection [
+	items removeAll.
 	keyedCollection keysAndValuesDo: [ :key :value | self addKey: key value: value ].
 ]
 
 { #category : #initialization }
 TeaKeyValueList >> layout [ 
-	| grid |
-	grid := SpBoxLayout newVertical.
-	items do: [ :teaKeyValueInput | grid add: teaKeyValueInput ].
-	^ grid
+	| box |
+	box := SpBoxLayout newVertical
+		spacing: 5;
+		vAlignStart;
+		yourself.
+	items do: [ :teaKeyValueInput | box add: teaKeyValueInput ].
+	^ items 
+		ifEmpty: [ box ] 
+		ifNotEmpty: [ SpScrollableLayout with: box ]
 ]
 
 { #category : #private }
