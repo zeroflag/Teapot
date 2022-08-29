@@ -11,30 +11,39 @@ Class {
 		'methodDropList',
 		'execButton',
 		'requestBody',
-		'consumer'
+		'resultText',
+		'resultLabel'
 	],
 	#category : #'Teapot-Tools-UI'
 }
 
-{ #category : #specs }
-Teaspoon class >> defaultSpec [
-	^ SpecLayout composed
-		newColumn: [ :col | 									
-			col 
-				newRow: [ :row | 
-					row 
-						add: #methodDropList width: 90;
-						add: #urlInput ]
-				height: self inputTextHeight.
-			col
-				add: #requestBody;
-				add: #contentTypeLabel height: self inputTextHeight;
-				add: #contentTypeDropList height: self inputTextHeight.
-			col 
-				newRow: 
-					[ :row | row add: #execButton ] 
-				height: self buttonHeight				
-		]
+{ #category : #layout }
+Teaspoon class >> defaultLayout [
+    ^ SpBoxLayout newVertical 
+        add: (SpBoxLayout newHorizontal
+                    vAlignCenter;
+                    add: #methodDropList expand: false fill: false;
+                    spacing: 5;
+                    add: #urlInput expand: true fill: true;
+                    yourself) 
+            expand: false fill: false padding: 10;
+        add: #requestBody expand: true fill: true;
+        add: (SpBoxLayout newHorizontal
+                vAlignCenter;
+                add: #contentTypeLabel expand: false fill: false;
+                spacing: 5;
+                add: #contentTypeDropList expand: true fill: true;
+                yourself)
+            expand: false fill: false;
+        spacing: 10;		
+		  add: #resultLabel expand: false fill: false;
+        add: #resultText expand: true fill: true;
+        add: (SpBoxLayout newHorizontal 
+                add: #execButton expand: false fill: false;
+                hAlignCenter;
+                yourself)
+            expand: false fill: false;
+        yourself
 ]
 
 { #category : #'private - accessing' }
@@ -57,9 +66,9 @@ Teaspoon class >> menuCommandOn: aBuilder [
 { #category : #interface }
 Teaspoon class >> open [
 	<script>
-	
-	(self new)
-		openWithSpec;
+	^ (SpWindowPresenter presenter: self new)
+		initialExtent: 600@600;
+		open;
 		yourself
 ]
 
@@ -82,16 +91,14 @@ Teaspoon >> client [
 
 { #category : #initialization }
 Teaspoon >> connectPresenters [ 
-
 	execButton
 		whenActionPerformedDo: [ 
 			self urlInput text notEmpty
-				ifTrue: [ self consumer value: self client execute ]]
-]
-
-{ #category : #private }
-Teaspoon >> consumer [
-	^ consumer ifNil: [ consumer := [ :any | any inspect ] ]
+				ifTrue: [ 
+					self resultText text: ''.
+					self resultText text: self client execute.
+				] 
+		]
 ]
 
 { #category : #accessing }
@@ -109,21 +116,17 @@ Teaspoon >> execButton [
 	^ execButton
 ]
 
-{ #category : #api }
-Teaspoon >> initialExtent [
-	^  580@420
-]
-
 { #category : #initialization }
 Teaspoon >> initializePresenters [
-
 	super initializePresenters.
 	methodDropList := self newMethodDropList.
-	urlInput := self newTextInput autoAccept: true; yourself.
+	urlInput := self newTextInput autoAccept: true; text: 'http://localhost:1701/'; yourself.
 	requestBody := TeaRequestBodyTabs new.
 	contentTypeLabel := self newLabel label: 'Content Type'; yourself.
 	contentTypeDropList := self newContentTypeDropList.
 	execButton := self newButton label: 'Execute request'; yourself.
+	resultText := self newText.
+	resultLabel := self newLabel label: 'Result'; yourself.
 ]
 
 { #category : #'tea spoon' }
@@ -163,23 +166,13 @@ Teaspoon >> newMethodDropList [
 	^ dropList
 ]
 
-{ #category : #'tea spoon' }
-Teaspoon >> onHttpResultDo: aBlock [
-	consumer := aBlock
-]
-
 { #category : #private }
 Teaspoon >> populateMethod: methodString [
 	| selected |
 	selected := methodDropList listItems
 		detect: [ :each | each = methodString ]
 		ifNone: [ methodDropList listItems first ].
-	
-	"
-	needs rewrite
-	
-	methodDropList setSelectedItem: selected
-	"
+	methodDropList selectItem: selected.
 ]
 
 { #category : #private }
@@ -194,6 +187,16 @@ Teaspoon >> populateUrl: urlString port: portNumber [
 { #category : #accessing }
 Teaspoon >> requestBody [
 	^ requestBody
+]
+
+{ #category : #accessing }
+Teaspoon >> resultLabel [
+	^ resultLabel
+]
+
+{ #category : #accessing }
+Teaspoon >> resultText [
+	^ resultText
 ]
 
 { #category : #accessing }

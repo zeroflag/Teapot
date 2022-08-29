@@ -15,14 +15,14 @@ BaselineOfTeapot >> baseline: spec [
 			
 			spec
 				package: 'Teapot-Core' with: [ spec requires: #('NeoJSON') ];
-				package: 'Teapot-Tests' with: [ spec requires: 'Teapot-Core' ]
-				"package: 'Teapot-Tools' with: [ spec requires: 'Teapot-Core' ]
-				no time and knowledge to rewrite the spec1 into spec2".
+				package: 'Teapot-Tests' with: [ spec requires: 'Teapot-Core' ];
+				package: 'Teapot-Tools' with: [ spec requires: 'Teapot-Core' ].
 
 			spec
 				group: 'Tests' with: #('Teapot-Tests');
+				group: 'Tools' with: #('Teapot-Tools');
 				group: 'Deployment' with: #('Teapot-Core');
-				group: 'Development' with: #('Tests' );
+				group: 'Development' with: #('Tests' 'Tools');
 				group: 'default' with: 'Development' ]
 ]
 

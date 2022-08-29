@@ -13,13 +13,13 @@ Class {
 	#category : #'Teapot-Tools-UI-Components'
 }
 
-{ #category : #specs }
-TeaRequestBodyTabs class >> defaultSpec [
-	^ SpecLayout composed
-		newColumn: [ :col |
-			col 
-				add: #label height: self inputTextHeight;
-				add: #requestBody ]
+{ #category : #layout }
+TeaRequestBodyTabs class >> defaultLayout [
+	^ SpBoxLayout newVertical 
+		add: #label expand: false fill: false;
+		spacing: 5;
+		add: #requestBody expand: true fill: true;
+		yourself
 ]
 
 { #category : #private }
@@ -40,26 +40,16 @@ TeaRequestBodyTabs >> label [
 
 { #category : #initialization }
 TeaRequestBodyTabs >> newRequestBody [
-	"
-	needs rewrite
 	raw := self newText.
 	form := TeaFormTab new.
-	^ self newTabManager
-		addTab:
-			(self newTab
-				label: self rawTabTitle;
-				closeable: false;
-				presenter: raw);
-		addTab:
-			(self newTab
-				label: self formTabTitle;
-				closeable: false;
-				presenter: form);
-		whenTabSelected: [ :selected | 
-			selected label = self formTabTitle
+	^ self newNotebook 
+		addPageTitle: self rawTabTitle provider: raw; 
+		addPageTitle: self formTabTitle provider: form;
+		whenSelectedPageChangedDo: [ :selected | 
+			selected title = self formTabTitle
 				ifTrue: [ form updateKeyValus: ('?' , raw text) asUrl query ]
-				ifFalse: [ form writeUrlEncodedTo: raw ] ]
-	"
+				ifFalse: [ form writeUrlEncodedTo: raw ] ];
+		yourself
 ]
 
 { #category : #private }
@@ -74,7 +64,7 @@ TeaRequestBodyTabs >> requestBody [
 
 { #category : #protocol }
 TeaRequestBodyTabs >> urlEncoded [
-	requestBody selectedTab label = self formTabTitle
+	requestBody selectedPage title = self formTabTitle
 		ifTrue: [ raw text: form urlEncoded ].
 	^ raw text
 ]

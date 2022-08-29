@@ -50,26 +50,6 @@ Cupboard class >> soleInstance [
 	^ soleInstance ifNil: [ soleInstance := self basicNew initialize ]
 ]
 
-{ #category : #accessing }
-Cupboard >> gtInspectorTeapotsIn: composite [
-	"
-	need rewrite
-	
-	<gtInspectorPresentationOrder: 0>  
-	
-	^(composite list)
-		title: 'Teapots';
-		icon: [:each | self iconForTeapot: each ];
-		display: [ self teapots ]; 
-		format: [:each | self nameForTeapot: each ];
-		selectionAct:  [:each | each selection ifNotNil: [ each selection start ]. each update ] icon: self iconProvider teapotServerStartIcon entitled: 'Start';
-		selectionAct: [:each | each selection ifNotNil: [ each selection stop ]. each update ] icon: self iconProvider teapotServerStopIcon entitled: 'Stop';
-		selectionAct: [:each | each selection ifNotNil: [ each selection browse ]. each update ] icon: self iconProvider teapotServerIcon entitled: 'Browse';
-		act: [:each | self onNewServer. each update ] icon: self iconProvider teapotServerIcon entitled: 'New Teapot';
-		act: [:each | self onNewStaticServer. each update ] icon: self iconProvider teapotServerStaticIcon entitled: 'New Teapot (serving static)'
-		"
-]
-
 { #category : #private }
 Cupboard >> iconForTeapot: aTeapot [
 	^aTeapot server isRunning 
@@ -79,13 +59,54 @@ Cupboard >> iconForTeapot: aTeapot [
 
 { #category : #accessing }
 Cupboard >> iconProvider [
+	^ self class iconProvider
+]
 
-	^self class iconProvider
+{ #category : #accessing }
+Cupboard >> inspectTeapot: aBuilder [
+	<inspectorPresentationOrder: 0 title: 'Teapots'>      
+	| list |
+	list := aBuilder newList.
+	list
+		items: self teapots;
+		displayIcon: [:each | self iconForTeapot: each ];
+		display: [ :each | self nameForTeapot: each  ];
+		contextMenu: (SpMenuPresenter new
+			addItem: [ :item | 
+				item 
+					name: 'Start';
+					icon: self iconProvider teapotServerStartIcon;
+					action: [ list selectedItem start. list refresh ] ];
+			addItem: [ :item | 
+				item 
+					name: 'Stop';
+					icon: self iconProvider teapotServerStopIcon;
+					action: [ list selectedItem stop. list refresh ] ];
+			addItem: [ :item | 
+				item 
+					name: 'Browse';
+					icon: self iconProvider teapotServerIcon;
+					action: [ list selectedItem browse. list refresh ] ];
+"			TODO: this doesn't work properly:
+				1. After adding a new Teapot the list is not refreshed
+				2. It shouldn't be a context menu. If there is no existing Teapot in the list, the context menu cannot be shown.	
+			addItem: [ :item | 
+				item 
+					name: 'New Teapot';
+					icon: self iconProvider teapotServerIcon;
+					action: [ self onNewServer. list refresh ] ];
+			addItem: [ :item | 
+				item 
+					name: 'New Teapot (serving static)';
+					icon: self iconProvider teapotServerStaticIcon;
+					action: [ self onNewStaticServer. list refresh ] ];	"							
+			yourself).
+	^ list
 ]
 
 { #category : #private }
 Cupboard >> nameForTeapot: aTeapot [
-	^String streamContents: [:stream |
+	^ String streamContents: [:stream |
 		stream nextPutAll: aTeapot server port asString.
 		stream nextPutAll: ' - '.
 		stream nextPutAll: (aTeapot server isRunning ifTrue: [ 'running' ] ifFalse: [ 'stopped' ]) ].
@@ -94,13 +115,13 @@ Cupboard >> nameForTeapot: aTeapot [
 
 { #category : #actions }
 Cupboard >> onNewServer [
-	|port pot |
+	| port pot |
 	port := UIManager default request: 'New server' initialAnswer: '80'.
-	port ifNil: [ ^self ].
+	port ifNil: [ ^ self ].
 	pot := Teapot configure: { 
 		#port -> port asNumber
 	}.
-	pot start
+	pot start.
 	
 		
 
@@ -108,16 +129,16 @@ Cupboard >> onNewServer [
 
 { #category : #actions }
 Cupboard >> onNewStaticServer [
-	|port directory pot |
+	| port directory pot |
 	port := UIManager default request: 'New server' initialAnswer: '80'.
 	port ifNil: [ ^self ].
 	directory := UIManager default chooseDirectory: 'Serve directory'.
-	directory ifNil: [ ^self ].
+	directory ifNil: [ ^ self ].
 	pot := Teapot configure: { 
 		#port -> port asNumber
 	}.
 	pot serveStatic: '/' from: directory.
-	pot start
+	pot start.
 	
 		
 
@@ -125,12 +146,10 @@ Cupboard >> onNewStaticServer [
 
 { #category : #printing }
 Cupboard >> printOn: aStream [
-
 	aStream nextPutAll: 'Cupboard'
 ]
 
 { #category : #accessing }
 Cupboard >> teapots [
-
-	^Teapot allInstances
+	^ Teapot allInstances
 ]

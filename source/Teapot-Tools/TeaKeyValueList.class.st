@@ -5,60 +5,36 @@ Class {
 	#name : #TeaKeyValueList,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'models'
+		'items'
 	],
 	#category : #'Teapot-Tools-UI-Components'
 }
 
-{ #category : #specs }
-TeaKeyValueList class >> defaultSpec [
-	^ SpecLayout composed
-]
-
 { #category : #protocol }
 TeaKeyValueList >> addKey: keyString value: valueString [
-	"
-	self needFullRebuild: false.	
-	self buildWithSpecLayout: 
-		(self dynamicLayout: 
-			(self asAssociations copyWith: keyString -> valueString))
-	"
+	| item |
+	item := TeaKeyValueInput 
+		key: keyString 
+		value: valueString 
+		removeAction: [ :teaKeyValueInput | self remove: teaKeyValueInput ].
+	items add: item.
+	self rebuildLayout.
 ]
 
 { #category : #private }
 TeaKeyValueList >> asAssociations [
-	^ models collect: #asAssociation
+	^ items collect: #asAssociation
 ]
 
-{ #category : #private }
-TeaKeyValueList >> dynamicLayout: associations [
-	"
-	need rewrites
-	
-	self focusOrder removeAll.
-	models removeAll.
-	self widgets removeAll.
-	^ SpecLayout composed newColumn: [ :col |
-			associations doWithIndex: [:assoc :i | 
-				| inputName widget |
-				inputName := ('input', i asString) asSymbol.
-				self instantiateModels: {inputName.  #TeaKeyValueInput}.
-				widget := self perform: inputName.
-				widget
-					setKey: assoc key
-					value: assoc value
-					removeAction: [ :me | self remove: me ].
-				models add: widget.
-				self focusOrder add: widget.
-				col 
-					newRow: [ :row | row add: inputName ] ] ].
-		"
+{ #category : #initialization }
+TeaKeyValueList >> defaultLayout [
+	^ SpBoxLayout new
 ]
 
 { #category : #initialization }
 TeaKeyValueList >> initialize [
 	super initialize.
-	models := OrderedCollection new.
+	items := OrderedCollection new.
 ]
 
 { #category : #protocol }
@@ -68,20 +44,27 @@ TeaKeyValueList >> items [
 
 { #category : #protocol }
 TeaKeyValueList >> items: keyedCollection [
-	"
-	needs rewrite
-	self needFullRebuild: false.
-	self buildWithSpecLayout: 
-		(self dynamicLayout: 
-			(self withoutDuplicatesAndBlanks: keyedCollection))
-			"
+	items removeAll.
+	keyedCollection keysAndValuesDo: [ :key :value | self addKey: key value: value ].
+]
+
+{ #category : #initialization }
+TeaKeyValueList >> layout [ 
+	| box |
+	box := SpBoxLayout newVertical
+		spacing: 5;
+		vAlignStart;
+		yourself.
+	items do: [ :teaKeyValueInput | box add: teaKeyValueInput ].
+	^ items 
+		ifEmpty: [ box ] 
+		ifNotEmpty: [ SpScrollableLayout with: box ]
 ]
 
 { #category : #private }
-TeaKeyValueList >> remove: model [
-	self needFullRebuild: false.
-	models remove: model.
-	self buildWithSpecLayout: (self dynamicLayout: self asAssociations)
+TeaKeyValueList >> remove: item [
+	items remove: item.
+	self rebuildLayout.
 ]
 
 { #category : #private }

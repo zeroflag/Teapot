@@ -12,12 +12,14 @@ Class {
 }
 
 { #category : #specs }
-TeaFormTab class >> defaultSpec [
-	^ SpecLayout composed
-		newColumn: [ :col |
-			col 
-				add: #form;
-				add: #addButton height: self buttonHeight ]
+TeaFormTab class >> defaultLayout [
+	^ SpBoxLayout newVertical 
+		add: #form expand: false fill: false;
+      add: (SpBoxLayout newHorizontal 
+		   add: #addButton expand: false fill: false;
+         hAlignCenter;
+         yourself) expand: false fill: false;		
+		yourself
 ]
 
 { #category : #accessing }
@@ -27,8 +29,7 @@ TeaFormTab >> addButton [
 
 { #category : #initialization }
 TeaFormTab >> connectPresenters [ 
-
-	addButton whenActionPerformedDo: [ form addKey: '' value: '' ]
+	addButton whenActionPerformedDo: [ form addKey: 'key' value: 'value' ]
 ]
 
 { #category : #accessing }
@@ -38,7 +39,6 @@ TeaFormTab >> form [
 
 { #category : #initialization }
 TeaFormTab >> initializePresenters [
-
 	addButton := self newButton label: 'Add parameter'; yourself.
 	form := self instantiate: TeaKeyValueList.
 	self focusOrder 
