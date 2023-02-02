@@ -243,6 +243,13 @@ Cupboard >> onNewStaticServer [
 
 ]
 
+{ #category : #actions }
+Cupboard >> open [
+
+	self refreshTeapots.
+	super open.
+]
+
 { #category : #printing }
 Cupboard >> printOn: aStream [
 	aStream nextPutAll: 'Cupboard'
