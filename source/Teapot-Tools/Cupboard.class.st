@@ -105,25 +105,28 @@ Cupboard >> buildInspectToolBarItem [
 
 { #category : #initialization }
 Cupboard >> buildNewStaticToolBarItem [
-	
+
 	^ SpToolbarButtonPresenter new
-		label: 'New Teapot (serving static)';
-		icon: self iconProvider teapotServerStaticIcon;
-		action: [ self onNewStaticServer. self refreshTeapots ];
-		help: 'Create a new Teapot serving static files';
-		yourself
+		  label: 'New File Server';
+		  icon: self iconProvider teapotServerStaticIcon;
+		  action: [
+			  self onNewStaticServer.
+			  self refreshTeapots ];
+		  help: 'Create a new Teapot serving static files';
+		  yourself
 ]
 
 { #category : #initialization }
 Cupboard >> buildNewToolBarItem [
-	
+
 	^ SpToolbarButtonPresenter new
-		label: 'New Teapot';
-		icon: self iconProvider teapotServerIcon;
-		action: [ self onNewServer. self refreshTeapots ];
-		help: 'Create a new Teapot';
-		yourself
-		
+		  label: 'New Server';
+		  icon: self iconProvider teapotServerIcon;
+		  action: [
+			  self onNewServer.
+			  self refreshTeapots ];
+		  help: 'Create a new Teapot';
+		  yourself
 ]
 
 { #category : #initialization }
