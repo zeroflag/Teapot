@@ -45,6 +45,12 @@ N5raAAAAAElFTkSuQmCC'
 ]
 
 { #category : #icons }
+TeaIconProvider class >> teapotInspectIcon [
+
+	^ self iconNamed: #'glamorousInspect'
+]
+
+{ #category : #icons }
 TeaIconProvider class >> teapotServerIcon [
 
 	^ self icons

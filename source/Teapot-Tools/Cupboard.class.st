@@ -1,9 +1,18 @@
 "
-A cupboad for teapots
+A cupboard for teapots.
+I'm the main User Interface to manage teapots instances.
+
+You can open me with:
+	
+	self soleInstance open
 "
 Class {
 	#name : #Cupboard,
-	#superclass : #Object,
+	#superclass : #SpPresenter,
+	#instVars : [
+		'teapots',
+		'toolbar'
+	],
 	#classInstVars : [
 		'soleInstance',
 		'icons'
@@ -25,7 +34,7 @@ Cupboard class >> menuCommandOn: aBuilder [
 		help: 'Teatime'; 
 		parent: #'Tools' translated;
 		icon: self iconProvider teapotIcon;
-		action: [ self soleInstance inspect ].
+		action: [ self soleInstance open ].
 	 aBuilder withSeparatorAfter 
 ]
 
@@ -50,6 +59,116 @@ Cupboard class >> soleInstance [
 	^ soleInstance ifNil: [ soleInstance := self basicNew initialize ]
 ]
 
+{ #category : #initialization }
+Cupboard >> buildBrowseToolBarItem [
+
+	^ SpToolbarButtonPresenter new
+		label: 'Browse';
+		icon: self iconProvider teapotServerIcon;
+		action: [ self selectedTeapot browse ];
+		help: 'Browse the selected Teapot';
+		yourself
+]
+
+{ #category : #initialization }
+Cupboard >> buildContextMenu [
+
+	^ SpMenuPresenter new
+			addItem: [ :item | 
+				item 
+					name: 'Start';
+					icon: self iconProvider teapotServerStartIcon;
+					action: [ teapots selectedItem start. self refreshTeapots ] ];
+			addItem: [ :item | 
+				item 
+					name: 'Stop';
+					icon: self iconProvider teapotServerStopIcon;
+					action: [ teapots selectedItem stop. self refreshTeapots ] ];
+			addItem: [ :item | 
+				item 
+					name: 'Browse';
+					icon: self iconProvider teapotServerIcon;
+					action: [ teapots selectedItem browse. self refreshTeapots ] ];
+		yourself
+]
+
+{ #category : #initialization }
+Cupboard >> buildInspectToolBarItem [
+
+	^ SpToolbarButtonPresenter new
+		label: 'Inspect';
+		icon: self iconProvider teapotInspectIcon;
+		action: [ self selectedTeapot inspect ];
+		help: 'Inspect the selected Teapot';
+		yourself
+]
+
+{ #category : #initialization }
+Cupboard >> buildNewStaticToolBarItem [
+	
+	^ SpToolbarButtonPresenter new
+		label: 'New Teapot (serving static)';
+		icon: self iconProvider teapotServerStaticIcon;
+		action: [ self onNewStaticServer. self refreshTeapots ];
+		help: 'Create a new Teapot serving static files';
+		yourself
+]
+
+{ #category : #initialization }
+Cupboard >> buildNewToolBarItem [
+	
+	^ SpToolbarButtonPresenter new
+		label: 'New Teapot';
+		icon: self iconProvider teapotServerIcon;
+		action: [ self onNewServer. self refreshTeapots ];
+		help: 'Create a new Teapot';
+		yourself
+		
+]
+
+{ #category : #initialization }
+Cupboard >> buildStartToolBarItem [
+	
+	^ SpToolbarButtonPresenter new
+		label: 'Start';
+		icon: self iconProvider teapotServerStartIcon;
+		action: [ self selectedTeapot start. self refreshTeapots ];
+		help: 'Start the selected Teapot';
+		yourself
+]
+
+{ #category : #initialization }
+Cupboard >> buildStopToolBarItem [
+	
+	^ SpToolbarButtonPresenter new
+		label: 'Stop';
+		icon: self iconProvider teapotServerStopIcon;
+		action: [ self selectedTeapot stop. self refreshTeapots ];
+		help: 'Stop the selected Teapot';
+		yourself
+]
+
+{ #category : #initialization }
+Cupboard >> buildToolbar [
+	
+	^ self newToolbar 
+		addItem: self buildNewToolBarItem;
+		addItem: self buildNewStaticToolBarItem;
+		addItem: self buildStartToolBarItem;
+		addItem: self buildStopToolBarItem;
+		addItem: self buildBrowseToolBarItem;
+		addItem: self buildInspectToolBarItem;
+		yourself
+]
+
+{ #category : #layout }
+Cupboard >> defaultLayout [ 
+
+	^ SpBoxLayout newTopToBottom 
+		add: teapots;
+		yourself
+]
+
 { #category : #private }
 Cupboard >> iconForTeapot: aTeapot [
 	^aTeapot server isRunning 
@@ -62,46 +181,26 @@ Cupboard >> iconProvider [
 	^ self class iconProvider
 ]
 
-{ #category : #accessing }
-Cupboard >> inspectTeapot: aBuilder [
-	<inspectorPresentationOrder: 0 title: 'Teapots'>      
-	| list |
-	list := aBuilder newList.
-	list
+{ #category : #initialization }
+Cupboard >> initializePresenters [
+	
+	teapots := self newList.
+	teapots
 		items: self teapots;
 		displayIcon: [:each | self iconForTeapot: each ];
 		display: [ :each | self nameForTeapot: each  ];
-		contextMenu: (SpMenuPresenter new
-			addItem: [ :item | 
-				item 
-					name: 'Start';
-					icon: self iconProvider teapotServerStartIcon;
-					action: [ list selectedItem start. list refresh ] ];
-			addItem: [ :item | 
-				item 
-					name: 'Stop';
-					icon: self iconProvider teapotServerStopIcon;
-					action: [ list selectedItem stop. list refresh ] ];
-			addItem: [ :item | 
-				item 
-					name: 'Browse';
-					icon: self iconProvider teapotServerIcon;
-					action: [ list selectedItem browse. list refresh ] ];
-"			TODO: this doesn't work properly:
-				1. After adding a new Teapot the list is not refreshed
-				2. It shouldn't be a context menu. If there is no existing Teapot in the list, the context menu cannot be shown.	
-			addItem: [ :item | 
-				item 
-					name: 'New Teapot';
-					icon: self iconProvider teapotServerIcon;
-					action: [ self onNewServer. list refresh ] ];
-			addItem: [ :item | 
-				item 
-					name: 'New Teapot (serving static)';
-					icon: self iconProvider teapotServerStaticIcon;
-					action: [ self onNewStaticServer. list refresh ] ];	"							
-			yourself).
-	^ list
+		whenActivatedDo: [ self selectedTeapot inspect ];
+		bindKeyCombination: Character cr asShortcut toAction: [ self selectedTeapot inspect ];
+		contextMenu: self buildContextMenu
+]
+
+{ #category : #initialization }
+Cupboard >> initializeWindow: aWindowPresenter [
+
+	super initializeWindow: aWindowPresenter.
+	aWindowPresenter 
+		title: 'Teapots';
+		toolbar: (toolbar := self buildToolbar).
 ]
 
 { #category : #private }
@@ -147,6 +246,18 @@ Cupboard >> onNewStaticServer [
 { #category : #printing }
 Cupboard >> printOn: aStream [
 	aStream nextPutAll: 'Cupboard'
+]
+
+{ #category : #actions }
+Cupboard >> refreshTeapots [
+
+	teapots items: self teapots
+]
+
+{ #category : #accessing }
+Cupboard >> selectedTeapot [
+
+	^ teapots selectedItem
 ]
 
 { #category : #accessing }
