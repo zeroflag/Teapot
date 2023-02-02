@@ -51,6 +51,12 @@ TeaIconProvider class >> teapotInspectIcon [
 ]
 
 { #category : #icons }
+TeaIconProvider class >> teapotRefreshIcon [
+
+	^ self iconNamed: #'glamorousRefresh'
+]
+
+{ #category : #icons }
 TeaIconProvider class >> teapotServerIcon [
 
 	^ self icons

@@ -127,6 +127,17 @@ Cupboard >> buildNewToolBarItem [
 ]
 
 { #category : #initialization }
+Cupboard >> buildRefreshToolBarItem [
+
+	^ SpToolbarButtonPresenter new
+		label: 'Refresh';
+		icon: self iconProvider teapotRefreshIcon;
+		action: [ self refreshTeapots ];
+		help: 'Refresh the Teapot list';
+		yourself
+]
+
+{ #category : #initialization }
 Cupboard >> buildStartToolBarItem [
 	
 	^ SpToolbarButtonPresenter new
@@ -152,6 +163,7 @@ Cupboard >> buildStopToolBarItem [
 Cupboard >> buildToolbar [
 	
 	^ self newToolbar 
+		addItem: self buildRefreshToolBarItem;
 		addItem: self buildNewToolBarItem;
 		addItem: self buildNewStaticToolBarItem;
 		addItem: self buildStartToolBarItem;
