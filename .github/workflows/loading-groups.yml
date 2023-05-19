@@ -1,0 +1,23 @@
+name: Baseline Groups
+
+on: [push,pull_request,workflow_dispatch]
+
+jobs:
+   group-loading:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        smalltalk: [ Pharo64-11, Pharo64-10, Pharo64-9.0, Pharo64-8.0, Pharo64-7.0 ]
+        load-spec: [ deployment, tests, tools, development ]
+    name: ${{ matrix.smalltalk }} + ${{ matrix.load-spec }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hpi-swa/setup-smalltalkCI@v1
+        with:
+          smalltalk-image: ${{ matrix.smalltalk }}
+      - name: Load group in image
+        run: smalltalkci -s ${{ matrix.smalltalk }} .smalltalkci/loading.${{ matrix.load-spec }}.ston
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        timeout-minutes: 15

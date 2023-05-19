@@ -1,0 +1,16 @@
+SmalltalkCISpec {
+  #loading : [
+    SCIMetacelloLoadSpec {
+      #baseline : 'Teapot',
+      #directory : '../source',
+      #load : [ 'Tests' ],
+      #platforms : [  #pharo ]
+    }
+  ],
+  #testing : {
+    #coverage : {
+      #packages : [ 'Teapot*' ],
+      #format: #lcov
+    }
+  }
+}
