@@ -41,5 +41,5 @@ BaselineOfTeapot >> setUpDependencies: spec [
 				loads: #( 'core' )
 			];
 		baseline: 'ZincHTTPComponents' with: [ spec repository: 'github://svenvc/zinc' ];
-		project: 'Zinc-Zodiac' copyFrom: 'Zinc' with: [ spec loads: 'Zinc-Zodiac-Core' ]
+		project: 'Zinc-Zodiac' copyFrom: 'ZincHTTPComponents' with: [ spec loads: 'Zinc-Zodiac-Core' ]
 ]
