@@ -2,14 +2,15 @@ SmalltalkCISpec {
   #loading : [
     SCIMetacelloLoadSpec {
       #baseline : 'Teapot',
-      #directory : 'source',
+      #directory : '../source',
       #load : [ 'Tests' ],
-      #platforms : [ #pharo ]
-    } 
-  ], 
+      #platforms : [  #pharo ]
+    }
+  ],
   #testing : {
     #coverage : {
-      #packages : [ 'Teapot-Core' ]
+      #packages : [ 'Teapot*' ],
+      #format: #lcov
     }
   }
 }
