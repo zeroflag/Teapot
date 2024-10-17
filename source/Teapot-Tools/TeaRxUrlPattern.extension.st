@@ -1,6 +1,6 @@
-Extension { #name : #TeaRxUrlPattern }
+Extension { #name : 'TeaRxUrlPattern' }
 
-{ #category : #'*Teapot-Tools' }
+{ #category : '*Teapot-Tools' }
 TeaRxUrlPattern >> asTeaspoonPath [
 	^ '/'
 ]

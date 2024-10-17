@@ -1,13 +1,14 @@
 Class {
-	#name : #TeapotSslTest,
-	#superclass : #TestCase,
+	#name : 'TeapotSslTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'teapot'
 	],
-	#category : #'Teapot-Tests'
+	#category : 'Teapot-Tests',
+	#package : 'Teapot-Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 TeapotSslTest >> pemContent [
 	^ String streamContents: [ :stream | 
 		{
@@ -43,12 +44,12 @@ TeapotSslTest >> pemContent [
 ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeapotSslTest >> pemFile [
 	^ FileLocator temp asFileReference / 'test-teapot-ssl.pem'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeapotSslTest >> setUp [
 	self writeOutPemTo: self pemFile.
 	teapot := Teapot configure: { 
@@ -62,13 +63,13 @@ TeapotSslTest >> setUp [
 		start.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotSslTest >> tearDown [
 	teapot stop.
 	self pemFile delete.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotSslTest >> testHttpsGet [
 	self skip.
 	"| result |
@@ -76,7 +77,7 @@ TeapotSslTest >> testHttpsGet [
 	self assert: result equals: 'secure'."
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeapotSslTest >> writeOutPemTo: aFileReference [
 	aFileReference writeStreamDo: [ :stream | stream nextPutAll: self pemContent ]
 ]

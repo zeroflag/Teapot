@@ -3,12 +3,13 @@ My subclasses form the elements of TeaGlobUrlPatterns
 
 "
 Class {
-	#name : #TeaGlobUrlSegment,
-	#superclass : #Object,
-	#category : #'Teapot-Core'
+	#name : 'TeaGlobUrlSegment',
+	#superclass : 'Object',
+	#category : 'Teapot-Core',
+	#package : 'Teapot-Core'
 }
 
-{ #category : #'url pattern segment' }
+{ #category : 'url pattern segment' }
 TeaGlobUrlSegment >> matches: urlSegments rest: adjacentPatterns placeholders: aDictionary [
 	self subclassResponsibility
 ]

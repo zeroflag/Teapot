@@ -12,17 +12,18 @@ This route matches to the '/users/12' but does not match to '/users/foobar'. In 
 You can extend the built in type constraints with your own constraints, by implementing the ""placeholder type constraint"" protocol. Then you can use the class name in the URL.
 "
 Class {
-	#name : #IsObject,
-	#superclass : #Object,
-	#category : #'Teapot-Core'
+	#name : 'IsObject',
+	#superclass : 'Object',
+	#category : 'Teapot-Core',
+	#package : 'Teapot-Core'
 }
 
-{ #category : #'type constraint' }
+{ #category : 'type constraint' }
 IsObject class >> matchesTo: aString [
 	^ true
 ]
 
-{ #category : #'type constraint' }
+{ #category : 'type constraint' }
 IsObject class >> parseString: aString [
 	^ aString
 ]

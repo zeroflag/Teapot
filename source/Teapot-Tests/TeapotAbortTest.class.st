@@ -1,13 +1,14 @@
 Class {
-	#name : #TeapotAbortTest,
-	#superclass : #TestCase,
+	#name : 'TeapotAbortTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'server'
 	],
-	#category : #'Teapot-Tests'
+	#category : 'Teapot-Tests',
+	#package : 'Teapot-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotAbortTest >> setUp [
 	server := Teapot on
 		GET: 'badrequest' -> [ :req | req abort: (ZnResponse badRequest: req) ];
@@ -16,17 +17,17 @@ TeapotAbortTest >> setUp [
 		start.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotAbortTest >> tearDown [
 	server stop
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotAbortTest >> testAbortSupportsAnyObject [
 	self assert: (TeaTestClient httpGetString: '/abortstring') equals: 'abort test'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotAbortTest >> testErrorCodes [
 	self assert: (TeaTestClient httpGet: '/badrequest') code equals: 400.
 	self assert: (TeaTestClient httpGet: '/unauthorized') code equals: 401.

@@ -1,6 +1,6 @@
-Extension { #name : #TeaRequestMatcher }
+Extension { #name : 'TeaRequestMatcher' }
 
-{ #category : #'*Teapot-Tools' }
+{ #category : '*Teapot-Tools' }
 TeaRequestMatcher >> urlPattern [
 	^ urlPattern
 ]

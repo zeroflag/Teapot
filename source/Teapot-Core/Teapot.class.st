@@ -15,8 +15,8 @@ Teapot on
 For more configuration option see the Teapot class>>configure method.
 "
 Class {
-	#name : #Teapot,
-	#superclass : #Object,
+	#name : 'Teapot',
+	#superclass : 'Object',
 	#instVars : [
 		'server',
 		'dynamicRouter',
@@ -25,10 +25,11 @@ Class {
 		'defaultOutput',
 		'current'
 	],
-	#category : #'Teapot-Core'
+	#category : 'Teapot-Core',
+	#package : 'Teapot-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Teapot class >> configure: optionsAssociations [
 	"Create a new Teapot instance with optional properties.
  	 - Teapot properties: #defaultOutput, #znServer
@@ -44,19 +45,19 @@ Teapot class >> configure: optionsAssociations [
 	^ self new initializeOptions: optionsAssociations asDictionary
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Teapot class >> on [
 	"Create Teapot with default properties."
 	
 	^ self configure: { }
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 Teapot class >> stopAll [
 	self allInstancesDo: #stop
 ]
 
-{ #category : #'url mapping' }
+{ #category : 'url mapping' }
 Teapot >> CONNECT: patternActionAssoc [
 	self
 		addRouteMethod: (TeaMethodMatcher exactly: #CONNECT)
@@ -64,7 +65,7 @@ Teapot >> CONNECT: patternActionAssoc [
 		action: patternActionAssoc value
 ]
 
-{ #category : #'url mapping' }
+{ #category : 'url mapping' }
 Teapot >> DELETE: patternActionAssoc [
 	self
 		addRouteMethod: (TeaMethodMatcher exactly: #DELETE)
@@ -72,7 +73,7 @@ Teapot >> DELETE: patternActionAssoc [
 		action: patternActionAssoc value
 ]
 
-{ #category : #'url mapping' }
+{ #category : 'url mapping' }
 Teapot >> GET: patternActionAssoc [
 	self 
 		addRouteMethod: (TeaMethodMatcher exactly: #GET) 
@@ -80,7 +81,7 @@ Teapot >> GET: patternActionAssoc [
 		action: patternActionAssoc value
 ]
 
-{ #category : #'url mapping' }
+{ #category : 'url mapping' }
 Teapot >> HEAD: patternActionAssoc [
 	self 
 		addRouteMethod: (TeaMethodMatcher exactly: #HEAD) 
@@ -88,7 +89,7 @@ Teapot >> HEAD: patternActionAssoc [
 		action: patternActionAssoc value
 ]
 
-{ #category : #'url mapping' }
+{ #category : 'url mapping' }
 Teapot >> OPTIONS: patternActionAssoc [
 	self
 		addRouteMethod: (TeaMethodMatcher exactly: #OPTIONS)
@@ -96,7 +97,7 @@ Teapot >> OPTIONS: patternActionAssoc [
 		action: patternActionAssoc value
 ]
 
-{ #category : #'url mapping' }
+{ #category : 'url mapping' }
 Teapot >> PATCH: patternActionAssoc [
 	self
 		addRouteMethod: (TeaMethodMatcher exactly: #PATCH)
@@ -104,7 +105,7 @@ Teapot >> PATCH: patternActionAssoc [
 		action: patternActionAssoc value
 ]
 
-{ #category : #'url mapping' }
+{ #category : 'url mapping' }
 Teapot >> POST: patternActionAssoc [
 	self 
 		addRouteMethod: (TeaMethodMatcher exactly: #POST) 
@@ -112,7 +113,7 @@ Teapot >> POST: patternActionAssoc [
 		action: patternActionAssoc value
 ]
 
-{ #category : #'url mapping' }
+{ #category : 'url mapping' }
 Teapot >> PUT: patternActionAssoc [
 	self 
 		addRouteMethod: (TeaMethodMatcher exactly: #PUT) 
@@ -120,7 +121,7 @@ Teapot >> PUT: patternActionAssoc [
 		action: patternActionAssoc value
 ]
 
-{ #category : #'url mapping' }
+{ #category : 'url mapping' }
 Teapot >> TRACE: patternActionAssoc [
 	self
 		addRouteMethod: (TeaMethodMatcher exactly: #TRACE)
@@ -128,7 +129,7 @@ Teapot >> TRACE: patternActionAssoc [
 		action: patternActionAssoc value
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Teapot >> addRouteMethod: aTeaMethodMatcher pattern: pattern action: aTeaAction [
 	current := dynamicRouter addRoute:
 		(TeaRoute
@@ -138,7 +139,7 @@ Teapot >> addRouteMethod: aTeaMethodMatcher pattern: pattern action: aTeaAction 
 			port: server port)
 ]
 
-{ #category : #filters }
+{ #category : 'filters' }
 Teapot >> after: patternActionAssoc [
 	current := compositeRouter addAfterFilter:		
 		(TeaAfterFilter 
@@ -146,7 +147,7 @@ Teapot >> after: patternActionAssoc [
 			action: patternActionAssoc value)
 ]
 
-{ #category : #'url mapping' }
+{ #category : 'url mapping' }
 Teapot >> any: patternActionAssoc [
 	self
 		addRouteMethod: TeaMethodMatcher any
@@ -154,7 +155,7 @@ Teapot >> any: patternActionAssoc [
 		action: patternActionAssoc value
 ]
 
-{ #category : #filters }
+{ #category : 'filters' }
 Teapot >> before: patternActionAssoc [
 	current := compositeRouter addBeforeFilter:		
 		(TeaBeforeFilter 
@@ -162,7 +163,7 @@ Teapot >> before: patternActionAssoc [
 			action: patternActionAssoc value)
 ]
 
-{ #category : #'url mapping' }
+{ #category : 'url mapping' }
 Teapot >> exception: anExceptionSetActionAssoc [
 	current := compositeRouter addErrorHandler:
 		(TeaErrorHandler
@@ -171,7 +172,7 @@ Teapot >> exception: anExceptionSetActionAssoc [
 			responseTransformer: defaultOutput)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Teapot >> initializeOptions: optionsDictionary [
 	dynamicRouter := TeaDynamicRouter new.
 	staticRouter := TeaStaticRouter new.
@@ -189,40 +190,40 @@ Teapot >> initializeOptions: optionsDictionary [
 	^ self
 ]
 
-{ #category : #'url mapping' }
+{ #category : 'url mapping' }
 Teapot >> output: transformerBlockOrSymbol [
 	current responseTransformer: (self responseTransformer: transformerBlockOrSymbol)
 	
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Teapot >> responseTransformer: transformerBlockOrSymbol [
 	^ transformerBlockOrSymbol isSymbol
 		ifTrue: [ TeaOutput perform: transformerBlockOrSymbol ]
 		ifFalse: [ transformerBlockOrSymbol ]
 ]
 
-{ #category : #'url mapping' }
+{ #category : 'url mapping' }
 Teapot >> serveStatic: urlPrefixString from: pathString [	
 	staticRouter urlPrefix: urlPrefixString path: pathString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Teapot >> server [
 	^ server
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 Teapot >> start [
 	server start
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 Teapot >> stop [
 	server stop
 ]
 
-{ #category : #filters }
+{ #category : 'filters' }
 Teapot >> when: aBlockClosure [ 
 	current whenClause: aBlockClosure
 	

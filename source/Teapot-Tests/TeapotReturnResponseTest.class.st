@@ -1,13 +1,14 @@
 Class {
-	#name : #TeapotReturnResponseTest,
-	#superclass : #TestCase,
+	#name : 'TeapotReturnResponseTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'server'
 	],
-	#category : #'Teapot-Tests'
+	#category : 'Teapot-Tests',
+	#package : 'Teapot-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotReturnResponseTest >> setUp [
 	| stream |
 	stream := ZnStreamingEntity
@@ -23,22 +24,22 @@ TeapotReturnResponseTest >> setUp [
 		start
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotReturnResponseTest >> tearDown [
 	server stop
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotReturnResponseTest >> testDirectStreamResponse [
 	self assert: (TeaTestClient httpGetString: '/resp2') equals: 'direct stream'.	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotReturnResponseTest >> testDirectStringResponse [
 	self assert: (TeaTestClient httpGetString: '/resp1') equals: 'direct response'.	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotReturnResponseTest >> testRedirect [
 	self assert: (TeaTestClient httpGetString: '/redirect') equals: 'redirected here'.
 	

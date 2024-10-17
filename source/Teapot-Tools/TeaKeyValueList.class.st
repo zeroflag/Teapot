@@ -2,15 +2,17 @@
 I'm built up from a dynamically extensible list of other components.
 "
 Class {
-	#name : #TeaKeyValueList,
-	#superclass : #SpPresenter,
+	#name : 'TeaKeyValueList',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'items'
 	],
-	#category : #'Teapot-Tools-UI-Components'
+	#category : 'Teapot-Tools-UI-Components',
+	#package : 'Teapot-Tools',
+	#tag : 'UI-Components'
 }
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TeaKeyValueList >> addKey: keyString value: valueString [
 	| item |
 	item := TeaKeyValueInput 
@@ -21,34 +23,34 @@ TeaKeyValueList >> addKey: keyString value: valueString [
 	self rebuildLayout.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeaKeyValueList >> asAssociations [
 	^ items collect: #asAssociation
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeaKeyValueList >> defaultLayout [
 	^ SpBoxLayout new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeaKeyValueList >> initialize [
 	super initialize.
 	items := OrderedCollection new.
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TeaKeyValueList >> items [
 	^ self withoutDuplicatesAndBlanks: (self asAssociations asOrderedDictionary)
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TeaKeyValueList >> items: keyedCollection [
 	items removeAll.
 	keyedCollection keysAndValuesDo: [ :key :value | self addKey: key value: value ].
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeaKeyValueList >> layout [ 
 	| box |
 	box := SpBoxLayout newVertical
@@ -61,13 +63,13 @@ TeaKeyValueList >> layout [
 		ifNotEmpty: [ SpScrollableLayout with: box ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeaKeyValueList >> remove: item [
 	items remove: item.
 	self rebuildLayout.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeaKeyValueList >> withoutDuplicatesAndBlanks: keyedCollection [
 	| keyset |
 	keyset := PluggableSet new

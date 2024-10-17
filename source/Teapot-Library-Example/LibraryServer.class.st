@@ -75,24 +75,25 @@ List all
 		200 [{""title"":""book1"",""id"":3,""authors"":""author2""}]
 "
 Class {
-	#name : #LibraryServer,
-	#superclass : #Object,
+	#name : 'LibraryServer',
+	#superclass : 'Object',
 	#instVars : [
 		'port',
 		'teapot',
 		'bookShelf'
 	],
-	#category : #'Teapot-Library-Example'
+	#category : 'Teapot-Library-Example',
+	#package : 'Teapot-Library-Example'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LibraryServer class >> serveOn: portNumber [
 	^ self new  
 		initializePort: portNumber;
 		start
 ]
 
-{ #category : #'error handlers' }
+{ #category : 'error handlers' }
 LibraryServer >> bookNotFound: aBookNotFound request: aZnRequest [
 	^ TeaResponse notFound body:
 		{ 
@@ -101,7 +102,7 @@ LibraryServer >> bookNotFound: aBookNotFound request: aZnRequest [
 		} asDictionary
 ]
 
-{ #category : #routes }
+{ #category : 'routes' }
 LibraryServer >> createBook: request [
 	| book |
 	book := bookShelf addBook: (self makeBook: request).
@@ -110,14 +111,14 @@ LibraryServer >> createBook: request [
 		location: '/books/', (book at: #id) asString
 ]
 
-{ #category : #routes }
+{ #category : 'routes' }
 LibraryServer >> deleteBook: request [		
 	^ bookShelf removeBook: (request at: #id)
 	
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LibraryServer >> initializePort: anInteger [
 	bookShelf := BookShelf new.
 	teapot := Teapot configure: { 
@@ -131,13 +132,13 @@ LibraryServer >> initializePort: anInteger [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LibraryServer >> makeBook: request [
 	^ {#title   -> (request at: #title).
       #authors -> (request at: #authors)} asDictionary.
 ]
 
-{ #category : #'error handlers' }
+{ #category : 'error handlers' }
 LibraryServer >> missingParam: aTeaNoSuchParam request: aZnRequest [
 	^ TeaResponse badRequest body:
 		{ 
@@ -146,17 +147,17 @@ LibraryServer >> missingParam: aTeaNoSuchParam request: aZnRequest [
 		} asDictionary
 ]
 
-{ #category : #routes }
+{ #category : 'routes' }
 LibraryServer >> readBook: request [
 	^ bookShelf findBook: (request at: #id)
 ]
 
-{ #category : #routes }
+{ #category : 'routes' }
 LibraryServer >> readBooks: aTeaRequest [
 	^ bookShelf books
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LibraryServer >> registerErrorHandlers [
 	teapot
 		exception: TeaNoSuchParam -> (Send message: #missingParam:request: to: self);
@@ -164,7 +165,7 @@ LibraryServer >> registerErrorHandlers [
 		exception: Error -> (TeaResponse serverError body: { #code -> 'ERROR' } asDictionary )		
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LibraryServer >> registerRoutes [
 	teapot
 		GET: '/' -> '<h1>A simple book library server</h1>'; output: #html;
@@ -175,18 +176,18 @@ LibraryServer >> registerRoutes [
 		DELETE: '/books/<id:IsInteger>' -> (Send message: #deleteBook: to: self)
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 LibraryServer >> start [
 	teapot start.
 	^ self
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 LibraryServer >> stop [
 	teapot stop
 ]
 
-{ #category : #routes }
+{ #category : 'routes' }
 LibraryServer >> updateBook: request [
 	^ bookShelf 
 		replaceBook: (request at: 'id') 

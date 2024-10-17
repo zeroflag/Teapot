@@ -1,6 +1,6 @@
-Extension { #name : #TeaRoute }
+Extension { #name : 'TeaRoute' }
 
-{ #category : #'*Teapot-Tools' }
+{ #category : '*Teapot-Tools' }
 TeaRoute >> inspectRoute: aBuilder [
 	<inspectorPresentationOrder: 0 title: 'Teaspoon'>
 	^ Teaspoon new

@@ -1,13 +1,14 @@
 Class {
-	#name : #TeapotFormParamsTest,
-	#superclass : #TestCase,
+	#name : 'TeapotFormParamsTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'server'
 	],
-	#category : #'Teapot-Tests'
+	#category : 'Teapot-Tests',
+	#package : 'Teapot-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotFormParamsTest >> setUp [
 	server := Teapot on
 		POST: '/form' -> [ :req | (req at: #foo), '-', (req at: #bar) ];
@@ -15,12 +16,12 @@ TeapotFormParamsTest >> setUp [
 		start.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotFormParamsTest >> tearDown [
 	server stop
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotFormParamsTest >> testFormParams [
 	| result |
 	result := ZnEasy post: 'http://localhost:1701/form' data: (ZnApplicationFormUrlEncodedEntity new 
@@ -31,7 +32,7 @@ TeapotFormParamsTest >> testFormParams [
 	self assert: result entity string equals: 'abc-123'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotFormParamsTest >> testFormParamsNotFound [
 	| result |
 	result := ZnEasy post: 'http://localhost:1701/form' data: (ZnApplicationFormUrlEncodedEntity new 

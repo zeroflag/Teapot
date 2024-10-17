@@ -1,6 +1,6 @@
-Extension { #name : #TeaGlobUrlPattern }
+Extension { #name : 'TeaGlobUrlPattern' }
 
-{ #category : #'*Teapot-Tools' }
+{ #category : '*Teapot-Tools' }
 TeaGlobUrlPattern >> asTeaspoonPath [
 	^ String streamContents: [ :aStream |
 			segments 
