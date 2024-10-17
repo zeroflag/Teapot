@@ -2,43 +2,45 @@
 I graphically represent a request body that can be viewed in multiple ways.
 "
 Class {
-	#name : #TeaRequestBodyTabs,
-	#superclass : #SpPresenter,
+	#name : 'TeaRequestBodyTabs',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'requestBody',
 		'label',
 		'raw',
 		'form'
 	],
-	#category : #'Teapot-Tools-UI-Components'
+	#category : 'Teapot-Tools-UI-Components',
+	#package : 'Teapot-Tools',
+	#tag : 'UI-Components'
 }
 
-{ #category : #layout }
-TeaRequestBodyTabs class >> defaultLayout [
+{ #category : 'layout' }
+TeaRequestBodyTabs >> defaultLayout [
 	^ SpBoxLayout newVertical 
-		add: #label expand: false fill: false;
+		add: label expand: false fill: false;
 		spacing: 5;
-		add: #requestBody expand: true fill: true;
+		add: requestBody expand: true fill: true;
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeaRequestBodyTabs >> formTabTitle [
 	^ 'Form'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeaRequestBodyTabs >> initializePresenters [
 	label := self newLabel label: 'Request body'; yourself.
 	requestBody := self newRequestBody.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TeaRequestBodyTabs >> label [
 	^ label
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeaRequestBodyTabs >> newRequestBody [
 	raw := self newText.
 	form := TeaFormTab new.
@@ -52,17 +54,17 @@ TeaRequestBodyTabs >> newRequestBody [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeaRequestBodyTabs >> rawTabTitle [
 	^ 'Raw'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TeaRequestBodyTabs >> requestBody [
 	^ requestBody
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TeaRequestBodyTabs >> urlEncoded [
 	requestBody selectedPage title = self formTabTitle
 		ifTrue: [ raw text: form urlEncoded ].

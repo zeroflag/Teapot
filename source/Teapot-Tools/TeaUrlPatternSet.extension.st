@@ -1,13 +1,13 @@
-Extension { #name : #TeaUrlPatternSet }
+Extension { #name : 'TeaUrlPatternSet' }
 
-{ #category : #'*Teapot-Tools' }
+{ #category : '*Teapot-Tools' }
 TeaUrlPatternSet >> asRequestBuilderPath [
 	^ patterns 
 		ifEmpty: [ '/' ]
 		ifNotEmpty: [ patterns first asTeaspoonPath ]
 ]
 
-{ #category : #'*Teapot-Tools' }
+{ #category : '*Teapot-Tools' }
 TeaUrlPatternSet >> asTeaspoonPath [
 	^ patterns 
 		ifEmpty: [ '/' ]

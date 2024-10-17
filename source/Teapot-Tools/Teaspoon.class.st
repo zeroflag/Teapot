@@ -2,8 +2,8 @@
 I provide a graphical interface for quickly testing and excesising routes. Right click on a route in the inspector to open me.
 "
 Class {
-	#name : #Teaspoon,
-	#superclass : #SpPresenter,
+	#name : 'Teaspoon',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'urlInput',
 		'contentTypeDropList',
@@ -14,45 +14,18 @@ Class {
 		'resultText',
 		'resultLabel'
 	],
-	#category : #'Teapot-Tools-UI'
+	#category : 'Teapot-Tools-UI',
+	#package : 'Teapot-Tools',
+	#tag : 'UI'
 }
 
-{ #category : #layout }
-Teaspoon class >> defaultLayout [
-    ^ SpBoxLayout newVertical 
-        add: (SpBoxLayout newHorizontal
-                    vAlignCenter;
-                    add: #methodDropList expand: false fill: false;
-                    spacing: 5;
-                    add: #urlInput expand: true fill: true;
-                    yourself) 
-            expand: false fill: false padding: 10;
-        add: #requestBody expand: true fill: true;
-        add: (SpBoxLayout newHorizontal
-                vAlignCenter;
-                add: #contentTypeLabel expand: false fill: false;
-                spacing: 5;
-                add: #contentTypeDropList expand: true fill: true;
-                yourself)
-            expand: false fill: false;
-        spacing: 10;		
-		  add: #resultLabel expand: false fill: false;
-        add: #resultText expand: true fill: true;
-        add: (SpBoxLayout newHorizontal 
-                add: #execButton expand: false fill: false;
-                hAlignCenter;
-                yourself)
-            expand: false fill: false;
-        yourself
-]
-
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 Teaspoon class >> iconProvider [
 
 	^TeaIconProvider 
 ]
 
-{ #category : #'world menu' }
+{ #category : 'world menu' }
 Teaspoon class >> menuCommandOn: aBuilder [ 
 	<worldMenu> 
 	
@@ -63,7 +36,7 @@ Teaspoon class >> menuCommandOn: aBuilder [
 		action: [ self open ].
 ]
 
-{ #category : #interface }
+{ #category : 'interface' }
 Teaspoon class >> open [
 	<script>
 	^ (SpWindowPresenter presenter: self new)
@@ -72,12 +45,12 @@ Teaspoon class >> open [
 		yourself
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 Teaspoon class >> title [
 	^ 'Teaspoon client'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Teaspoon >> client [
 	^ ZnClient new
 		url: self urlInput text;
@@ -89,7 +62,7 @@ Teaspoon >> client [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Teaspoon >> connectPresenters [ 
 	execButton
 		whenActionPerformedDo: [ 
@@ -101,22 +74,51 @@ Teaspoon >> connectPresenters [
 		]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Teaspoon >> contentTypeDropList [
 	^ contentTypeDropList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Teaspoon >> contentTypeLabel [
 	^ contentTypeLabel
 ]
 
-{ #category : #accessing }
+{ #category : 'layout' }
+Teaspoon >> defaultLayout [
+    ^ SpBoxLayout newVertical 
+        add: (SpBoxLayout newHorizontal
+                    vAlignCenter;
+                    add: methodDropList expand: false fill: false;
+                    spacing: 5;
+                    add: urlInput expand: true fill: true;
+                    yourself) 
+            expand: false fill: false padding: 10;
+        add: requestBody expand: true fill: true;
+        add: (SpBoxLayout newHorizontal
+                vAlignCenter;
+                add: contentTypeLabel expand: false fill: false;
+                spacing: 5;
+                add: contentTypeDropList expand: true fill: true;
+                yourself)
+            expand: false fill: false;
+        spacing: 10;		
+		  add: resultLabel expand: false fill: false;
+        add: resultText expand: true fill: true;
+        add: (SpBoxLayout newHorizontal 
+                add: execButton expand: false fill: false;
+                hAlignCenter;
+                yourself)
+            expand: false fill: false;
+        yourself
+]
+
+{ #category : 'accessing' }
 Teaspoon >> execButton [
 	^ execButton
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Teaspoon >> initializePresenters [
 	super initializePresenters.
 	methodDropList := self newMethodDropList.
@@ -129,18 +131,18 @@ Teaspoon >> initializePresenters [
 	resultLabel := self newLabel label: 'Result'; yourself.
 ]
 
-{ #category : #'tea spoon' }
+{ #category : 'tea spoon' }
 Teaspoon >> method: methodString url: urlString port: portNumber [
 	self populateMethod: methodString.
 	self populateUrl: urlString port: portNumber.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Teaspoon >> methodDropList [
 	^ methodDropList
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Teaspoon >> newContentTypeDropList [
 	| dropList |
 	dropList := self newDropList.
@@ -157,7 +159,7 @@ Teaspoon >> newContentTypeDropList [
 	^ dropList
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Teaspoon >> newMethodDropList [
 	| dropList |
 	dropList := self newDropList.
@@ -166,7 +168,7 @@ Teaspoon >> newMethodDropList [
 	^ dropList
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Teaspoon >> populateMethod: methodString [
 	| selected |
 	selected := methodDropList listItems
@@ -175,7 +177,7 @@ Teaspoon >> populateMethod: methodString [
 	methodDropList selectItem: selected.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Teaspoon >> populateUrl: urlString port: portNumber [
 	| pathSegment |
 	pathSegment := urlString.
@@ -184,22 +186,22 @@ Teaspoon >> populateUrl: urlString port: portNumber [
 	urlInput text: ('http://localhost:', portNumber asString, pathSegment)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Teaspoon >> requestBody [
 	^ requestBody
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Teaspoon >> resultLabel [
 	^ resultLabel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Teaspoon >> resultText [
 	^ resultText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Teaspoon >> urlInput [
 	^ urlInput
 ]
