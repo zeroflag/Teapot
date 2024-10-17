@@ -31,6 +31,12 @@ BaselineOfTeapot >> baseline: spec [
 ]
 
 { #category : 'baselines' }
+BaselineOfTeapot >> pharoVersionsFrom: aVersion [
+	"Method copied from BaselineOf to allow use of Pharo versions < 11"
+	^ (aVersion to: SystemVersion current major) collect: [ :v | ('pharo' , v asString , '.x') asSymbol ]
+]
+
+{ #category : 'baselines' }
 BaselineOfTeapot >> setUpDependencies: spec [
 
 	spec
