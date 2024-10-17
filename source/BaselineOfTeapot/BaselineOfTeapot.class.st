@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfTeapot,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfTeapot
+	#name : 'BaselineOfTeapot',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfTeapot',
+	#package : 'BaselineOfTeapot'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfTeapot >> baseline: spec [
 
 	<baseline>
@@ -13,14 +14,12 @@ BaselineOfTeapot >> baseline: spec [
 
 		spec
 			package: 'Teapot-Core' with: [ spec requires: #( 'NeoJSON' ) ];
-			package: 'Teapot-Tools' with: [ spec requires: 'Teapot-Core' ].
-		spec
-			for: #( #'pharo7.x' #'pharo8.x' #'pharo9.x' )
-			do: [ spec package: 'Teapot-Tests' with: [ spec requires: 'Teapot-Core' ] ].
+			package: 'Teapot-Tools' with: [ spec requires: 'Teapot-Core' ];
+			package: 'Teapot-Tests' with: [ spec requires: 'Teapot-Core' ].
 
 		spec
-			for: #( #'pharo10.x' #'pharo11.x' #'pharo12.x' )
-			do: [ spec package: 'Teapot-Tests' with: [ spec requires: #( 'Teapot-Core' 'Zinc-Zodiac' ) ] ].
+			for: (self pharoVersionsFrom: 10)
+			do: [ spec package: 'Teapot-Tests' with: [ spec requires: #( 'Zinc-Zodiac' ) ] ].
 
 		spec
 			group: 'Tests' with: #( 'Teapot-Tests' );
@@ -31,7 +30,7 @@ BaselineOfTeapot >> baseline: spec [
 		]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfTeapot >> setUpDependencies: spec [
 
 	spec
