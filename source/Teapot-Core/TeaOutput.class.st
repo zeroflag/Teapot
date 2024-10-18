@@ -9,17 +9,18 @@ Some of the transformers require optional dependencies, like Neo-JSON, STON, or 
 
 "
 Class {
-	#name : #TeaOutput,
-	#superclass : #Object,
-	#category : #'Teapot-Core'
+	#name : 'TeaOutput',
+	#superclass : 'Object',
+	#category : 'Teapot-Core',
+	#package : 'Teapot-Core'
 }
 
-{ #category : #'response transformers' }
+{ #category : 'response transformers' }
 TeaOutput class >> html [
 	^ self stringWithContentType: ZnMimeType textHtml
 ]
 
-{ #category : #'response transformers' }
+{ #category : 'response transformers' }
 TeaOutput class >> json [
 	^ [ :aTeaResponse | | entity |
 		entity := ZnStringEntity 
@@ -31,7 +32,7 @@ TeaOutput class >> json [
 			headers: aTeaResponse headers ]
 ]
 
-{ #category : #'response transformers' }
+{ #category : 'response transformers' }
 TeaOutput class >> mustache: templateStringOrStream contentType: contentType [
 	^ [ :aTeaResponse | | model object entity |
 		object := aTeaResponse body.
@@ -46,19 +47,19 @@ TeaOutput class >> mustache: templateStringOrStream contentType: contentType [
 
 ]
 
-{ #category : #'response transformers' }
+{ #category : 'response transformers' }
 TeaOutput class >> mustacheHtml: templateString [ 
 	^ self mustache: templateString contentType: ZnMimeType textHtml.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeaOutput class >> optionalClass: aSymbol [
 	[ ^ Smalltalk at: aSymbol ]
 		on: KeyNotFound
 		do: [ self error: 'An optional dependency ', aSymbol, ' was not found. Please load it first.' ]
 ]
 
-{ #category : #'response transformers' }
+{ #category : 'response transformers' }
 TeaOutput class >> ston [
 	^ [ :aTeaResponse | | entity |
 		entity := ZnStringEntity 
@@ -70,12 +71,12 @@ TeaOutput class >> ston [
 			headers: aTeaResponse headers ]
 ]
 
-{ #category : #'response transformers' }
+{ #category : 'response transformers' }
 TeaOutput class >> stream [
 	^ self stream: ZnMimeType applicationOctetStream 
 ]
 
-{ #category : #'response transformers' }
+{ #category : 'response transformers' }
 TeaOutput class >> stream: aZnMimeType [
 	^ [ :aTeaResponse | | entity |
 		entity := ZnStreamingEntity 
@@ -89,7 +90,7 @@ TeaOutput class >> stream: aZnMimeType [
 
 ]
 
-{ #category : #'response transformers' }
+{ #category : 'response transformers' }
 TeaOutput class >> stringWithContentType: aZnMimeType [ 
 	^ [ :aTeaResponse | | entity |
 		entity := ZnStringEntity new
@@ -102,13 +103,13 @@ TeaOutput class >> stringWithContentType: aZnMimeType [
 			headers: aTeaResponse headers ]
 ]
 
-{ #category : #'response transformers' }
+{ #category : 'response transformers' }
 TeaOutput class >> text [
 	^ self stringWithContentType: ZnMimeType textPlain
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeaOutput class >> znEntity: aZnEntity code: anInteger headers: aDictionary [
 	| headers |
 	headers := ZnHeaders defaultResponseHeaders.

@@ -1,13 +1,14 @@
 Class {
-	#name : #TeapotRegexpTest,
-	#superclass : #TestCase,
+	#name : 'TeapotRegexpTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'server'
 	],
-	#category : #'Teapot-Tests'
+	#category : 'Teapot-Tests',
+	#package : 'Teapot-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotRegexpTest >> setUp [
 	server := Teapot on
 		GET: '/./' asRegex -> [ 'regexp' ];
@@ -16,23 +17,23 @@ TeapotRegexpTest >> setUp [
 		start
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotRegexpTest >> tearDown [
 	server stop
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotRegexpTest >> testCollectingSubexpressions [
 	self assert: (TeaTestClient httpGetString: '/abc3/4/xxx') equals: '3'.	
 	self assert: (TeaTestClient httpGetString: '/1/aabbcc/2/foobar') equals: '1aabbccfoobar'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotRegexpTest >> testIgnoresQueryParam [
 	self assert: (TeaTestClient httpGetString: '/k/?param=value') equals: 'regexp'.	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotRegexpTest >> testRegexpMatch [
 	self assert: (TeaTestClient httpGetString: '/k/') equals: 'regexp'.	
 ]

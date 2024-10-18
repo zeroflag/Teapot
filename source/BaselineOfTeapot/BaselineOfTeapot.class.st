@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfTeapot,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfTeapot
+	#name : 'BaselineOfTeapot',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfTeapot',
+	#package : 'BaselineOfTeapot'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfTeapot >> baseline: spec [
 
 	<baseline>
@@ -31,7 +32,7 @@ BaselineOfTeapot >> baseline: spec [
 		]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfTeapot >> setUpDependencies: spec [
 
 	spec

@@ -2,16 +2,18 @@
 I'm built up from a dynamically extensible key value pair list (TeaKeyValueInput). I can represent POST parameters or HTTP headers for example.
 "
 Class {
-	#name : #TeaFormTab,
-	#superclass : #SpPresenter,
+	#name : 'TeaFormTab',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'form',
 		'addButton'
 	],
-	#category : #'Teapot-Tools-UI-Components'
+	#category : 'Teapot-Tools-UI-Components',
+	#package : 'Teapot-Tools',
+	#tag : 'UI-Components'
 }
 
-{ #category : #specs }
+{ #category : 'specs' }
 TeaFormTab class >> defaultLayout [
 	^ SpBoxLayout newVertical 
 		add: #form expand: false fill: false;
@@ -22,22 +24,22 @@ TeaFormTab class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TeaFormTab >> addButton [
 	^ addButton 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeaFormTab >> connectPresenters [ 
 	addButton whenActionPerformedDo: [ form addKey: 'key' value: 'value' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TeaFormTab >> form [
 	^ form
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeaFormTab >> initializePresenters [
 	addButton := self newButton label: 'Add parameter'; yourself.
 	form := self instantiate: TeaKeyValueList.
@@ -46,12 +48,12 @@ TeaFormTab >> initializePresenters [
 		add: addButton.
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TeaFormTab >> updateKeyValus: keyValueCollection [
 	form items: keyValueCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeaFormTab >> urlEncoded [
 	| url formParams |
 	url := '/' asZnUrl.
@@ -62,7 +64,7 @@ TeaFormTab >> urlEncoded [
 	
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TeaFormTab >> writeUrlEncodedTo: aTextModel [
 	self urlEncoded 
 		ifNotEmpty: [ aTextModel text: self urlEncoded ]

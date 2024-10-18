@@ -2,16 +2,17 @@
 I'm a placeholder with a key. My content is substituted with a value.
 "
 Class {
-	#name : #TeaPlaceholder,
-	#superclass : #TeaGlobUrlSegment,
+	#name : 'TeaPlaceholder',
+	#superclass : 'TeaGlobUrlSegment',
 	#instVars : [
 		'placeholderName',
 		'typeConstraint'
 	],
-	#category : #'Teapot-Core'
+	#category : 'Teapot-Core',
+	#package : 'Teapot-Core'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 TeaPlaceholder class >> createPlaceholderName: key typeConstraint: aTypeConstraint atLast: aBoolean [
 	| class |
 	class := aBoolean
@@ -22,7 +23,7 @@ TeaPlaceholder class >> createPlaceholderName: key typeConstraint: aTypeConstrai
 		typeConstraint: aTypeConstraint
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TeaPlaceholder class >> fromString: aString atLast: aBoolean [
 	| spec typeConstraint key |
 	self mustBeValidPlaceholder: aString.
@@ -35,13 +36,13 @@ TeaPlaceholder class >> fromString: aString atLast: aBoolean [
 		atLast: aBoolean
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeaPlaceholder class >> mustBeValidPlaceholder: aString [
 	((aString beginsWith: '<') and: [ aString endsWith: '>' ])
 		ifFalse: [ self error: 'Invalid placeholder name: ', aString ]
 ]
 
-{ #category : #'url pattern segment' }
+{ #category : 'url pattern segment' }
 TeaPlaceholder >> matches: urlSegments rest: adjacentPatterns placeholders: aDictionary [
 	(urlSegments first = TeaPadding or: [ (typeConstraint matchesTo: urlSegments first) not]) 
 		ifTrue: [ ^ false ].		
@@ -54,7 +55,7 @@ TeaPlaceholder >> matches: urlSegments rest: adjacentPatterns placeholders: aDic
 		placeholders: aDictionary
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TeaPlaceholder >> printOn: aStream [
 	aStream 
 		nextPut: $<;
@@ -62,7 +63,7 @@ TeaPlaceholder >> printOn: aStream [
 		nextPut: $>
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeaPlaceholder >> setPlaceholderName: aString typeConstraint: aTypeConstraint [
 	placeholderName := aString asSymbol.
 	typeConstraint := aTypeConstraint.

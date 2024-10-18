@@ -4,18 +4,19 @@ Configuration for Teapot micro web framework.
 See http://smalltalkhub.com/#!/~zeroflag/Teapot
 "
 Class {
-	#name : #ConfigurationOfTeapot,
-	#superclass : #Object,
+	#name : 'ConfigurationOfTeapot',
+	#superclass : 'Object',
 	#instVars : [
 		'project'
 	],
 	#classVars : [
 		'LastVersionLoad'
 	],
-	#category : #ConfigurationOfTeapot
+	#category : 'ConfigurationOfTeapot',
+	#package : 'ConfigurationOfTeapot'
 }
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 ConfigurationOfTeapot class >> DevelopmentSupport [
 
 "See the methods in the 'development support' category on the class-side of MetacelloBaseConfiguration. Decide what development support methods you would like to use and copy them the the class-side of your configuration."
@@ -23,7 +24,7 @@ ConfigurationOfTeapot class >> DevelopmentSupport [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurationOfTeapot class >> baseConfigurationClassIfAbsent: aBlock [
 
 	^Smalltalk
@@ -34,43 +35,43 @@ ConfigurationOfTeapot class >> baseConfigurationClassIfAbsent: aBlock [
 
 ]
 
-{ #category : #catalog }
+{ #category : 'catalog' }
 ConfigurationOfTeapot class >> catalogChangeLog [
 	"Returns a paragraph describing the most important changes in the configuration class."
 	^ ' '
 ]
 
-{ #category : #catalog }
+{ #category : 'catalog' }
 ConfigurationOfTeapot class >> catalogContactInfo [
 	"Returns a paragraph describing contact information such as email, mailing lists and website."
 	^ 'Contact the authors on the Pharo developer list (http://lists.pharo.org)'
 ]
 
-{ #category : #catalog }
+{ #category : 'catalog' }
 ConfigurationOfTeapot class >> catalogDescription [
 	"Returns a paragraph describing the project"
 	^ 'Teapot is micro web framework on top of the Zinc HTTP components, that focuses on simplicity and ease of use.'
 ]
 
-{ #category : #catalog }
+{ #category : 'catalog' }
 ConfigurationOfTeapot class >> catalogKeyClassesAndExample [
 	"Returns a paragraph or more describing the key classes of your project. You can use Pillar/Pier syntax to layout out the text i.e., ==Code== and - for bullet."
 	^ 'Checkout the class ==Teapot=='
 ]
 
-{ #category : #catalog }
+{ #category : 'catalog' }
 ConfigurationOfTeapot class >> catalogKeywords [
 	"Returns an array of symbols"
 	^ #(micro web framework http sinatra) 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurationOfTeapot class >> ensureMetacello [
 
 	(self baseConfigurationClassIfAbsent: []) ensureMetacello
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurationOfTeapot class >> ensureMetacelloBaseConfiguration [
 
 	Smalltalk
@@ -86,14 +87,14 @@ ConfigurationOfTeapot class >> ensureMetacelloBaseConfiguration [
 					version workingCopy repositoryGroup addRepository: repository ] ]
 ]
 
-{ #category : #'metacello tool support' }
+{ #category : 'metacello tool support' }
 ConfigurationOfTeapot class >> isMetacelloConfig [
 	"Answer true and the Metacello tools will operate on you"
 	
 	^true
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 ConfigurationOfTeapot class >> load [
 	"Load the #stable version defined for this platform. The #stable version is the version that is recommended to be used on this platform."
 
@@ -103,7 +104,7 @@ ConfigurationOfTeapot class >> load [
 	^(self project version: #stable) load
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 ConfigurationOfTeapot class >> loadBleedingEdge [
 	"Load the latest versions of the mcz files defined for this project. It is not likely that the #bleedingEdge has been tested."
 
@@ -113,7 +114,7 @@ ConfigurationOfTeapot class >> loadBleedingEdge [
 	^(self project version: #bleedingEdge) load
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 ConfigurationOfTeapot class >> loadDevelopment [
 	"Load the #development version defined for this platform. The #development version will change over time and is not expected to be stable."
 
@@ -123,13 +124,13 @@ ConfigurationOfTeapot class >> loadDevelopment [
 	^(self project version: #development) load
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationOfTeapot class >> project [
 
 	^self new project
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 ConfigurationOfTeapot class >> validate [
 	"Check the configuration for Errors, Critical Warnings, and Warnings (see class comment for MetacelloMCVersionValidator for more information). 
 	Errors identify specification issues that will result in unexpected behaviour when you load the configuration. 
@@ -143,7 +144,7 @@ ConfigurationOfTeapot class >> validate [
 	^ ((Smalltalk at: #MetacelloToolBox) validateConfiguration: self debug: #() recurse: false) explore
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 ConfigurationOfTeapot >> baseline01: spec [
 	<version: '0.1-baseline'>
 
@@ -154,7 +155,7 @@ ConfigurationOfTeapot >> baseline01: spec [
 
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 ConfigurationOfTeapot >> baseline20: spec [
 	<version: '2.0-baseline'>
 
@@ -182,7 +183,7 @@ ConfigurationOfTeapot >> baseline20: spec [
 
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 ConfigurationOfTeapot >> baseline21: spec [
 	<version: '2.1-baseline'>
 
@@ -215,7 +216,7 @@ ConfigurationOfTeapot >> baseline21: spec [
 
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 ConfigurationOfTeapot >> baseline22: spec [
 	<version: '2.2-baseline'>
 
@@ -248,7 +249,7 @@ ConfigurationOfTeapot >> baseline22: spec [
 
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 ConfigurationOfTeapot >> baseline23: spec [
 	<version: '2.3-baseline'>
 
@@ -281,7 +282,7 @@ ConfigurationOfTeapot >> baseline23: spec [
 
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 ConfigurationOfTeapot >> baseline24: spec [
 	<version: '2.4-baseline'>
 
@@ -314,7 +315,7 @@ ConfigurationOfTeapot >> baseline24: spec [
 
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 ConfigurationOfTeapot >> baseline25: spec [
 	<version: '2.5-baseline'>
 
@@ -342,7 +343,7 @@ ConfigurationOfTeapot >> baseline25: spec [
 
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 ConfigurationOfTeapot >> baseline26: spec [
 	<version: '2.6-baseline'>
 
@@ -370,7 +371,7 @@ ConfigurationOfTeapot >> baseline26: spec [
 
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 ConfigurationOfTeapot >> baseline27: spec [
 	<version: '2.7-baseline'>
 
@@ -398,7 +399,7 @@ ConfigurationOfTeapot >> baseline27: spec [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationOfTeapot >> customProjectAttributes [
 	 "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
 	For more information see: http://code.google.com/p/metacello/wiki/CustomProjectAttrributes"
@@ -406,7 +407,7 @@ ConfigurationOfTeapot >> customProjectAttributes [
 	^ #().
 ]
 
-{ #category : #'symbolic versions' }
+{ #category : 'symbolic versions' }
 ConfigurationOfTeapot >> development: spec [
 	<symbolicVersion: #'development'>
 
@@ -414,7 +415,7 @@ ConfigurationOfTeapot >> development: spec [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationOfTeapot >> project [
 
 	^ project ifNil: [ 
@@ -427,7 +428,7 @@ ConfigurationOfTeapot >> project [
 		project ]
 ]
 
-{ #category : #'symbolic versions' }
+{ #category : 'symbolic versions' }
 ConfigurationOfTeapot >> stable: spec [
 	<symbolicVersion: #'stable'>
 
@@ -435,7 +436,7 @@ ConfigurationOfTeapot >> stable: spec [
 	spec for: #'pharo7.x' version: '2.6'.	
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 ConfigurationOfTeapot >> version08: spec [
 	<version: '0.8' imports: #('0.1-baseline' )>
 
@@ -448,7 +449,7 @@ ConfigurationOfTeapot >> version08: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 ConfigurationOfTeapot >> version091: spec [
 	<version: '0.91' imports: #('0.1-baseline' )>
 
@@ -461,7 +462,7 @@ ConfigurationOfTeapot >> version091: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 ConfigurationOfTeapot >> version09: spec [
 	<version: '0.9' imports: #('0.1-baseline' )>
 
@@ -474,7 +475,7 @@ ConfigurationOfTeapot >> version09: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 ConfigurationOfTeapot >> version20: spec [
 	<version: '2.0' imports: #('2.0-baseline' )>
 
@@ -491,7 +492,7 @@ ConfigurationOfTeapot >> version20: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 ConfigurationOfTeapot >> version21: spec [
 	<version: '2.1' imports: #('2.1-baseline' )>
 
@@ -510,7 +511,7 @@ ConfigurationOfTeapot >> version21: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 ConfigurationOfTeapot >> version22: spec [
 	<version: '2.2' imports: #('2.2-baseline' )>
 
@@ -529,7 +530,7 @@ ConfigurationOfTeapot >> version22: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 ConfigurationOfTeapot >> version23: spec [
 	<version: '2.3' imports: #('2.2-baseline' )>
 
@@ -548,7 +549,7 @@ ConfigurationOfTeapot >> version23: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 ConfigurationOfTeapot >> version24: spec [
 	<version: '2.4' imports: #('2.4-baseline' )>
 
@@ -567,7 +568,7 @@ ConfigurationOfTeapot >> version24: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 ConfigurationOfTeapot >> version25: spec [
 	<version: '2.5' imports: #('2.5-baseline' )>
 
@@ -585,7 +586,7 @@ ConfigurationOfTeapot >> version25: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 ConfigurationOfTeapot >> version26: spec [
 	<version: '2.6' imports: #('2.6-baseline' )>
 

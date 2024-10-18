@@ -2,34 +2,35 @@
 I'm an URL pattern that uses a regular expression internally. I collect subexpressions in case of matching.
 "
 Class {
-	#name : #TeaRxUrlPattern,
-	#superclass : #TeaUrlPattern,
+	#name : 'TeaRxUrlPattern',
+	#superclass : 'TeaUrlPattern',
 	#instVars : [
 		'regexp',
 		'lock'
 	],
-	#category : #'Teapot-Core'
+	#category : 'Teapot-Core',
+	#package : 'Teapot-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TeaRxUrlPattern class >> fromRxMatcher: aRxMatcher [ 
 	^ self new initializeRxMatcher: aRxMatcher 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeaRxUrlPattern >> hasMatched: aZnUrl [
 	"XXX RxMatcher has state. Consider something better"
 	^ lock critical: [ (regexp matches: aZnUrl path) or: [ regexp matches: '/', aZnUrl path ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeaRxUrlPattern >> initializeRxMatcher: aRxMatcher [ 
 	regexp := aRxMatcher.
 	lock := Mutex new.
 	^ self
 ]
 
-{ #category : #'url matcher' }
+{ #category : 'url matcher' }
 TeaRxUrlPattern >> matchesUrl: aZnUrl placeholders: aDictionary [ 
 	| match |
 	match := self hasMatched: aZnUrl.
@@ -40,7 +41,7 @@ TeaRxUrlPattern >> matchesUrl: aZnUrl placeholders: aDictionary [
 
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TeaRxUrlPattern >> printOn: aStream [
 	aStream nextPutAll: '<regexp>'.
 ]

@@ -1,13 +1,14 @@
 Class {
-	#name : #TeapotRouteSetTest,
-	#superclass : #TestCase,
+	#name : 'TeapotRouteSetTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'server'
 	],
-	#category : #'Teapot-Tests'
+	#category : 'Teapot-Tests',
+	#package : 'Teapot-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotRouteSetTest >> setUp [
 	server := Teapot on
 		before: { '/secure/*' . '/protected/*' } -> [ :req | req abort: TeaResponse unauthorized ];	
@@ -17,12 +18,12 @@ TeapotRouteSetTest >> setUp [
 		start.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotRouteSetTest >> tearDown [
 	server stop
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotRouteSetTest >> testMatchesAnyRouteInAfterFilter [
 	| response |
 	response := TeaTestClient httpGet: '/a'.
@@ -36,7 +37,7 @@ TeapotRouteSetTest >> testMatchesAnyRouteInAfterFilter [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotRouteSetTest >> testMatchesAnyRouteInBeforeFilter [
 	| response |
 	response := TeaTestClient httpGet: '/secure/123'.
@@ -47,14 +48,14 @@ TeapotRouteSetTest >> testMatchesAnyRouteInBeforeFilter [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotRouteSetTest >> testMatchesAnyRouteInSet [
 	self assert: (TeaTestClient httpGetString: '/a') equals: 'abc'.
 	self assert: (TeaTestClient httpGetString: '/b') equals: 'abc'.
 	self assert: (TeaTestClient httpGetString: '/c') equals: 'abc'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotRouteSetTest >> testMatchesAnyRouteInSetWithParams [
 	self assert: (TeaTestClient httpPostString: '/x/value1') equals: 'value1'.
 	self assert: (TeaTestClient httpPostString: '/y/value2') equals: 'value2'.	

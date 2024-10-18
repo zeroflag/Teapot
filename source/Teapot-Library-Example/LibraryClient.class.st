@@ -2,20 +2,21 @@
 A simple HTTP Client for communication with the LibraryServer
 "
 Class {
-	#name : #LibraryClient,
-	#superclass : #Object,
+	#name : 'LibraryClient',
+	#superclass : 'Object',
 	#instVars : [
 		'port'
 	],
-	#category : #'Teapot-Library-Example'
+	#category : 'Teapot-Library-Example',
+	#package : 'Teapot-Library-Example'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LibraryClient class >> port: anInteger [
 	^ self new initializePort: anInteger
 ]
 
-{ #category : #'book library' }
+{ #category : 'book library' }
 LibraryClient >> addBook: aDictionary [		
 	| response |
 	response := ZnClient new
@@ -27,12 +28,12 @@ LibraryClient >> addBook: aDictionary [
 	^ self parseResponse: response
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LibraryClient >> baseUrl [
 	^ 'http://localhost:', self port asString
 ]
 
-{ #category : #'book library' }
+{ #category : 'book library' }
 LibraryClient >> books [
 	| response |
 	response := ZnClient new
@@ -44,13 +45,13 @@ LibraryClient >> books [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LibraryClient >> checkForNotFound: aZnResponse book: bookId [
 	404 = aZnResponse code 
 		ifTrue: [ BookNotFound signalWithBookId: bookId ]
 ]
 
-{ #category : #'book library' }
+{ #category : 'book library' }
 LibraryClient >> findBook: bookId [
 	| response |
 	response := ZnClient new
@@ -61,25 +62,25 @@ LibraryClient >> findBook: bookId [
 	^ self parseResponse: response
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LibraryClient >> initializePort: anInteger [
 	port := anInteger.
 	^ self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LibraryClient >> parseResponse: aZnResponse [
 	^ aZnResponse isSuccess
 		ifTrue: [ (NeoJSONReader on: aZnResponse entity readStream) next ]
 		ifFalse: [ self error: 'Unexpected response: ', aZnResponse code asString ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LibraryClient >> port [
 	^ port
 ]
 
-{ #category : #'book library' }
+{ #category : 'book library' }
 LibraryClient >> removeBook: bookId [
 	| response |
 	response := ZnClient new
@@ -90,7 +91,7 @@ LibraryClient >> removeBook: bookId [
 	^ self parseResponse: response
 ]
 
-{ #category : #'book library' }
+{ #category : 'book library' }
 LibraryClient >> replaceBook: bookId with: aDictionary [
 	| response |
 	response := ZnClient new

@@ -2,20 +2,21 @@
 I'm a ZnDelegate. I serve dynamically generated contents. The request is handled by the first route object, that returns other than 404 as response.
 "
 Class {
-	#name : #TeaDynamicRouter,
-	#superclass : #TeaRouter,
+	#name : 'TeaDynamicRouter',
+	#superclass : 'TeaRouter',
 	#instVars : [
 		'routes'
 	],
-	#category : #'Teapot-Core'
+	#category : 'Teapot-Core',
+	#package : 'Teapot-Core'
 }
 
-{ #category : #'route dispatcher' }
+{ #category : 'route dispatcher' }
 TeaDynamicRouter >> addRoute: aRoute [
 	^ routes add: aRoute
 ]
 
-{ #category : #'zn delegate' }
+{ #category : 'zn delegate' }
 TeaDynamicRouter >> handleRequest: aZnRequest ifUnhandled: aBlock [
 	routes do: [ :each | | response |
 		response := each handleRequest: aZnRequest ifUnhandled: nil.
@@ -23,13 +24,13 @@ TeaDynamicRouter >> handleRequest: aZnRequest ifUnhandled: aBlock [
 	^ aBlock value
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeaDynamicRouter >> initialize [
 	super initialize.
 	routes := OrderedCollection new.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TeaDynamicRouter >> routes [
 
 	^routes
