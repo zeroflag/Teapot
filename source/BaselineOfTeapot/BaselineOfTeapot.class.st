@@ -14,14 +14,12 @@ BaselineOfTeapot >> baseline: spec [
 
 		spec
 			package: 'Teapot-Core' with: [ spec requires: #( 'NeoJSON' ) ];
-			package: 'Teapot-Tools' with: [ spec requires: 'Teapot-Core' ].
-		spec
-			for: #( #'pharo7.x' #'pharo8.x' #'pharo9.x' )
-			do: [ spec package: 'Teapot-Tests' with: [ spec requires: 'Teapot-Core' ] ].
+			package: 'Teapot-Tools' with: [ spec requires: 'Teapot-Core' ];
+			package: 'Teapot-Tests' with: [ spec requires: 'Teapot-Core' ].
 
 		spec
-			for: #( #'pharo10.x' #'pharo11.x' #'pharo12.x' )
-			do: [ spec package: 'Teapot-Tests' with: [ spec requires: #( 'Teapot-Core' 'Zinc-Zodiac' ) ] ].
+			for: (self pharoVersionsFrom: 10)
+			do: [ spec package: 'Teapot-Tests' with: [ spec requires: #( 'Zinc-Zodiac' ) ] ].
 
 		spec
 			group: 'Tests' with: #( 'Teapot-Tests' );
@@ -33,6 +31,11 @@ BaselineOfTeapot >> baseline: spec [
 ]
 
 { #category : 'baselines' }
+BaselineOfTeapot >> pharoVersionsFrom: aVersion [
+	"Method copied from BaselineOf to allow use of Pharo versions < 11"
+	^ (aVersion to: SystemVersion current major) collect: [ :v | ('pharo' , v asString , '.x') asSymbol ]
+]
+
 BaselineOfTeapot >> setUpDependencies: spec [
 
 	spec
