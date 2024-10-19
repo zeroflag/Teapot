@@ -9,23 +9,24 @@ Teapot on
 	
 "
 Class {
-	#name : #Send,
-	#superclass : #Object,
+	#name : 'Send',
+	#superclass : 'Object',
 	#instVars : [
 		'selector',
 		'receiver'
 	],
-	#category : #'Teapot-Core'
+	#category : 'Teapot-Core',
+	#package : 'Teapot-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Send class >> message: aSymbol to: anObject [
 	^ self new 
 		setSelector: aSymbol 
 		receiver: anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Send >> printOn: aStream [
 	aStream 
 		nextPutAll: '(Send message: ';
@@ -35,14 +36,14 @@ Send >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Send >> setSelector: aSymbol receiver: anObject [
 	selector := aSymbol.
 	receiver := anObject.
 	^ self	
 ]
 
-{ #category : #'tea action' }
+{ #category : 'tea action' }
 Send >> teaEvalActionOnException: anException request: aTeaRequest [
 	^ receiver 
 		perform: selector 
@@ -51,7 +52,7 @@ Send >> teaEvalActionOnException: anException request: aTeaRequest [
 
 ]
 
-{ #category : #'tea action' }
+{ #category : 'tea action' }
 Send >> teaEvalActionOnRequest: aTeaRequest [
 	^ receiver 
 		perform: selector 
@@ -60,7 +61,7 @@ Send >> teaEvalActionOnRequest: aTeaRequest [
 
 ]
 
-{ #category : #'tea action' }
+{ #category : 'tea action' }
 Send >> teaEvalActionOnRequest: aTeaRequest response: aZnResponse [
 	^ receiver 
 		perform: selector 

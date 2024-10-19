@@ -1,13 +1,14 @@
 Class {
-	#name : #TeapotWhenClauseTest,
-	#superclass : #TestCase,
+	#name : 'TeapotWhenClauseTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'server'
 	],
-	#category : #'Teapot-Tests'
+	#category : 'Teapot-Tests',
+	#package : 'Teapot-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotWhenClauseTest >> setUp [
 	server := Teapot on
 		any: '/when' -> 'get'; when: [:req | req method = 'GET'];
@@ -25,12 +26,12 @@ TeapotWhenClauseTest >> setUp [
 		start
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotWhenClauseTest >> tearDown [
 	server stop
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotWhenClauseTest >> testDispatchesOnMethodInWhenFilter [
 	self 
 		assert: (TeaTestClient httpGetString: '/when') 
@@ -48,7 +49,7 @@ TeapotWhenClauseTest >> testDispatchesOnMethodInWhenFilter [
 	self assert: (TeaTestClient httpGet: '/never') isNotFound.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotWhenClauseTest >> testWhenClauseWithBeforeAfterFilter [
 	self 
 		assert: (TeaTestClient httpGetString: '/beforeurl') 

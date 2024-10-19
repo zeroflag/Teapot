@@ -7,18 +7,19 @@ A route handles http requests if it matches to the route. I have four major part
 - A response transformer for creating ZnResponse from the object returned by the handler.
 "
 Class {
-	#name : #TeaRoute,
-	#superclass : #Object,
+	#name : 'TeaRoute',
+	#superclass : 'Object',
 	#instVars : [
 		'responseTransformer',
 		'action',
 		'requestMatcher',
 		'port'
 	],
-	#category : #'Teapot-Core'
+	#category : 'Teapot-Core',
+	#package : 'Teapot-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TeaRoute class >> matcher: aTeaRequestMatcher action: aTeaAction transformer: aResponseTransformer port: portNumber [
 	^ self new 
 		setMatcher: aTeaRequestMatcher
@@ -27,13 +28,13 @@ TeaRoute class >> matcher: aTeaRequestMatcher action: aTeaAction transformer: aR
 		port: portNumber "XXX only used by teapsoon inspector"
 ]
 
-{ #category : #'request handling' }
+{ #category : 'request handling' }
 TeaRoute >> canHandleUrl: aZnUrl [
 	"only check the URL not without checking HTTP Method or when clause"
 	^ requestMatcher matchesUrl: aZnUrl
 ]
 
-{ #category : #'request handling' }
+{ #category : 'request handling' }
 TeaRoute >> handleRequest: aZnRequest ifUnhandled: aBlock [
 	^ requestMatcher
 		matchRequest: aZnRequest
@@ -44,24 +45,24 @@ TeaRoute >> handleRequest: aZnRequest ifUnhandled: aBlock [
 		ifNoMatch: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TeaRoute >> methodMatcher [ 
 	^ requestMatcher methodMatcher 
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TeaRoute >> printOn: aStream [
 	requestMatcher printOn: aStream.
 	aStream nextPutAll: ' -> '.
 	action printOn: aStream.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TeaRoute >> responseTransformer: aBlock [
 	responseTransformer := aBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeaRoute >> setMatcher: aTeaRequestMatcher action: aTeaAction transformer: aResponseTransformer port: portNumber [
 	requestMatcher := aTeaRequestMatcher.
 	action := aTeaAction.
@@ -70,7 +71,7 @@ TeaRoute >> setMatcher: aTeaRequestMatcher action: aTeaAction transformer: aResp
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TeaRoute >> whenClause: aBlockClosure [ 
 	requestMatcher whenClause: aBlockClosure
 ]

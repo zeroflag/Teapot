@@ -2,8 +2,8 @@
 I'm a composite zn delegate, built from other zn delegates. I forward the request to the first delegate that returns other than 404 as response. Errors are handled with the help of the registered error handlers.
 "
 Class {
-	#name : #TeaCompositeRouter,
-	#superclass : #TeaRouter,
+	#name : 'TeaCompositeRouter',
+	#superclass : 'TeaRouter',
 	#instVars : [
 		'routers',
 		'errorhandlers',
@@ -11,52 +11,53 @@ Class {
 		'afterFilters',
 		'notFoundHandler'
 	],
-	#category : #'Teapot-Core'
+	#category : 'Teapot-Core',
+	#package : 'Teapot-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TeaCompositeRouter class >> routers: teaRouterCollection [
 	^ self new setRouters: teaRouterCollection
 ]
 
-{ #category : #filters }
+{ #category : 'filters' }
 TeaCompositeRouter >> addAfterFilter: aTeaFilter [
 	^ afterFilters add: aTeaFilter
 ]
 
-{ #category : #filters }
+{ #category : 'filters' }
 TeaCompositeRouter >> addBeforeFilter: aTeaFilter [
 	^ beforeFilters add: aTeaFilter
 ]
 
-{ #category : #'error handing' }
+{ #category : 'error handing' }
 TeaCompositeRouter >> addErrorHandler: aTeaErrorHandler [
 	^ errorhandlers add: aTeaErrorHandler
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TeaCompositeRouter >> afterFilters [
 
 	^afterFilters 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TeaCompositeRouter >> beforeFilters [
 
 	^beforeFilters 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeaCompositeRouter >> evaluateAfterFilters: aZnRequest response: aZnResponse [
 	afterFilters do: [ :each | each handleRequest: aZnRequest response: aZnResponse ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeaCompositeRouter >> evaluateBeforeFilters: aZnRequest [
 	beforeFilters do: [ :each | each handleRequest: aZnRequest ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeaCompositeRouter >> evaluateRouters: aZnRequest ifUnhandled: aBlock [
 	routers do: [ :each | | response |
 		response := each handleRequest: aZnRequest ifUnhandled: nil.
@@ -64,7 +65,7 @@ TeaCompositeRouter >> evaluateRouters: aZnRequest ifUnhandled: aBlock [
 	^ aBlock value
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeaCompositeRouter >> exceptionOccurred: anException request: aZnRequest [
 	| handler |
 	handler := errorhandlers 
@@ -74,14 +75,14 @@ TeaCompositeRouter >> exceptionOccurred: anException request: aZnRequest [
 	
 ]
 
-{ #category : #'zn delegate' }
+{ #category : 'zn delegate' }
 TeaCompositeRouter >> handleRequest: aZnRequest [
 	^ self 
 		handleRequest: aZnRequest 
 		ifUnhandled: [ notFoundHandler requestNotFound: aZnRequest ] 
 ]
 
-{ #category : #'zn delegate' }
+{ #category : 'zn delegate' }
 TeaCompositeRouter >> handleRequest: aZnRequest ifUnhandled: aBlock [
 	| response |
 	^ [ self evaluateBeforeFilters: aZnRequest.
@@ -92,7 +93,7 @@ TeaCompositeRouter >> handleRequest: aZnRequest ifUnhandled: aBlock [
 	     do: [ :ex | self exceptionOccurred: ex request: aZnRequest ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeaCompositeRouter >> initialize [
 	super initialize.
 	errorhandlers := OrderedCollection new.
@@ -101,12 +102,12 @@ TeaCompositeRouter >> initialize [
 	notFoundHandler := TeaNotFoundHandler new.
 ]
 
-{ #category : #'error handing' }
+{ #category : 'error handing' }
 TeaCompositeRouter >> notFoundHandler: aTeaNotFoundHandler [
 	notFoundHandler := aTeaNotFoundHandler
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeaCompositeRouter >> setRouters: teaRouterCollection [
 	routers := teaRouterCollection asArray.
 	^ self

@@ -1,13 +1,14 @@
 Class {
-	#name : #TeapotResponseTest,
-	#superclass : #TestCase,
+	#name : 'TeapotResponseTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'server'
 	],
-	#category : #'Teapot-Tests'
+	#category : 'Teapot-Tests',
+	#package : 'Teapot-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotResponseTest >> setUp [
 	server := Teapot on
 		GET: '/test400' -> [ 
@@ -17,12 +18,12 @@ TeapotResponseTest >> setUp [
 		start
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotResponseTest >> tearDown [
 	server stop
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotResponseTest >> testReturnsCustomCodeBodyAndHeaders [
 	| response |
 	response := TeaTestClient httpGet: '/test400'.

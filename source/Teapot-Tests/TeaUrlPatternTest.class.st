@@ -1,10 +1,11 @@
 Class {
-	#name : #TeaUrlPatternTest,
-	#superclass : #TestCase,
-	#category : #'Teapot-Tests'
+	#name : 'TeaUrlPatternTest',
+	#superclass : 'TestCase',
+	#category : 'Teapot-Tests',
+	#package : 'Teapot-Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 TeaUrlPatternTest >> pattern: patternString matches: urlString [
 	| placeholders |
 	placeholders := Dictionary new.
@@ -12,7 +13,7 @@ TeaUrlPatternTest >> pattern: patternString matches: urlString [
 	^ placeholders
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeaUrlPatternTest >> pattern: patternString noMatch: urlString [
 	| placeholders |
 	placeholders := Dictionary new.
@@ -20,13 +21,13 @@ TeaUrlPatternTest >> pattern: patternString noMatch: urlString [
 	^ placeholders
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeaUrlPatternTest >> testLongerPatternEndedPlaceholder [
 	self pattern: '/a/b/<id>' noMatch: '/a/b'.
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeaUrlPatternTest >> testLongerPatternEndedWildcard [
 	self pattern: '/a/b/c/*' matches: '/a/b/c'.
 	self pattern: '/1/2/3/*/*' matches: '/1/2/3'.
@@ -34,13 +35,13 @@ TeaUrlPatternTest >> testLongerPatternEndedWildcard [
 	self pattern: '/a/b/c/*' noMatch: '/a/b'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeaUrlPatternTest >> testNoWildcard [	
 	self pattern: '/aa' matches: '/aa'.
 	self pattern: '/aa' noMatch: '/bb'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeaUrlPatternTest >> testPlaceholderSubstitute [
 	| placeholders |
 	
@@ -55,7 +56,7 @@ TeaUrlPatternTest >> testPlaceholderSubstitute [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeaUrlPatternTest >> testPlaceholderTypeMatch [
 	| placeholders |
 	placeholders := self pattern: '/<id:IsInteger>' matches: '/12'.
@@ -69,7 +70,7 @@ TeaUrlPatternTest >> testPlaceholderTypeMatch [
 	self assert: (placeholders at: #int) equals: 3.	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeaUrlPatternTest >> testPlaceholderTypeNoMatch [
 	self pattern: '/<id:IsInteger>' noMatch: '/foobar'.	
 	self pattern: '/<id:IsNumber>' noMatch: '/foobar'.
@@ -79,7 +80,7 @@ TeaUrlPatternTest >> testPlaceholderTypeNoMatch [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeaUrlPatternTest >> testPlaceholders [
 	self pattern: '/<id>/a/b' matches: '/1/a/b'.
 	self pattern: '/a/<id>/b' matches: '/a/2/b'.
@@ -90,7 +91,7 @@ TeaUrlPatternTest >> testPlaceholders [
 	self pattern: '/a/b/<id>' noMatch: '/a/c/1'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeaUrlPatternTest >> testRoot [
 	self pattern: '/' matches: '/'.	
 	self pattern: '/' noMatch: '/a'.	
@@ -98,13 +99,13 @@ TeaUrlPatternTest >> testRoot [
 	self pattern: '/a/b' noMatch: '/'.	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeaUrlPatternTest >> testShorterPatternEndedPlaceholder [
 	self pattern: '/a/b/<id>' noMatch: '/a/b/1/2'.	
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeaUrlPatternTest >> testShorterPatternEndedWildcard [	
  	self pattern: '/a/*' matches: '/a/b/c'.
 	self pattern: '/*' matches: '/1/2/3'.
@@ -113,13 +114,13 @@ TeaUrlPatternTest >> testShorterPatternEndedWildcard [
 	self pattern: '/a/b' noMatch: '/a/b/c'.	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeaUrlPatternTest >> testTralingSlash [
 	self pattern: '/a/b' matches: '/a/b/'.
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeaUrlPatternTest >> testWildcards [
 	self pattern: '/*/1/2' matches: '/0/1/2'.
 	self pattern: '/a/b/*' matches: '/a/b/c'.

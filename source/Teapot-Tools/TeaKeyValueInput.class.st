@@ -14,6 +14,7 @@ Class {
 	#tag : 'UI-Components'
 }
 
+
 { #category : 'instance creation' }
 TeaKeyValueInput class >> key: keyString value: valueString removeAction: aBlock [
 	^ self new

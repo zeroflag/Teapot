@@ -1,13 +1,14 @@
 Class {
-	#name : #TeapotQueryParamsTest,
-	#superclass : #TestCase,
+	#name : 'TeapotQueryParamsTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'server'
 	],
-	#category : #'Teapot-Tests'
+	#category : 'Teapot-Tests',
+	#package : 'Teapot-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotQueryParamsTest >> setUp [
 	server := Teapot on
 		GET: '/query' -> [ :req | req at: #foo ];
@@ -15,17 +16,17 @@ TeapotQueryParamsTest >> setUp [
 		start
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotQueryParamsTest >> tearDown [
 	server stop
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotQueryParamsTest >> testDefaultQueryParam [
 	self assert: (TeaTestClient httpGetString: '/queryopt') equals: 'default'.	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotQueryParamsTest >> testQueryParam [
 	self assert: (TeaTestClient httpGetString: '/query?foo=bar') equals: 'bar'.
 	self assert: (TeaTestClient httpGetString: '/queryopt?foo=baz') equals: 'baz'.

@@ -1,13 +1,14 @@
 Class {
-	#name : #TeapotEncodingTest,
-	#superclass : #TestCase,
+	#name : 'TeapotEncodingTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'server'
 	],
-	#category : #'Teapot-Tests'
+	#category : 'Teapot-Tests',
+	#package : 'Teapot-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotEncodingTest >> setUp [
 	server := Teapot on
 		GET: 'enc' -> (TeaResponse ok 
@@ -16,12 +17,12 @@ TeapotEncodingTest >> setUp [
 		start
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotEncodingTest >> tearDown [
 	server stop
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotEncodingTest >> testUserSpecifiedEncoding [
 	| response |
 	response := TeaTestClient httpGet: '/enc'.

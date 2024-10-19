@@ -1,13 +1,14 @@
 Class {
-	#name : #TeapotFormatTest,
-	#superclass : #TestCase,
+	#name : 'TeapotFormatTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'server'
 	],
-	#category : #'Teapot-Tests'
+	#category : 'Teapot-Tests',
+	#package : 'Teapot-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotFormatTest >> setUp [
 	server := Teapot on
 		GET: '/a' -> [ 4 ]; output: [ :resp :req | ZnResponse ok: (ZnStringEntity text: resp body printStringRoman) ];
@@ -17,31 +18,31 @@ TeapotFormatTest >> setUp [
 		start		
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotFormatTest >> tearDown [
 	server stop
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotFormatTest >> testArbitraryContentType [
 	self 
 		assert: (TeaTestClient httpGet: '/xml') contentType 
 		equals: (ZnMimeType applicationXml charSet: 'utf-8'; yourself)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotFormatTest >> testConverting [
 	self assert: (TeaTestClient httpGetString: '/a') equals: 'IV'.	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotFormatTest >> testDefaultContentTypeIsHtml [
 	self 
 		assert: (TeaTestClient httpGet: '/default') contentType 
 		equals: ZnMimeType textHtml
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotFormatTest >> testSetsContentType [
 	self 
 		assert: (TeaTestClient httpGet: '/plain') contentType 

@@ -1,13 +1,14 @@
 Class {
-	#name : #TeapotAfterTest,
-	#superclass : #TestCase,
+	#name : 'TeapotAfterTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'server'
 	],
-	#category : #'Teapot-Tests'
+	#category : 'Teapot-Tests',
+	#package : 'Teapot-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotAfterTest >> setUp [
 	server := Teapot on
 		after: '/after/<param>' -> [ :req :resp | resp headers at: 'header-key' put: (req at: #param) ];
@@ -15,12 +16,12 @@ TeapotAfterTest >> setUp [
 		start		
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotAfterTest >> tearDown [
 	server stop
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotAfterTest >> testAfterFilterCanModifyResponse [
 	| response |
 	

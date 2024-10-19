@@ -2,15 +2,16 @@
 I'm a ZnDelegate based on ZnStaticFileServerDelegate. I serve static content from a file system directory.
 "
 Class {
-	#name : #TeaStaticRouter,
-	#superclass : #TeaRouter,
+	#name : 'TeaStaticRouter',
+	#superclass : 'TeaRouter',
 	#instVars : [
 		'delegate'
 	],
-	#category : #'Teapot-Core'
+	#category : 'Teapot-Core',
+	#package : 'Teapot-Core'
 }
 
-{ #category : #'zn delegate' }
+{ #category : 'zn delegate' }
 TeaStaticRouter >> handleRequest: aZnRequest ifUnhandled: aBlock [
 	| response |
 	delegate ifNil: [ ^ aBlock value ].
@@ -18,7 +19,7 @@ TeaStaticRouter >> handleRequest: aZnRequest ifUnhandled: aBlock [
 	^ response isNotFound ifTrue: aBlock ifFalse: [ response ]
 ]
 
-{ #category : #acccessing }
+{ #category : 'acccessing' }
 TeaStaticRouter >> urlPrefix: urlPrefixString path: pathString [
 	delegate ifNil: [ delegate := ZnStaticFileServerDelegate new ].
 	delegate
