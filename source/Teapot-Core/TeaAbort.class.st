@@ -2,25 +2,26 @@
 I'm an exception that immediately stops a request within a filter or route.
 "
 Class {
-	#name : #TeaAbort,
-	#superclass : #Error,
+	#name : 'TeaAbort',
+	#superclass : 'Error',
 	#instVars : [
 		'response'
 	],
-	#category : #'Teapot-Core'
+	#category : 'Teapot-Core',
+	#package : 'Teapot-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TeaAbort class >> response: aZnResponse [
 	^ self new setResponse: aZnResponse
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 TeaAbort >> response [
 	^ response
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeaAbort >> setResponse: aZnResponse [
 	response := aZnResponse.
 	^ self

@@ -1,20 +1,21 @@
 Class {
-	#name : #TeapotErrorHandlingTest,
-	#superclass : #TestCase,
+	#name : 'TeapotErrorHandlingTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'server'
 	],
-	#category : #'Teapot-Tests'
+	#category : 'Teapot-Tests',
+	#package : 'Teapot-Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 TeapotErrorHandlingTest >> handleError: ex request: req [
 	self assert: (ex isKindOf: Exception).
 	self assert: (req isKindOf: TeaRequest).
 	^ ZnResponse ok: (ZnStringEntity text: 'outofbounds/domainerror handled')
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotErrorHandlingTest >> setUp [
 	server := Teapot on
 		GET: '/zerodiv' -> [ 1 / 0 ];
@@ -30,28 +31,28 @@ TeapotErrorHandlingTest >> setUp [
 		start		
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotErrorHandlingTest >> tearDown [
 	server stop
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotErrorHandlingTest >> testHandlesExceptionSet [
 	self assert: (TeaTestClient httpGetString: '/sub') equals: 'outofbounds/domainerror handled'.	
 	self assert: (TeaTestClient httpGetString: '/domain') equals: 'outofbounds/domainerror handled'.		
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotErrorHandlingTest >> testHandlesOneException [
 	self assert: (TeaTestClient httpGetString: '/zerodiv') equals: 'zerodiv handled'.	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotErrorHandlingTest >> testTransformingErroHandlerResponse [
 	self assert: (TeaTestClient httpGetString: '/keynotfound') equals: 'XLII'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotErrorHandlingTest >> testValueAsExceptionHandler [
 	self assert: (TeaTestClient httpGetString: '/nonbool') equals: 'nonbool handled'.	
 ]

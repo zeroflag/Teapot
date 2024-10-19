@@ -7,8 +7,8 @@ You can open me with:
 	self soleInstance open
 "
 Class {
-	#name : #Cupboard,
-	#superclass : #SpPresenter,
+	#name : 'Cupboard',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'teapots',
 		'toolbar'
@@ -17,16 +17,18 @@ Class {
 		'soleInstance',
 		'icons'
 	],
-	#category : #'Teapot-Tools-UI'
+	#category : 'Teapot-Tools-UI',
+	#package : 'Teapot-Tools',
+	#tag : 'UI'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Cupboard class >> iconProvider [
 
 	^TeaIconProvider
 ]
 
-{ #category : #'world menu' }
+{ #category : 'world menu' }
 Cupboard class >> menuCommandOn: aBuilder [ 
 	<worldMenu> 
 	
@@ -38,13 +40,13 @@ Cupboard class >> menuCommandOn: aBuilder [
 	 aBuilder withSeparatorAfter 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Cupboard class >> new [
 
 	self error: 'Do not create new instances - access using #soleInstance'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Cupboard class >> reset [
 	<script>
 	
@@ -52,14 +54,14 @@ Cupboard class >> reset [
 	 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Cupboard class >> soleInstance [
 	<script: 'self soleInstance inspect'>
 	
 	^ soleInstance ifNil: [ soleInstance := self basicNew initialize ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Cupboard >> buildBrowseToolBarItem [
 
 	^ SpToolbarButtonPresenter new
@@ -70,7 +72,7 @@ Cupboard >> buildBrowseToolBarItem [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Cupboard >> buildContextMenu [
 
 	^ SpMenuPresenter new
@@ -92,7 +94,7 @@ Cupboard >> buildContextMenu [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Cupboard >> buildInspectToolBarItem [
 
 	^ SpToolbarButtonPresenter new
@@ -103,7 +105,7 @@ Cupboard >> buildInspectToolBarItem [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Cupboard >> buildNewStaticToolBarItem [
 
 	^ SpToolbarButtonPresenter new
@@ -116,7 +118,7 @@ Cupboard >> buildNewStaticToolBarItem [
 		  yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Cupboard >> buildNewToolBarItem [
 
 	^ SpToolbarButtonPresenter new
@@ -129,7 +131,7 @@ Cupboard >> buildNewToolBarItem [
 		  yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Cupboard >> buildRefreshToolBarItem [
 
 	^ SpToolbarButtonPresenter new
@@ -140,7 +142,7 @@ Cupboard >> buildRefreshToolBarItem [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Cupboard >> buildStartToolBarItem [
 	
 	^ SpToolbarButtonPresenter new
@@ -151,7 +153,7 @@ Cupboard >> buildStartToolBarItem [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Cupboard >> buildStopToolBarItem [
 	
 	^ SpToolbarButtonPresenter new
@@ -162,7 +164,7 @@ Cupboard >> buildStopToolBarItem [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Cupboard >> buildToolbar [
 	
 	^ self newToolbar 
@@ -176,7 +178,7 @@ Cupboard >> buildToolbar [
 		yourself
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 Cupboard >> defaultLayout [ 
 
 	^ SpBoxLayout newTopToBottom 
@@ -184,19 +186,19 @@ Cupboard >> defaultLayout [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Cupboard >> iconForTeapot: aTeapot [
 	^aTeapot server isRunning 
 			ifTrue: [ self iconProvider teapotServerStartIcon ] 
 			ifFalse: [ self iconProvider teapotServerStopIcon ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Cupboard >> iconProvider [
 	^ self class iconProvider
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Cupboard >> initializePresenters [
 	
 	teapots := self newList.
@@ -209,7 +211,7 @@ Cupboard >> initializePresenters [
 		contextMenu: self buildContextMenu
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Cupboard >> initializeWindow: aWindowPresenter [
 
 	super initializeWindow: aWindowPresenter.
@@ -218,7 +220,7 @@ Cupboard >> initializeWindow: aWindowPresenter [
 		toolbar: (toolbar := self buildToolbar).
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Cupboard >> nameForTeapot: aTeapot [
 	^ String streamContents: [:stream |
 		stream nextPutAll: aTeapot server port asString.
@@ -227,7 +229,7 @@ Cupboard >> nameForTeapot: aTeapot [
 
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 Cupboard >> onNewServer [
 	| port pot |
 	port := UIManager default request: 'New server' initialAnswer: '80'.
@@ -241,7 +243,7 @@ Cupboard >> onNewServer [
 
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 Cupboard >> onNewStaticServer [
 	| port directory pot |
 	port := UIManager default request: 'New server' initialAnswer: '80'.
@@ -258,31 +260,31 @@ Cupboard >> onNewStaticServer [
 
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 Cupboard >> open [
 
 	self refreshTeapots.
 	super open.
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Cupboard >> printOn: aStream [
 	aStream nextPutAll: 'Cupboard'
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 Cupboard >> refreshTeapots [
 
 	teapots items: self teapots
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Cupboard >> selectedTeapot [
 
 	^ teapots selectedItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Cupboard >> teapots [
 	^ Teapot allInstances
 ]

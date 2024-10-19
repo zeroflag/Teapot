@@ -1,13 +1,14 @@
 Class {
-	#name : #TeapotWithTypeConstraintTest,
-	#superclass : #TestCase,
+	#name : 'TeapotWithTypeConstraintTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'server'
 	],
-	#category : #'Teapot-Tests'
+	#category : 'Teapot-Tests',
+	#package : 'Teapot-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotWithTypeConstraintTest >> setUp [
 	server := Teapot on
 		GET: '/u/<identifier:IsUUID>/more' -> [ :req | (req at: #identifier) asString ];
@@ -16,12 +17,12 @@ TeapotWithTypeConstraintTest >> setUp [
 		start
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotWithTypeConstraintTest >> tearDown [
 	server stop
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotWithTypeConstraintTest >> testNoParams [
 	self 
 		assert: (TeaTestClient httpGetString: '/u') 
@@ -29,7 +30,7 @@ TeapotWithTypeConstraintTest >> testNoParams [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotWithTypeConstraintTest >> testParseTypeConstraint [
 	self 
 		assert: (TeaTestClient httpGetString: '/u/964d5d07-1834-0d00-a106-47ae08909eb2') 
@@ -37,7 +38,7 @@ TeapotWithTypeConstraintTest >> testParseTypeConstraint [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotWithTypeConstraintTest >> testParseTypeConstraint2 [
 	self 
 		assert: (TeaTestClient httpGetString: '/u/964d5d07-1834-0d00-a106-47ae08909eb2/more') 

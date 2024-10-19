@@ -3,25 +3,26 @@ This exception indicates that the given parameter was not found in the TeaReques
 
 "
 Class {
-	#name : #TeaNoSuchParam,
-	#superclass : #KeyNotFound,
+	#name : 'TeaNoSuchParam',
+	#superclass : 'KeyNotFound',
 	#instVars : [
 		'param'
 	],
-	#category : #'Teapot-Core'
+	#category : 'Teapot-Core',
+	#package : 'Teapot-Core'
 }
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 TeaNoSuchParam class >> signalWithParam: aSymbol [
 	(self new setParam: aSymbol) signal: 'Param ', aSymbol printString, ' not found'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TeaNoSuchParam >> param [
 	^ param
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeaNoSuchParam >> setParam: aSymbol [
 	param := aSymbol.
 	^ self

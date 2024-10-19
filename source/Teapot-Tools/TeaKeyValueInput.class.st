@@ -2,17 +2,19 @@
 Two inputs and a remove button.
 "
 Class {
-	#name : #TeaKeyValueInput,
-	#superclass : #SpPresenter,
+	#name : 'TeaKeyValueInput',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'keyInput',
 		'valueInput',
 		'removeButton'
 	],
-	#category : #'Teapot-Tools-UI-Components'
+	#category : 'Teapot-Tools-UI-Components',
+	#package : 'Teapot-Tools',
+	#tag : 'UI-Components'
 }
 
-{ #category : #specs }
+{ #category : 'specs' }
 TeaKeyValueInput class >> defaultLayout [
 	^ SpBoxLayout newHorizontal  
 		add: #keyInput expand: true fill: true padding: 5;
@@ -22,7 +24,7 @@ TeaKeyValueInput class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TeaKeyValueInput class >> key: keyString value: valueString removeAction: aBlock [
 	^ self new
 		setKey: keyString 
@@ -30,12 +32,12 @@ TeaKeyValueInput class >> key: keyString value: valueString removeAction: aBlock
 		removeAction: aBlock
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 TeaKeyValueInput >> asAssociation [
 	^ keyInput text -> valueInput text
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeaKeyValueInput >> initializePresenters [
 	keyInput := self newTextInput placeholder: 'key'; yourself.
 	valueInput := self newTextInput placeholder: 'value'; yourself.
@@ -48,17 +50,17 @@ TeaKeyValueInput >> initializePresenters [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TeaKeyValueInput >> keyInput [
 	^ keyInput
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TeaKeyValueInput >> removeButton [
 	^ removeButton
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeaKeyValueInput >> setKey: keyString value: valueString removeAction: aBlock [
 	keyInput text: keyString.
 	valueInput text: valueString.
@@ -66,7 +68,7 @@ TeaKeyValueInput >> setKey: keyString value: valueString removeAction: aBlock [
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TeaKeyValueInput >> valueInput [
 	^ valueInput
 ]

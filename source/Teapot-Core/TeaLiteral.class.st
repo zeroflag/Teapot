@@ -2,22 +2,23 @@
 A literal url pattern segment that matches to a string.
 "
 Class {
-	#name : #TeaLiteral,
-	#superclass : #TeaGlobUrlSegment,
+	#name : 'TeaLiteral',
+	#superclass : 'TeaGlobUrlSegment',
 	#instVars : [
 		'literal'
 	],
-	#category : #'Teapot-Core'
+	#category : 'Teapot-Core',
+	#package : 'Teapot-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TeaLiteral class >> fromString: aString atLast: aBoolean [
 	| class |
 	class := aBoolean ifTrue: [ TeaLiteralStop ] ifFalse: [ TeaLiteral ].
 	^ class new setLiteral: aString
 ]
 
-{ #category : #'url pattern segment' }
+{ #category : 'url pattern segment' }
 TeaLiteral >> matches: urlSegments rest: adjacentPatterns placeholders: aDictionary [
 	^ literal = urlSegments first and: 
 		[ adjacentPatterns first 
@@ -26,13 +27,13 @@ TeaLiteral >> matches: urlSegments rest: adjacentPatterns placeholders: aDiction
 			placeholders: aDictionary ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TeaLiteral >> printOn: aStream [
 	aStream nextPutAll: literal.
 	
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeaLiteral >> setLiteral: aString [
 	literal := aString.
 	^ self

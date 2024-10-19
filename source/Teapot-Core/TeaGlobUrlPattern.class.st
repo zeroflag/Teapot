@@ -10,15 +10,16 @@ Which will create a pattern that matches to an URL like this:
 	/foo/xyz/12/bar
 "
 Class {
-	#name : #TeaGlobUrlPattern,
-	#superclass : #TeaUrlPattern,
+	#name : 'TeaGlobUrlPattern',
+	#superclass : 'TeaUrlPattern',
 	#instVars : [
 		'segments'
 	],
-	#category : #'Teapot-Core'
+	#category : 'Teapot-Core',
+	#package : 'Teapot-Core'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 TeaGlobUrlPattern class >> createSegment: aString atLast: aBoolean [
 	aString = '*' 
 		ifTrue: [ ^ TeaWildcard atLast: aBoolean ].
@@ -27,7 +28,7 @@ TeaGlobUrlPattern class >> createSegment: aString atLast: aBoolean [
 	^ TeaLiteral fromString: aString atLast: aBoolean
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeaGlobUrlPattern class >> parseSegments: aString [
 	| tokens |
 	tokens := aString findTokens: '/'.
@@ -35,12 +36,12 @@ TeaGlobUrlPattern class >> parseSegments: aString [
 		self createSegment: each atLast: idx = tokens size ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TeaGlobUrlPattern class >> parseString: aString [
 	^ self new setSegments: (self parseSegments: aString)
 ]
 
-{ #category : #'url matcher' }
+{ #category : 'url matcher' }
 TeaGlobUrlPattern >> matchesUrl: anUrl placeholders: aDictionary [
 	| urlSegments |
 	urlSegments := self padUrlSegments: anUrl with: TeaPadding size: segments size.
@@ -52,7 +53,7 @@ TeaGlobUrlPattern >> matchesUrl: anUrl placeholders: aDictionary [
 		placeholders: aDictionary
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeaGlobUrlPattern >> padUrlSegments: anUrl with: padding size: anInteger [
 	| urlSegments |
 	urlSegments := anUrl segments isEmptyOrNil 
@@ -63,7 +64,7 @@ TeaGlobUrlPattern >> padUrlSegments: anUrl with: padding size: anInteger [
 	^ urlSegments
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TeaGlobUrlPattern >> printOn: aStream [
 	aStream nextPut: $'.
 	segments 
@@ -72,13 +73,13 @@ TeaGlobUrlPattern >> printOn: aStream [
 	aStream nextPut: $'.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeaGlobUrlPattern >> setSegments: anArray [
 	segments := anArray.
 	^ self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeaGlobUrlPattern >> trimTrailingSlash: urlSegments [ 
 	^ (urlSegments isNotEmpty and: [ urlSegments last asString = '/' ])
 		ifTrue: [ urlSegments allButLast ]

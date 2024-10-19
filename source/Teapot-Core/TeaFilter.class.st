@@ -2,16 +2,17 @@
 After and Before filters
 "
 Class {
-	#name : #TeaFilter,
-	#superclass : #Object,
+	#name : 'TeaFilter',
+	#superclass : 'Object',
 	#instVars : [
 		'action',
 		'requestMatcher'
 	],
-	#category : #'Teapot-Core'
+	#category : 'Teapot-Core',
+	#package : 'Teapot-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TeaFilter class >> urlPattern: anUrlPattern action: aTeaAction [
 	^ self new 
 		setMatcher: (TeaRequestMatcher method: TeaMethodMatcher any url: anUrlPattern)
@@ -19,26 +20,26 @@ TeaFilter class >> urlPattern: anUrlPattern action: aTeaAction [
 
 ]
 
-{ #category : #acccessing }
+{ #category : 'acccessing' }
 TeaFilter >> action [
 
 	^action
 ]
 
-{ #category : #acccessing }
+{ #category : 'acccessing' }
 TeaFilter >> requestMatcher [
 
 	^requestMatcher
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeaFilter >> setMatcher: aTeaRequestMatcher action: aTeaAction [
 	requestMatcher := aTeaRequestMatcher.
 	action := aTeaAction.
 	^ self
 ]
 
-{ #category : #acccessing }
+{ #category : 'acccessing' }
 TeaFilter >> whenClause: aBlockClosure [ 
 	requestMatcher whenClause: aBlockClosure 
 ]

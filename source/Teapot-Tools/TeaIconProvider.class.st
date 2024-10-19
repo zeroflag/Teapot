@@ -2,27 +2,29 @@
 An icon provider for tools icons with an icon cache
 "
 Class {
-	#name : #TeaIconProvider,
-	#superclass : #Object,
+	#name : 'TeaIconProvider',
+	#superclass : 'Object',
 	#classVars : [
 		'IconCache'
 	],
-	#category : #'Teapot-Tools-Utilities'
+	#category : 'Teapot-Tools-Utilities',
+	#package : 'Teapot-Tools',
+	#tag : 'Utilities'
 }
 
-{ #category : #'private - icons' }
+{ #category : 'private - icons' }
 TeaIconProvider class >> form: base64String [
 	^ Form fromBinaryStream: (base64String base64Decoded asByteArray readStream)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TeaIconProvider class >> icons [
 
 	IconCache ifNil: [ IconCache := Dictionary new ].
 	^IconCache
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 TeaIconProvider class >> teapotIcon [
 
 	^ self icons
@@ -30,7 +32,7 @@ TeaIconProvider class >> teapotIcon [
 			ifAbsentPut: [ self form: self teapotIconContents ]
 ]
 
-{ #category : #'private - icons' }
+{ #category : 'private - icons' }
 TeaIconProvider class >> teapotIconContents [
 
 	^'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABhklEQVR42rWSPSxDURTHzzmv
@@ -44,19 +46,19 @@ QD2vUC8Qkkf0uiT9wFon5OSVqUL65oui6hGxBy3TMMsAU+Y9Ki5M3KZ1lZZqi5oBr2z5j75R
 N5raAAAAAElFTkSuQmCC'
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 TeaIconProvider class >> teapotInspectIcon [
 
 	^ self iconNamed: #'glamorousInspect'
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 TeaIconProvider class >> teapotRefreshIcon [
 
 	^ self iconNamed: #'glamorousRefresh'
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 TeaIconProvider class >> teapotServerIcon [
 
 	^ self icons
@@ -64,7 +66,7 @@ TeaIconProvider class >> teapotServerIcon [
 			ifAbsentPut: [ self form: self teapotServerIconContents ]
 ]
 
-{ #category : #'private - icons' }
+{ #category : 'private - icons' }
 TeaIconProvider class >> teapotServerIconContents [
 
 	^'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAC0UlEQVR4Xo2SbU+SURzG+RS2
@@ -84,7 +86,7 @@ PNq/5OcfQGRlKZHAKaLal4/bPAXkBa3IypZr6HQ6g/Y/8vI6SVRW9qChUYPsnCJNaGgE9/cz
 PwCyhvLlWzqQAwAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 TeaIconProvider class >> teapotServerStartIcon [
 
 	^ self icons
@@ -92,7 +94,7 @@ TeaIconProvider class >> teapotServerStartIcon [
 			ifAbsentPut: [ self form: self teapotServerStartIconContents ]
 ]
 
-{ #category : #'private - icons' }
+{ #category : 'private - icons' }
 TeaIconProvider class >> teapotServerStartIconContents [
 
 	^'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADR0lEQVR4Xn2T71fTZRyG+S80
@@ -114,7 +116,7 @@ hyisLrBqtUYUiguB9p3ldH4N+q+bAxU+bfrPbYzaHyVsj9guPBv5jCB5Kbi6UXtiBIOhnWvm
 O3TcsBEfn6B4kvkXxV9YN+ClYBQAAAAASUVORK5CYII='
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 TeaIconProvider class >> teapotServerStaticIcon [
 
 	^ self icons
@@ -122,7 +124,7 @@ TeaIconProvider class >> teapotServerStaticIcon [
 			ifAbsentPut: [ self form: self teapotServerStaticIconContents ]
 ]
 
-{ #category : #'private - icons' }
+{ #category : 'private - icons' }
 TeaIconProvider class >> teapotServerStaticIconContents [
 
 	^'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADIElEQVR42l2Ta0gUURTH/1fH
@@ -143,7 +145,7 @@ K4CiUwbr6SOZJjJTgmqnAEevtGJRym709j50VlVeNE51Jtm0IcWcmbE0WxLpCdBWlgQRoFdY
 9sfG/PqYeQkr5IZqfzrg7n/nsQwM9Fv+b+e/lwaeIIipiHQAAAAASUVORK5CYII='
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 TeaIconProvider class >> teapotServerStopIcon [
 
 	^ self icons
@@ -151,7 +153,7 @@ TeaIconProvider class >> teapotServerStopIcon [
 			ifAbsentPut: [ self form: self teapotServerStopIconContents ]
 ]
 
-{ #category : #'private - icons' }
+{ #category : 'private - icons' }
 TeaIconProvider class >> teapotServerStopIconContents [
 
 	^'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADO0lEQVR4Xn2T7U+TVxiH+xds
@@ -173,7 +175,7 @@ NZia+lTiR0p9Qppl3JhjM65ZYzPIZLa1q1f/vSAp6fHkE9ZLdJzrRv9Jk6P4bbXpr9Ddn/sT
 U0VgFvyaFxkAAAAASUVORK5CYII='
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 TeaIconProvider class >> teaspoonIcon [
 
 	^ self icons
@@ -181,7 +183,7 @@ TeaIconProvider class >> teaspoonIcon [
 			ifAbsentPut: [ self form: (self teaspoonIconContents) ]
 ]
 
-{ #category : #'private - icons' }
+{ #category : 'private - icons' }
 TeaIconProvider class >> teaspoonIconContents [
 
 	^'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABdklEQVR42mNkoBAwgoiJs6fL

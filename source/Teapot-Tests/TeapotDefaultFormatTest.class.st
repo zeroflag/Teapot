@@ -1,13 +1,14 @@
 Class {
-	#name : #TeapotDefaultFormatTest,
-	#superclass : #TestCase,
+	#name : 'TeapotDefaultFormatTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'server'
 	],
-	#category : #'Teapot-Tests'
+	#category : 'Teapot-Tests',
+	#package : 'Teapot-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotDefaultFormatTest >> setUp [
 	server := (Teapot configure: { #defaultOutput -> #text })
 		GET: 'default' -> 'any';
@@ -15,19 +16,19 @@ TeapotDefaultFormatTest >> setUp [
 		start		
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotDefaultFormatTest >> tearDown [
 	server stop
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotDefaultFormatTest >> testDefault [
 	self 
 		assert: (TeaTestClient httpGet: '/default') contentType 
 		equals: ZnMimeType textPlain
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotDefaultFormatTest >> testOverride [
 	self 
 		assert: (TeaTestClient httpGet: '/html') contentType 

@@ -2,12 +2,13 @@
 I'm a smarter not found handler that returns 405 instead of 404 when the url part of some routes matched but the HTTP method didn't.
 "
 Class {
-	#name : #Tea405AwareNotFoundHandler,
-	#superclass : #TeaNotFoundHandler,
-	#category : #'Teapot-Core'
+	#name : 'Tea405AwareNotFoundHandler',
+	#superclass : 'TeaNotFoundHandler',
+	#category : 'Teapot-Core',
+	#package : 'Teapot-Core'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 Tea405AwareNotFoundHandler >> populateAllowedHeaderOf: response withAllowedRoutes: allowedRoutes [
 	allowedRoutes do: [ :route | 
 		response headers 
@@ -17,7 +18,7 @@ Tea405AwareNotFoundHandler >> populateAllowedHeaderOf: response withAllowedRoute
 	^ response
 ]
 
-{ #category : #'not found handler' }
+{ #category : 'not found handler' }
 Tea405AwareNotFoundHandler >> requestNotFound: aZnRequest [
 	| allowedRoutes |
 	allowedRoutes := routes

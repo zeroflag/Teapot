@@ -36,7 +36,6 @@ BaselineOfTeapot >> pharoVersionsFrom: aVersion [
 	^ (aVersion to: SystemVersion current major) collect: [ :v | ('pharo' , v asString , '.x') asSymbol ]
 ]
 
-{ #category : 'baselines' }
 BaselineOfTeapot >> setUpDependencies: spec [
 
 	spec

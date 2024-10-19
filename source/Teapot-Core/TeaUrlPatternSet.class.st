@@ -10,25 +10,26 @@ Teapot on
 Both ZnEasy get: '/a' and ZnEasy get: '/b' returns 'ab'
 "
 Class {
-	#name : #TeaUrlPatternSet,
-	#superclass : #TeaUrlPattern,
+	#name : 'TeaUrlPatternSet',
+	#superclass : 'TeaUrlPattern',
 	#instVars : [
 		'patterns'
 	],
-	#category : #'Teapot-Core'
+	#category : 'Teapot-Core',
+	#package : 'Teapot-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TeaUrlPatternSet class >> fromCollection: aCollection [ 
 	^ self new setPatterns: (aCollection collect: #asTeaUrlPattern)
 ]
 
-{ #category : #'url matcher' }
+{ #category : 'url matcher' }
 TeaUrlPatternSet >> matchesUrl: anUrl placeholders: aDictionary [
 	^ patterns anySatisfy: [ :each | each matchesUrl: anUrl placeholders: aDictionary ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TeaUrlPatternSet >> printOn: aStream [
 	aStream nextPut: ${.
 	patterns 
@@ -37,7 +38,7 @@ TeaUrlPatternSet >> printOn: aStream [
 	aStream nextPut: $}.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeaUrlPatternSet >> setPatterns: aCollection [ 
 	patterns := aCollection.
 	^ self

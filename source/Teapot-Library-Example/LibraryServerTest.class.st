@@ -1,21 +1,22 @@
 Class {
-	#name : #LibraryServerTest,
-	#superclass : #TestCase,
+	#name : 'LibraryServerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'client',
 		'server',
 		'book1',
 		'book2'
 	],
-	#category : #'Teapot-Library-Example'
+	#category : 'Teapot-Library-Example',
+	#package : 'Teapot-Library-Example'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 LibraryServerTest >> port [
 	^ 17834
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 LibraryServerTest >> setUp [
 	client := LibraryClient port: self port.
 	server := LibraryServer serveOn: self port.
@@ -23,12 +24,12 @@ LibraryServerTest >> setUp [
 	book2 := {#title -> 'book 2'. #authors -> 'author 2'} asDictionary
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 LibraryServerTest >> tearDown [
 	server stop
 ]
 
-{ #category : #'tests - an empty library' }
+{ #category : 'tests - an empty library' }
 LibraryServerTest >> testAllowsReplacing [
 	client 
 		replaceBook: 1 
@@ -39,7 +40,7 @@ LibraryServerTest >> testAllowsReplacing [
 		
 ]
 
-{ #category : #'tests  - a non empty library' }
+{ #category : 'tests  - a non empty library' }
 LibraryServerTest >> testDoesNotFindDeletedBook [
 	book1 := client addBook: book1.
 	book2 := client addBook: book2.
@@ -58,14 +59,14 @@ LibraryServerTest >> testDoesNotFindDeletedBook [
 	
 ]
 
-{ #category : #'tests - a new library' }
+{ #category : 'tests - a new library' }
 LibraryServerTest >> testHasNoBooks [
 	self 
 		assert: client books size
 		equals: 0
 ]
 
-{ #category : #'tests  - a non empty library' }
+{ #category : 'tests  - a non empty library' }
 LibraryServerTest >> testReplacesExistingBook [
 	| old new id |
 	old := client addBook: book1.
@@ -81,7 +82,7 @@ LibraryServerTest >> testReplacesExistingBook [
 		equals: (book2 copyWith: #id -> id)
 ]
 
-{ #category : #'tests  - a non empty library' }
+{ #category : 'tests  - a non empty library' }
 LibraryServerTest >> testReturnsAllBooks [
 	| books |	
 	books := client 
@@ -96,7 +97,7 @@ LibraryServerTest >> testReturnsAllBooks [
 	
 ]
 
-{ #category : #'tests - an empty library' }
+{ #category : 'tests - an empty library' }
 LibraryServerTest >> testReturnsSingleAddedBook [
 	| added found |	
 	added := client addBook: book1.
@@ -105,7 +106,7 @@ LibraryServerTest >> testReturnsSingleAddedBook [
 	self assert: found equals: added.
 ]
 
-{ #category : #'tests - an empty library' }
+{ #category : 'tests - an empty library' }
 LibraryServerTest >> testSignalsErrorWhenRemoving [
 	self 
 		should: [ client removeBook: 1 ]

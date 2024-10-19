@@ -1,14 +1,15 @@
 Class {
-	#name : #TeapotBeforeTest,
-	#superclass : #TestCase,
+	#name : 'TeapotBeforeTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'server',
 		'log'
 	],
-	#category : #'Teapot-Tests'
+	#category : 'Teapot-Tests',
+	#package : 'Teapot-Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 TeapotBeforeTest >> forbidden [
 	^ ZnResponse new
 		statusLine: ZnStatusLine forbidden;
@@ -16,12 +17,12 @@ TeapotBeforeTest >> forbidden [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeapotBeforeTest >> logRequest: aTeaRequest [
 	log add: (aTeaRequest at: #user)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotBeforeTest >> setUp [
 	log := OrderedCollection new.
 	server := Teapot on
@@ -35,12 +36,12 @@ TeapotBeforeTest >> setUp [
 		start		
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TeapotBeforeTest >> tearDown [
 	server stop
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotBeforeTest >> testAuthentication [
 	self assert: (TeaTestClient httpGetString: '/secure?user=admin&pass=****') equals: 'protected'.
 	self assert: (TeaTestClient httpGetString: '/secure/1/2/3?user=admin&pass=****') equals: 'protected'.
@@ -51,7 +52,7 @@ TeapotBeforeTest >> testAuthentication [
 	self assert: (TeaTestClient httpPostString: '/public?user=any') equals: 'public'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TeapotBeforeTest >> testMultipleBeforeHandlers [
 	TeaTestClient httpGet: '/secure?user=admin&pass=****'.
 	TeaTestClient httpGet: '/secure/1/2/3?user=admin&pass=****'.	

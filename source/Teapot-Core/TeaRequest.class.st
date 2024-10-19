@@ -2,38 +2,39 @@
 I extend the ZnRequest with addition methods for convenience.
 "
 Class {
-	#name : #TeaRequest,
-	#superclass : #Object,
+	#name : 'TeaRequest',
+	#superclass : 'Object',
 	#instVars : [
 		'znRequest',
 		'pathParams'
 	],
-	#category : #'Teapot-Core'
+	#category : 'Teapot-Core',
+	#package : 'Teapot-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TeaRequest class >> fromZnRequest: aZnRequest [
 	^ self fromZnRequest: aZnRequest pathParams: Dictionary new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TeaRequest class >> fromZnRequest: aZnRequest pathParams: aDictionary [
 	^ self new setZnRequest: aZnRequest pathParams: aDictionary
 ]
 
-{ #category : #aborting }
+{ #category : 'aborting' }
 TeaRequest >> abort: response [
 	(TeaAbort response: response) signal
 ]
 
-{ #category : #'acccessing - params' }
+{ #category : 'acccessing - params' }
 TeaRequest >> at: aSymbol [
 	^ self 
 		at: aSymbol 
 		ifAbsent: [ TeaNoSuchParam signalWithParam: aSymbol ]
 ]
 
-{ #category : #'acccessing - params' }
+{ #category : 'acccessing - params' }
 TeaRequest >> at: aSymbol ifAbsent: aBlock [
 	"Gets the value of a path parameter, query parameter for form parameter.
 		E.g. /foo/<path-param>/bar
@@ -42,26 +43,26 @@ TeaRequest >> at: aSymbol ifAbsent: aBlock [
 	^ pathParams at: aSymbol ifAbsent: [ self queryOrFormParam: aSymbol ifAbsent: aBlock	"XXX do something better" ]
 ]
 
-{ #category : #'reflective operations' }
+{ #category : 'reflective operations' }
 TeaRequest >> doesNotUnderstand: aMessage [
 	^ aMessage sendTo: znRequest
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeaRequest >> formParam: aSymbol ifAbsent: aBlock [
 	^ (znRequest entity isKindOf: ZnApplicationFormUrlEncodedEntity) "XXX do something better" 
 		ifTrue: [ znRequest entity at: aSymbol ifAbsent: aBlock ]
 		ifFalse: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TeaRequest >> queryOrFormParam: aSymbol ifAbsent: aBlock [
 	^ znRequest uri 
 		queryAt: aSymbol 
 		ifAbsent: [ self formParam: aSymbol ifAbsent: aBlock ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TeaRequest >> setZnRequest: aZnRequest pathParams: aDictionary [
 	znRequest := aZnRequest.
 	pathParams := aDictionary.

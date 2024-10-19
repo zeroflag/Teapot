@@ -2,12 +2,13 @@
 I'm a placeholder at the last position.
 "
 Class {
-	#name : #TeaPlaceholderStop,
-	#superclass : #TeaPlaceholder,
-	#category : #'Teapot-Core'
+	#name : 'TeaPlaceholderStop',
+	#superclass : 'TeaPlaceholder',
+	#category : 'Teapot-Core',
+	#package : 'Teapot-Core'
 }
 
-{ #category : #'url pattern segment' }
+{ #category : 'url pattern segment' }
 TeaPlaceholderStop >> matches: urlSegments rest: adjacentPatterns placeholders: aDictionary [
 	| match |
 	match := urlSegments size = 1 
