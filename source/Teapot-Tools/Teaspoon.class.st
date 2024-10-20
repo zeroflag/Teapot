@@ -19,35 +19,6 @@ Class {
 	#tag : 'UI'
 }
 
-{ #category : 'layout' }
-Teaspoon class >> defaultLayout [
-    ^ SpBoxLayout newVertical 
-        add: (SpBoxLayout newHorizontal
-                    vAlignCenter;
-                    add: #methodDropList expand: false fill: false;
-                    spacing: 5;
-                    add: #urlInput expand: true fill: true;
-                    yourself) 
-            expand: false fill: false padding: 10;
-        add: #requestBody expand: true fill: true;
-        add: (SpBoxLayout newHorizontal
-                vAlignCenter;
-                add: #contentTypeLabel expand: false fill: false;
-                spacing: 5;
-                add: #contentTypeDropList expand: true fill: true;
-                yourself)
-            expand: false fill: false;
-        spacing: 10;		
-		  add: #resultLabel expand: false fill: false;
-        add: #resultText expand: true fill: true;
-        add: (SpBoxLayout newHorizontal 
-                add: #execButton expand: false fill: false;
-                hAlignCenter;
-                yourself)
-            expand: false fill: false;
-        yourself
-]
-
 { #category : 'private - accessing' }
 Teaspoon class >> iconProvider [
 
@@ -111,6 +82,35 @@ Teaspoon >> contentTypeDropList [
 { #category : 'accessing' }
 Teaspoon >> contentTypeLabel [
 	^ contentTypeLabel
+]
+
+{ #category : 'layout' }
+Teaspoon >> defaultLayout [
+    ^ SpBoxLayout newVertical 
+        add: (SpBoxLayout newHorizontal
+                    vAlignCenter;
+                    add: methodDropList expand: false fill: false;
+                    spacing: 5;
+                    add: urlInput expand: true fill: true;
+                    yourself) 
+            expand: false fill: false padding: 10;
+        add: requestBody expand: true fill: true;
+        add: (SpBoxLayout newHorizontal
+                vAlignCenter;
+                add: contentTypeLabel expand: false fill: false;
+                spacing: 5;
+                add: contentTypeDropList expand: true fill: true;
+                yourself)
+            expand: false fill: false;
+        spacing: 10;		
+		  add: resultLabel expand: false fill: false;
+        add: resultText expand: true fill: true;
+        add: (SpBoxLayout newHorizontal 
+                add: execButton expand: false fill: false;
+                hAlignCenter;
+                yourself)
+            expand: false fill: false;
+        yourself
 ]
 
 { #category : 'accessing' }

@@ -16,11 +16,11 @@ Class {
 }
 
 { #category : 'layout' }
-TeaRequestBodyTabs class >> defaultLayout [
+TeaRequestBodyTabs >> defaultLayout [
 	^ SpBoxLayout newVertical 
-		add: #label expand: false fill: false;
+		add: label expand: false fill: false;
 		spacing: 5;
-		add: #requestBody expand: true fill: true;
+		add: requestBody expand: true fill: true;
 		yourself
 ]
 

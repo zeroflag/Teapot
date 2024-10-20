@@ -13,17 +13,6 @@ Class {
 	#tag : 'UI-Components'
 }
 
-{ #category : 'specs' }
-TeaFormTab class >> defaultLayout [
-	^ SpBoxLayout newVertical 
-		add: #form expand: false fill: false;
-      add: (SpBoxLayout newHorizontal 
-		   add: #addButton expand: false fill: false;
-         hAlignCenter;
-         yourself) expand: false fill: false;		
-		yourself
-]
-
 { #category : 'accessing' }
 TeaFormTab >> addButton [
 	^ addButton 
@@ -32,6 +21,17 @@ TeaFormTab >> addButton [
 { #category : 'initialization' }
 TeaFormTab >> connectPresenters [ 
 	addButton whenActionPerformedDo: [ form addKey: 'key' value: 'value' ]
+]
+
+{ #category : 'layout' }
+TeaFormTab >> defaultLayout [
+	^ SpBoxLayout newVertical 
+		add: form expand: false fill: false;
+      add: (SpBoxLayout newHorizontal 
+		   add: addButton expand: false fill: false;
+         hAlignCenter;
+         yourself) expand: false fill: false;		
+		yourself
 ]
 
 { #category : 'accessing' }

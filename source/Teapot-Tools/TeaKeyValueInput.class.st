@@ -14,15 +14,6 @@ Class {
 	#tag : 'UI-Components'
 }
 
-{ #category : 'specs' }
-TeaKeyValueInput class >> defaultLayout [
-	^ SpBoxLayout newHorizontal  
-		add: #keyInput expand: true fill: true padding: 5;
-		add: #valueInput expand: true fill: true padding: 5;
-		add: #removeButton expand: false fill: false padding: 5;
-		vAlignStart;
-		yourself
-]
 
 { #category : 'instance creation' }
 TeaKeyValueInput class >> key: keyString value: valueString removeAction: aBlock [
@@ -35,6 +26,16 @@ TeaKeyValueInput class >> key: keyString value: valueString removeAction: aBlock
 { #category : 'converting' }
 TeaKeyValueInput >> asAssociation [
 	^ keyInput text -> valueInput text
+]
+
+{ #category : 'layout' }
+TeaKeyValueInput >> defaultLayout [
+	^ SpBoxLayout newHorizontal  
+		add: keyInput expand: true fill: true padding: 5;
+		add: valueInput expand: true fill: true padding: 5;
+		add: removeButton expand: false fill: false padding: 5;
+		vAlignStart;
+		yourself
 ]
 
 { #category : 'initialization' }
