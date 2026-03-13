@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        smalltalk: [ Pharo64-11, Pharo64-10, Pharo64-9.0, Pharo64-8.0, Pharo64-7.0 ]
+        smalltalk: [ Pharo64-13, Pharo64-12, Pharo64-11, Pharo64-10, Pharo64-9.0, Pharo64-8.0, Pharo64-7.0 ]
         load-spec: [ deployment, tests, tools, development ]
     name: ${{ matrix.smalltalk }} + ${{ matrix.load-spec }}
     steps:
