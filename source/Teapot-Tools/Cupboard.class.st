@@ -277,8 +277,7 @@ Cupboard >> refreshTeapots [
 
 	teapots items: self teapots.
 	
-	teapots items isNotEmpty
-		ifTrue: [ teapots selectFirst ].
+	teapots items ifNotEmpty: [ teapots selectFirst ].
 ]
 
 { #category : 'accessing' }
