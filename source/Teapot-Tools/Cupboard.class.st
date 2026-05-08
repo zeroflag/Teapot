@@ -67,7 +67,7 @@ Cupboard >> buildBrowseToolBarItem [
 	^ SpToolbarButtonPresenter new
 		label: 'Browse';
 		icon: self iconProvider teapotServerIcon;
-		action: [ self selectedTeapot browse ];
+		action: [ self selectedTeapot ifNotNil: #browse ];
 		help: 'Browse the selected Teapot';
 		yourself
 ]
@@ -100,7 +100,7 @@ Cupboard >> buildInspectToolBarItem [
 	^ SpToolbarButtonPresenter new
 		label: 'Inspect';
 		icon: self iconProvider teapotInspectIcon;
-		action: [ self selectedTeapot inspect ];
+		action: [ self selectedTeapot ifNotNil: #inspect ];
 		help: 'Inspect the selected Teapot';
 		yourself
 ]
@@ -148,7 +148,8 @@ Cupboard >> buildStartToolBarItem [
 	^ SpToolbarButtonPresenter new
 		label: 'Start';
 		icon: self iconProvider teapotServerStartIcon;
-		action: [ self selectedTeapot start. self refreshTeapots ];
+		action: [ self selectedTeapot ifNotNil: #start. 
+			       self refreshTeapots ];
 		help: 'Start the selected Teapot';
 		yourself
 ]
@@ -159,7 +160,8 @@ Cupboard >> buildStopToolBarItem [
 	^ SpToolbarButtonPresenter new
 		label: 'Stop';
 		icon: self iconProvider teapotServerStopIcon;
-		action: [ self selectedTeapot stop. self refreshTeapots ];
+		action: [ self selectedTeapot ifNotNil: #stop. 
+			       self refreshTeapots ];
 		help: 'Stop the selected Teapot';
 		yourself
 ]

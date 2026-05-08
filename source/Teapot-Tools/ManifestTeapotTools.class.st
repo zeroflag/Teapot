@@ -13,3 +13,10 @@ Class {
 ManifestTeapotTools class >> ruleLongMethodsRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#Cupboard #inspectTeapot: #false)) #'2022-08-29T16:00:19.64012+02:00') )
 ]
+
+{ #category : 'code-critics' }
+ManifestTeapotTools class >> ruleReNotOptimizedIfNilRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGClassDefinition #(#Cupboard)) #'2026-05-08T12:29:38.838006+02:00') )
+]
