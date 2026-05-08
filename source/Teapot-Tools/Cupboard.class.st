@@ -200,10 +200,10 @@ Cupboard >> iconProvider [
 
 { #category : 'initialization' }
 Cupboard >> initializePresenters [
-	
 	teapots := self newList.
 	teapots
 		items: self teapots;
+		beSingleSelection;
 		displayIcon: [:each | self iconForTeapot: each ];
 		display: [ :each | self nameForTeapot: each  ];
 		whenActivatedDo: [ self selectedTeapot inspect ];
@@ -275,7 +275,10 @@ Cupboard >> printOn: aStream [
 { #category : 'actions' }
 Cupboard >> refreshTeapots [
 
-	teapots items: self teapots
+	teapots items: self teapots.
+	
+	teapots items isNotEmpty
+		ifTrue: [ teapots selectFirst ].
 ]
 
 { #category : 'accessing' }
